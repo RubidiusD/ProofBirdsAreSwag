@@ -23,8 +23,9 @@ int main() {
     float dt = time.asSeconds();
 
     while (S::Window.pollEvent(event) && S::Window.isOpen()) {
-      game.manageInputs(event);
+      InputManager::manageInput(event);
     }
+    InputManager::update(dt);
 
     if (S::Window.isOpen()) {
       game.update(dt);

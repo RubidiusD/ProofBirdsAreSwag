@@ -1,8 +1,10 @@
 #include "AbstractMenu.h"
+#include "../managers/InputManager.h"
 #include "../managers/Settings.h"
 
 void AbstractMenu::load() {
   isLoaded = true;
+  InputManager::subscribe(this);
 }
 
 void AbstractMenu::unload() {
@@ -11,18 +13,15 @@ void AbstractMenu::unload() {
   current_index = -1;
   buttons.clear();
   static_visuals.clear();
+  InputManager::remove(this);
 }
 
 void AbstractMenu::open() {
-
+  listening_to_inputs = true;
 }
 
 void AbstractMenu::close() {
-
-}
-
-bool AbstractMenu::keyPressed(sf::Keyboard::Key key, bool down) {
-  return false;
+  listening_to_inputs = false;
 }
 
 void AbstractMenu::update(float dt) {
@@ -37,59 +36,6 @@ void AbstractMenu::render() {
   }
   for (const std::shared_ptr<AbstractButton>& button : buttons) {
     button->Render();
-  }
-}
-
-void AbstractMenu::input(InputAction action, bool down) {
-  // if a button is hovered
-  if (current_button != nullptr) {
-    if (down && action != Select) {
-      S::CursorMode = false;
-      switch (action) {
-      case (Up): selectButton(current_button->neighbours.u); break;
-      case (Down): selectButton(current_button->neighbours.d); break;
-      case (Left): selectButton(current_button->neighbours.l); break;
-      case (Right): selectButton(current_button->neighbours.r); break;
-      default: break;
-      }
-    }
-    else if (down) {
-      current_button->Press();
-    }
-    else {
-      current_button->Depress();
-    }
-  }
-  else if (action != Select) {
-    selectButton(default_index);
-  }
-}
-
-void AbstractMenu::mouseInput(MouseInputAction action, sf::Vector2f vector) {
-  if (current_button != nullptr) {
-    switch (action) {
-    case (Press): current_button->Press(); break;
-    case (Depress): current_button->Depress(); break;
-    case (Move):
-      if (S::CursorDown) {
-        current_button->Drag(vector);
-      }
-      else if (!current_button->isInside(vector)) {
-        current_button->Deselect();
-        current_button = nullptr;
-        current_index = -1;
-      }
-      break;
-    }
-  }
-
-  if (current_button == nullptr) {
-    for (unsigned short index = 0; index != buttons.size(); index ++) {
-      if (buttons[index]->isInside(vector)) {
-        selectButton(index);
-        break;
-      }
-    }
   }
 }
 
@@ -122,4 +68,68 @@ void AbstractMenu::addButton(AbstractButton* new_button) {
 
 void AbstractMenu::addDrawable(sf::Drawable* new_drawable) {
   static_visuals.emplace_back(new_drawable);
+}
+
+void AbstractMenu::Up(bool down) {
+  S::CursorMode = false;
+  if (down) {
+    if (current_button == nullptr) selectButton(default_index);
+    else selectButton(current_button->neighbours.u);
+  }
+}
+
+void AbstractMenu::Down(bool down) {
+  S::CursorMode = false;
+  if (down) {
+    if (current_button == nullptr) selectButton(default_index);
+    else selectButton(current_button->neighbours.d);
+  }
+}
+
+void AbstractMenu::Left(bool down) {
+  S::CursorMode = false;
+  if (down) {
+    if (current_button == nullptr) selectButton(default_index);
+    else selectButton(current_button->neighbours.l);
+  }
+}
+
+void AbstractMenu::Right(bool down) {
+  S::CursorMode = false;
+  if (down) {
+    if (current_button == nullptr) selectButton(default_index);
+    else selectButton(current_button->neighbours.r);
+  }
+}
+
+void AbstractMenu::Point(sf::Vector2f vector) {
+  if (current_button != nullptr) {
+    if (S::CursorDown) {
+      current_button->Drag(vector);
+    }
+    else if (!current_button->isInside(vector)) {
+      current_button->Deselect();
+      current_button = nullptr;
+      current_index = -1;
+    }
+  }
+
+  if (current_button == nullptr) {
+    for (unsigned short index = 0; index != buttons.size(); index ++) {
+      if (buttons[index]->isInside(vector)) {
+        selectButton(index);
+        break;
+      }
+    }
+  }
+}
+
+void AbstractMenu::Select(bool down) {
+  if (current_button != nullptr) {
+    if (down) {
+      current_button->Press();
+    } else {
+      current_button->Depress();
+    }
+  }
 }

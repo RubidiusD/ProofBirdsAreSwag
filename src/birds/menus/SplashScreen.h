@@ -7,7 +7,7 @@
 class SplashScreen : public AbstractMenu {
 public:
   SplashScreen();
-  bool keyPressed(sf::Keyboard::Key key, bool down) override;
+  void KeyPressed(sf::Keyboard::Key key, bool down) override;
   void load() override;
 private:
 };

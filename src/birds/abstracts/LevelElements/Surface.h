@@ -15,14 +15,6 @@ struct Collision {
   }
 };
 
-sf::Vector2f norm(const sf::Vector2f& v) {
-  float mag = v.x * v.x + v.y * v.y;
-  return v / sqrtf(mag);
-}
-sf::Vector2f timesI(const sf::Vector2f& v) {
-  return {-v.y, v.x};
-}
-
 // vertices are drawn CLOCKWISE around an object
 // so that means COUNTERCLOCKWISE around an interior space
 // the normal of a surface is i* the vector

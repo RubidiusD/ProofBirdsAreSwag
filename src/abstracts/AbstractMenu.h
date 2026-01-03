@@ -1,6 +1,7 @@
 #ifndef BIRDSARESWAG_ABSTRACTMENU_H
 #define BIRDSARESWAG_ABSTRACTMENU_H
 
+#include "InputSubscriber.h"
 #include "ScreenElements/AbstractButton.h"
 #include <SFML/System/String.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -8,23 +9,7 @@
 #include <memory>
 #include <vector>
 
-enum InputAction {
-  Up,
-  Down,
-  Left,
-  Right,
-  Select,
-  InputActionTotal
-};
-
-enum MouseInputAction {
-  Move,
-  Press,
-  Depress,
-  MouseInputActionTotal
-};
-
-class AbstractMenu {
+class AbstractMenu: public InputSubscriber {
 protected:
   std::vector<std::shared_ptr<AbstractButton>> buttons;
   std::shared_ptr<AbstractButton> current_button;
@@ -37,7 +22,6 @@ protected:
   void addDrawable(sf::Drawable* new_drawable);
 
 public:
-
   static unsigned makeID(const sf::String& menu_id);
 
   explicit AbstractMenu(unsigned id) {
@@ -56,9 +40,13 @@ public:
   virtual void close();
   virtual void update(float dt);
   virtual void render();
-  virtual void input(InputAction action, bool down);
-  virtual void mouseInput(MouseInputAction action, sf::Vector2f vector);
-  virtual bool keyPressed(sf::Keyboard::Key key, bool down);
+
+  void Up(bool down) override;
+  void Down(bool down) override;
+  void Left(bool down) override;
+  void Right(bool down) override;
+  void Point(sf::Vector2f vector) override;
+  void Select(bool down) override;
 };
 
 #endif // BIRDSARESWAG_ABSTRACTMENU_H

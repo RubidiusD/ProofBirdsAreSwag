@@ -1,4 +1,5 @@
 #include "Surface.h"
+#include "../../../MathLib.h"
 std::shared_ptr<Collision> Surface::CollideCircle(const sf::Vector2f& c, float r) const {
 
   std::shared_ptr<Collision> first;
@@ -31,6 +32,6 @@ std::shared_ptr<Collision> Surface::CollideCircle(const sf::Vector2f& c, float r
     return first;
   }
   else {
-    return std::make_shared<Collision>(corner, norm(timesI(second->point - first->point)));
+    return std::make_shared<Collision>(corner, M::norm(M::timesI(second->point - first->point)));
   }
 }

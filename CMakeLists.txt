@@ -24,7 +24,7 @@ set(SOURCE_FILES
     src/abstracts/AbstractMenu.h src/abstracts/AbstractMenu.cpp
     src/abstracts/AbstractAction.h src/abstracts/AbstractAction.cpp
     src/abstracts/AbstractChoice.h src/abstracts/AbstractChoice.cpp
-    src/abstracts/InputSubscriber.h src/abstracts/InputSubscriber.cpp
+    src/abstracts/InputSubscriber.h
 
     src/abstracts/ScreenElements/AbstractButton.h src/abstracts/ScreenElements/AbstractButton.cpp
 
@@ -34,6 +34,7 @@ set(SOURCE_FILES
     src/birds/abstracts/AbstractPlayer.h src/birds/abstracts/AbstractPlayer.cpp
     src/birds/abstracts/AbstractLevel.h src/birds/abstracts/AbstractLevel.cpp
     src/birds/abstracts/LevelElements/Surface.h src/birds/abstracts/LevelElements/Surface.cpp
+    src/MathLib.h
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 

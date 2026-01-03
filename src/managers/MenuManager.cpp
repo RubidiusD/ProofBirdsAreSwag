@@ -5,7 +5,6 @@
 
 std::vector<std::shared_ptr<AbstractMenu>> MenuManager::menus = std::vector<std::shared_ptr<AbstractMenu>>();
 std::shared_ptr<AbstractMenu> MenuManager::current_menu = nullptr;
-bool MenuManager::down[InputActionTotal] = {false, false, false, false, false};
 sf::Text MenuManager::debug_text = sf::Text();
 
 void MenuManager::registerMenu(const std::shared_ptr<AbstractMenu>& new_menu) {
@@ -53,52 +52,6 @@ void MenuManager::render() {
   if (current_menu != nullptr) {
     current_menu->render();
     S::Window.draw(debug_text);
-  }
-}
-
-bool MenuManager::manageInputs(sf::Event event) {
-  if (current_menu == nullptr) {
-    return false;
-  }
-
-  switch (event.type) {
-  case (sf::Event::EventType::KeyPressed):
-  case (sf::Event::EventType::KeyReleased):
-    switch (event.key.code) {
-    case (sf::Keyboard::W):
-    case (sf::Keyboard::Up):
-      press(Up, event.type == sf::Event::EventType::KeyPressed); return true;
-    case (sf::Keyboard::S):
-    case (sf::Keyboard::Down):
-      press(Down, event.type == sf::Event::EventType::KeyPressed); return true;
-    case (sf::Keyboard::A):
-    case (sf::Keyboard::Left):
-      press(Left, event.type == sf::Event::EventType::KeyPressed); return true;
-    case (sf::Keyboard::D):
-    case (sf::Keyboard::Right):
-      press(Right, event.type == sf::Event::EventType::KeyPressed); return true;
-    case (sf::Keyboard::E):
-    case (sf::Keyboard::Enter):
-    case (sf::Keyboard::Space):
-      press(Select, event.type == sf::Event::EventType::KeyPressed); return true;
-    default:
-      return current_menu->keyPressed(event.key.code, event.type == sf::Event::KeyPressed);
-    }
-  case (sf::Event::EventType::MouseButtonPressed):
-    current_menu->mouseInput(Press, {0, 0}); return true;
-  case (sf::Event::EventType::MouseButtonReleased):
-    current_menu->mouseInput(Depress, {0, 0}); return true;
-  case (sf::Event::EventType::MouseMoved):
-    current_menu->mouseInput(Move, {(float)event.mouseMove.x, (float)event.mouseMove.y}); return true;
-  default:
-    return false;
-  }
-}
-
-void MenuManager::press(InputAction action, bool down_) {
-  if (down[action] != down_) {
-    down[action] = down_;
-    current_menu->input(action, down_);
   }
 }
 

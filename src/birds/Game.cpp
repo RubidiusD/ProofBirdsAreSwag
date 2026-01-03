@@ -27,14 +27,3 @@ void Game::render() {
     current_level->render();
   }
 }
-
-void Game::manageInputs(sf::Event event) {
-  if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) {
-    S::Window.close();
-    return;
-  }
-
-  if (MenuManager::manageInputs(event)) {
-    return;
-  }
-}

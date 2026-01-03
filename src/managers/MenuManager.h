@@ -10,9 +10,6 @@ private:
   static std::vector<std::shared_ptr<AbstractMenu>> menus;
   static std::shared_ptr<AbstractMenu> current_menu;
 
-  static bool down[InputActionTotal];
-  static void press(InputAction action, bool down_);
-
   static sf::Text debug_text;
 
 public:
@@ -21,7 +18,6 @@ public:
   static bool setMenu(const sf::String& menu_id);
   static void update(float id);
   static void render();
-  static bool manageInputs(sf::Event event);
 
   static bool isLoading;
 

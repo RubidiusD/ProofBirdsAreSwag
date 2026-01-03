@@ -3,9 +3,8 @@
 #include "../../managers/MenuManager.h"
 #include "../../managers/Settings.h"
 
-bool SplashScreen::keyPressed(sf::Keyboard::Key key, bool down) {
+void SplashScreen::KeyPressed(sf::Keyboard::Key key, bool down) {
   MenuManager::setMenu("MAIN");
-  return true;
 }
 
 SplashScreen::SplashScreen() : AbstractMenu("SPSH") {
@@ -13,7 +12,7 @@ SplashScreen::SplashScreen() : AbstractMenu("SPSH") {
 }
 
 void SplashScreen::load() {
-  isLoaded = true;
+  AbstractMenu::load();
   auto* UWE_Logo = new sf::Sprite();
   UWE_Logo->setTexture(AssetManager::getTexture(0));
   UWE_Logo->setPosition(S::Res.x - UWE_Logo->getGlobalBounds().width, S::Res.y - UWE_Logo->getGlobalBounds().height);

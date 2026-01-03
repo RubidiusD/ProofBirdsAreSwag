@@ -4,16 +4,28 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
 
+enum InputActions {
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT,
+  SELECT,
+  TOTAL
+};
+
 class InputSubscriber {
 public:
   bool listening_to_inputs = false;
-  unsigned subscriber_id;
+  unsigned subscriber_id = 0;
   virtual void Up(bool down) {}
   virtual void Down(bool down) {}
   virtual void Left(bool down) {}
   virtual void Right(bool down) {}
-  virtual void Move(sf::Vector2f vector) {}
-  virtual void Select() {}
+  virtual void Select(bool down) {}
+  virtual void Move(sf::Vector2f vector) {} // relative to the player, made of the left joystick or wasd
+  virtual void Look(sf::Vector2f vector) {} // relative to the player, made of mouse or right joystick
+  virtual void Point(sf::Vector2f vector) {} // position on the screen
+  virtual void KeyPressed(sf::Keyboard::Key key, bool down) {}
   virtual void ManageInputs(sf::Event event) {}
 };
 

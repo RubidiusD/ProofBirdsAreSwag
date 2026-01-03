@@ -11,7 +11,6 @@ public:
   bool init();
   void render();
   void update(float dt);
-  void manageInputs(sf::Event event);
 
 private:
   sf::RenderWindow& window;
