@@ -25,13 +25,16 @@ enum MouseInputAction {
 };
 
 class AbstractMenu {
-private:
+protected:
   std::vector<std::shared_ptr<AbstractButton>> buttons;
   std::shared_ptr<AbstractButton> current_button;
+  std::vector<std::shared_ptr<sf::Drawable>> static_visuals;
   short current_index = -1;
   unsigned short default_index = 0;
 
   void selectButton(unsigned short index);
+  void addButton(AbstractButton* new_button);
+  void addDrawable(sf::Drawable* new_drawable);
 
 public:
 

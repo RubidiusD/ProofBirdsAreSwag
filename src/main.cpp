@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "birds/Game.h"
 #include "managers/ActionManager.h"
 #include "managers/InputManager.h"
 #include "managers/Settings.h"
@@ -23,7 +23,7 @@ int main() {
     float dt = time.asSeconds();
 
     while (S::Window.pollEvent(event) && S::Window.isOpen()) {
-      InputManager::manageInputs(event);
+      game.manageInputs(event);
     }
 
     if (S::Window.isOpen()) {

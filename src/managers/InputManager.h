@@ -1,11 +1,16 @@
 #ifndef BIRDSARESWAG_INPUTMANAGER_H
 #define BIRDSARESWAG_INPUTMANAGER_H
 
-#include <SFML/Graphics.hpp>
+#include "../abstracts/InputSubscriber.h"
+#include <memory>
+#include <vector>
 
 class InputManager {
+private:
+  static std::vector<std::shared_ptr<InputSubscriber>> subscribers;
 public:
-  static void manageInputs(sf::Event event);
+  static void subscribe(InputSubscriber* new_subscriber);
+  static void remove(InputSubscriber* new_subscriber);
 };
 
 #endif // BIRDSARESWAG_INPUTMANAGER_H

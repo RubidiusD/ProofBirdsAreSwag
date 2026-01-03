@@ -23,7 +23,7 @@ bool MenuManager::setMenu(unsigned menu_id) {
   short lowest_index = -1;
   auto highest_index = (short)menus.size();
   while (highest_index != 1 + lowest_index) {
-    short checking_index = (lowest_index + highest_index) / 2;
+    short checking_index = (lowest_index + highest_index) / 2; // NOLINT(*-narrowing-conversions)
 
     if (menus[checking_index]->ID == menu_id) {
       ActionManager::addToBot(std::make_shared<OpenMenuAction>(checking_index));

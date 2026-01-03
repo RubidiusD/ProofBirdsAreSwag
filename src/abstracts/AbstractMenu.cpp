@@ -10,6 +10,7 @@ void AbstractMenu::unload() {
   current_button = nullptr;
   current_index = -1;
   buttons.clear();
+  static_visuals.clear();
 }
 
 void AbstractMenu::open() {
@@ -31,6 +32,9 @@ void AbstractMenu::update(float dt) {
 }
 
 void AbstractMenu::render() {
+  for (const std::shared_ptr<sf::Drawable>& drawable : static_visuals) {
+    S::Window.draw(*drawable);
+  }
   for (const std::shared_ptr<AbstractButton>& button : buttons) {
     button->Render();
   }
@@ -110,4 +114,12 @@ void AbstractMenu::selectButton(unsigned short index) {
     current_button->Select();
     current_index = (short signed) index;
   }
+}
+
+void AbstractMenu::addButton(AbstractButton* new_button) {
+  buttons.emplace_back(new_button);
+}
+
+void AbstractMenu::addDrawable(sf::Drawable* new_drawable) {
+  static_visuals.emplace_back(new_drawable);
 }
