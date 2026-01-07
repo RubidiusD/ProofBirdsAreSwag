@@ -1,5 +1,5 @@
 #include "InputManager.h"
-#include "Settings.h"
+#include "../Settings.h"
 
 std::vector<std::shared_ptr<InputSubscriber>> InputManager::subscribers;
 std::shared_ptr<InputSubscriber> InputManager::NothingBurger = std::make_shared<InputSubscriber>();
@@ -69,6 +69,8 @@ void InputManager::manageInput(sf::Event event) {
     } return;
   case (sf::Event::MouseMoved):
     getCurrentSubscriber()->Point({(float)event.mouseMove.x, (float)event.mouseMove.y}); return;
+  case (sf::Event::Resized):
+    Resize();
   default:
     return;
   }
@@ -123,4 +125,9 @@ void InputManager::update(float dt) {
       (action_pressed[LEFT] ? -1.0f : 0.0f) + (action_pressed[RIGHT] ? 1.0f : 0.0f),
       (action_pressed[UP] ? -1.0f : 0.0f) + (action_pressed[DOWN] ? 1.0f : 0.0f),
   });
+}
+
+void InputManager::Resize() {
+  S::Res = (sf::Vector2f)S::Window.getSize();
+  getCurrentSubscriber()->Resize();
 }

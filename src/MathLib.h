@@ -3,15 +3,33 @@
 
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
+#include <random>
 
-namespace M {
-sf::Vector2f norm(const sf::Vector2f& v) {
-  float mag = v.x * v.x + v.y * v.y;
-  return v / sqrtf(mag);
-}
-sf::Vector2f timesI(const sf::Vector2f& v) {
-  return {-v.y, v.x};
-}
-}
+class M {
+public:
+  static sf::Vector2f norm(const sf::Vector2f& v);
+  static sf::Vector2f timesI(const sf::Vector2f& v);
+  static sf::Vector2f scale(const sf::Vector2f& a, const sf::Vector2f& b);
+  static sf::Vector2f scale(const sf::Vector2f& a, float b);
+  static sf::Vector2f avg(const sf::Vector2f& a, const sf::Vector2f& b);
+  static sf::Vector2f limit(const sf::Vector2f& v);
+  static float distanceSQ(const sf::Vector2f& a, const sf::Vector2f& b);
+
+  static unsigned MaxU(unsigned a, unsigned b);
+  static unsigned MinU(unsigned a, unsigned b);
+
+  static bool Rand2();
+  static unsigned short Rand4();
+  static unsigned Rand();
+  static unsigned Rand(unsigned lower_bound, unsigned upper_bound);
+  static void initialiseRandomness();
+
+private:
+  typedef std::mt19937 MyRNG;
+  static MyRNG rng;
+  static std::uniform_int_distribution<uint32_t> rand2;
+  static std::uniform_int_distribution<uint32_t> rand4;
+  static std::uniform_int_distribution<uint32_t> rand;
+};
 
 #endif // BIRDSARESWAG_MATH_LIB_H

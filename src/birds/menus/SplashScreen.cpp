@@ -1,7 +1,7 @@
 #include "SplashScreen.h"
+#include "../../Settings.h"
 #include "../../managers/AssetManager.h"
 #include "../../managers/MenuManager.h"
-#include "../../managers/Settings.h"
 
 void SplashScreen::KeyPressed(sf::Keyboard::Key key, bool down) {
   MenuManager::setMenu("MAIN");

@@ -1,18 +1,36 @@
 #ifndef BIRDSARESWAG_SURFACE_H
 #define BIRDSARESWAG_SURFACE_H
 
+#include "../../../MathLib.h"
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <cmath>
 #include <memory>
 #include <vector>
-#include <cmath>
+
+struct Edge;
 
 struct Collision {
+  sf::Vector2f point = {};
+  sf::Vector2f normal = {};
+  Edge* edge = nullptr;
+  Collision(const sf::Vector2f& p, const sf::Vector2f& n, Edge* e);
+};
+
+struct Edge {
   sf::Vector2f point;
-  sf::Vector2f normal;
-  Collision(const sf::Vector2f& p, const sf::Vector2f& n) {
-    point = p;
-    normal = n;
-  }
+  Edge* next = nullptr;
+  Edge* prev = nullptr;
+  sf::Vector2f norm;
+  sf::Sprite sprite;
+  sf::RenderTexture rt;
+
+  explicit Edge(sf::Vector2f p);
+  explicit Edge(const Edge& edge);
+  void setNext(Edge* n);
+  float getLength() const;
+  std::shared_ptr<Collision> CollideCircle(const sf::Vector2f& c, float r);
 };
 
 // vertices are drawn CLOCKWISE around an object
@@ -20,9 +38,14 @@ struct Collision {
 // the normal of a surface is i* the vector
 class Surface {
 private:
-  std::vector<sf::Vector2f> vertices;
+  std::vector<Edge> edges;
+  sf::Sprite pen;
 public:
-  std::shared_ptr<Collision> CollideCircle(const sf::Vector2f& center, float radius) const;
+  std::shared_ptr<Collision> CollideCircle(const sf::Vector2f& center, float radius);
+  void render();
+  void initialiseTextures();
+
+  Surface(const std::vector<sf::Vector2f>& points);
 };
 
 #endif // BIRDSARESWAG_SURFACE_H

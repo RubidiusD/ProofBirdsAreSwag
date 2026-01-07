@@ -47,6 +47,7 @@ public:
   void Right(bool down) override;
   void Point(sf::Vector2f vector) override;
   void Select(bool down) override;
+  void Resize() override;
 };
 
 #endif // BIRDSARESWAG_ABSTRACTMENU_H

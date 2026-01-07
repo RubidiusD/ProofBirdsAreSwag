@@ -23,6 +23,7 @@ public:
   static void remove(InputSubscriber* new_subscriber);
   static void manageInput(sf::Event event);
   static void update(float dt);
+  static void Resize();
 };
 
 #endif // BIRDSARESWAG_INPUTMANAGER_H

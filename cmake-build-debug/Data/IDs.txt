@@ -1,5 +1,8 @@
 ----------------------------------------Textures
 0: Uwe Logo
+1: Text Box
+
+100: Floor Tiles
 
 
 

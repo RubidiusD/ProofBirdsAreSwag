@@ -16,6 +16,7 @@ public:
   static void registerMenu(const std::shared_ptr<AbstractMenu>& new_menu);
   static bool setMenu(unsigned menu_id);
   static bool setMenu(const sf::String& menu_id);
+  static bool closeMenu();
   static void update(float id);
   static void render();
 
@@ -28,13 +29,21 @@ public:
     static const float duration;
 
   public:
-    explicit OpenMenuAction(unsigned menu_index) {
+    explicit OpenMenuAction(unsigned menu_index) : AbstractAction("OpenMenuAction") {
       index = menu_index;
       timer = duration;
     }
+    void end() override;
+  };
+  // The action for closing the open menu
+  class CloseMenuAction : public AbstractAction {
+  private:
+    static const float duration;
 
-    void start() override;
-    void update(float dt) override;
+  public:
+    explicit CloseMenuAction() : AbstractAction("CloseMenuAction") {
+      timer = duration;
+    }
     void end() override;
   };
 };

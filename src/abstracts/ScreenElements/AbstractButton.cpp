@@ -1,5 +1,6 @@
 #include "AbstractButton.h"
-#include "../../managers/Settings.h"
+#include "../../MathLib.h"
+#include "../../Settings.h"
 
 void AbstractButton::Press() {}
 void AbstractButton::Depress() {}
@@ -22,4 +23,15 @@ bool AbstractButton::isInside(const sf::Vector2f& vector) {
       vector.x > rect.left &&
       vector.y > rect.top
   );
+}
+AbstractButton::AbstractButton(const Neighbours &n, const sf::Texture &texture) {
+  neighbours = n;
+  sprite.setTexture(texture);
+  sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
+}
+AbstractButton::AbstractButton(const Neighbours &n, const sf::Texture &texture, const sf::Vector2f &ratio_) : AbstractButton(n, texture) {
+  ratio = ratio_;
+}
+void AbstractButton::Reposition() {
+  sprite.setPosition(M::scale(ratio, S::Res));
 }

@@ -13,20 +13,21 @@ endif()
 find_package(SFML 2.5.1 COMPONENTS system window graphics network audio)
 set(SOURCE_FILES
     src/main.cpp
+    src/MathLib.h src/MathLib.cpp
     src/birds/Game.h src/birds/Game.cpp
 
     src/managers/ActionManager.h src/managers/ActionManager.cpp
     src/managers/MenuManager.h src/managers/MenuManager.cpp
     src/managers/AssetManager.h src/managers/AssetManager.cpp
-    src/managers/Settings.h src/managers/Settings.cpp
+    src/Settings.h src/Settings.cpp
     src/managers/InputManager.h src/managers/InputManager.cpp
 
     src/abstracts/AbstractMenu.h src/abstracts/AbstractMenu.cpp
     src/abstracts/AbstractAction.h src/abstracts/AbstractAction.cpp
-    src/abstracts/AbstractChoice.h src/abstracts/AbstractChoice.cpp
     src/abstracts/InputSubscriber.h
 
     src/abstracts/ScreenElements/AbstractButton.h src/abstracts/ScreenElements/AbstractButton.cpp
+    src/abstracts/ScreenElements/TextButton.h src/abstracts/ScreenElements/TextButton.cpp
 
     src/birds/menus/SplashScreen.h src/birds/menus/SplashScreen.cpp
     src/birds/menus/MainMenu.h src/birds/menus/MainMenu.cpp
@@ -34,7 +35,9 @@ set(SOURCE_FILES
     src/birds/abstracts/AbstractPlayer.h src/birds/abstracts/AbstractPlayer.cpp
     src/birds/abstracts/AbstractLevel.h src/birds/abstracts/AbstractLevel.cpp
     src/birds/abstracts/LevelElements/Surface.h src/birds/abstracts/LevelElements/Surface.cpp
-    src/MathLib.h
+    src/birds/levels/LevelLoader.hpp
+    src/birds/levels/TestLevel.h src/birds/levels/TestLevel.cpp
+    src/birds/levels/LevelLibrary.h src/birds/levels/LevelLibrary.cpp
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 

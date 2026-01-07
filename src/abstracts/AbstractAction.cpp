@@ -4,7 +4,10 @@
 void AbstractAction::tick(float dt) {
   timer -= dt;
   if (timer <= 0) {
-    end();
     isDone = true;
   }
+}
+
+void AbstractAction::identify() const {
+  printf("%s \n", identity.c_str());
 }

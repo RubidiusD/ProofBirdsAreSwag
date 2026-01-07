@@ -1,14 +1,20 @@
+#include "Settings.h"
 #include "birds/Game.h"
+#include "birds/levels/LevelLoader.hpp"
+#include "birds/menus/MenuLoader.hpp"
 #include "managers/ActionManager.h"
 #include "managers/InputManager.h"
-#include "managers/Settings.h"
 
 int main() {
   S::Window.setFramerateLimit(60);
-  S::Window.setMouseCursorVisible(false);
+//  S::Window.setMouseCursorVisible(false);
   S::Res = sf::Vector2f(S::Window.getSize());
 
+  MenuLoader::LoadMenus();
+  MenuManager::setMenu("SPSH");
+  LevelLoader::LoadLevels();
   Game game(S::Window);
+  M::initialiseRandomness();
 
   if (!game.init()) {
     return 0;

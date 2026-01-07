@@ -1,6 +1,6 @@
 #include "AbstractMenu.h"
+#include "../Settings.h"
 #include "../managers/InputManager.h"
-#include "../managers/Settings.h"
 
 void AbstractMenu::load() {
   isLoaded = true;
@@ -17,6 +17,9 @@ void AbstractMenu::unload() {
 }
 
 void AbstractMenu::open() {
+  for (const std::shared_ptr<AbstractButton>& button : buttons) {
+    button->Reposition();
+  }
   listening_to_inputs = true;
 }
 
@@ -131,5 +134,11 @@ void AbstractMenu::Select(bool down) {
     } else {
       current_button->Depress();
     }
+  }
+}
+
+void AbstractMenu::Resize() {
+  for (const std::shared_ptr<AbstractButton>& button : buttons) {
+    button->Reposition();
   }
 }

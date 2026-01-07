@@ -27,6 +27,7 @@ public:
   virtual void Point(sf::Vector2f vector) {} // position on the screen
   virtual void KeyPressed(sf::Keyboard::Key key, bool down) {}
   virtual void ManageInputs(sf::Event event) {}
+  virtual void Resize() {}
 };
 
 #endif // BIRDSARESWAG_INPUT_SUBSCRIBER_H

@@ -57,6 +57,14 @@ build CMakeFiles/BirdsAreSwag.dir/src/main.cpp.obj: CXX_COMPILER__BirdsAreSwag_u
   OBJECT_DIR = CMakeFiles\BirdsAreSwag.dir
   OBJECT_FILE_DIR = CMakeFiles\BirdsAreSwag.dir\src
 
+build CMakeFiles/BirdsAreSwag.dir/src/MathLib.cpp.obj: CXX_COMPILER__BirdsAreSwag_unscanned_Debug C$:/Users/brine/Documents/GitHub/ProofBirdsAreSwag/src/MathLib.cpp || cmake_object_order_depends_target_BirdsAreSwag
+  DEFINES = -DSFML_STATIC
+  DEP_FILE = CMakeFiles\BirdsAreSwag.dir\src\MathLib.cpp.obj.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  INCLUDES = -isystem "C:/Program Files/SFML/include"
+  OBJECT_DIR = CMakeFiles\BirdsAreSwag.dir
+  OBJECT_FILE_DIR = CMakeFiles\BirdsAreSwag.dir\src
+
 build CMakeFiles/BirdsAreSwag.dir/src/birds/Game.cpp.obj: CXX_COMPILER__BirdsAreSwag_unscanned_Debug C$:/Users/brine/Documents/GitHub/ProofBirdsAreSwag/src/birds/Game.cpp || cmake_object_order_depends_target_BirdsAreSwag
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\BirdsAreSwag.dir\src\birds\Game.cpp.obj.d
@@ -89,13 +97,13 @@ build CMakeFiles/BirdsAreSwag.dir/src/managers/AssetManager.cpp.obj: CXX_COMPILE
   OBJECT_DIR = CMakeFiles\BirdsAreSwag.dir
   OBJECT_FILE_DIR = CMakeFiles\BirdsAreSwag.dir\src\managers
 
-build CMakeFiles/BirdsAreSwag.dir/src/managers/Settings.cpp.obj: CXX_COMPILER__BirdsAreSwag_unscanned_Debug C$:/Users/brine/Documents/GitHub/ProofBirdsAreSwag/src/managers/Settings.cpp || cmake_object_order_depends_target_BirdsAreSwag
+build CMakeFiles/BirdsAreSwag.dir/src/Settings.cpp.obj: CXX_COMPILER__BirdsAreSwag_unscanned_Debug C$:/Users/brine/Documents/GitHub/ProofBirdsAreSwag/src/Settings.cpp || cmake_object_order_depends_target_BirdsAreSwag
   DEFINES = -DSFML_STATIC
-  DEP_FILE = CMakeFiles\BirdsAreSwag.dir\src\managers\Settings.cpp.obj.d
+  DEP_FILE = CMakeFiles\BirdsAreSwag.dir\src\Settings.cpp.obj.d
   FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   INCLUDES = -isystem "C:/Program Files/SFML/include"
   OBJECT_DIR = CMakeFiles\BirdsAreSwag.dir
-  OBJECT_FILE_DIR = CMakeFiles\BirdsAreSwag.dir\src\managers
+  OBJECT_FILE_DIR = CMakeFiles\BirdsAreSwag.dir\src
 
 build CMakeFiles/BirdsAreSwag.dir/src/managers/InputManager.cpp.obj: CXX_COMPILER__BirdsAreSwag_unscanned_Debug C$:/Users/brine/Documents/GitHub/ProofBirdsAreSwag/src/managers/InputManager.cpp || cmake_object_order_depends_target_BirdsAreSwag
   DEFINES = -DSFML_STATIC
@@ -121,17 +129,17 @@ build CMakeFiles/BirdsAreSwag.dir/src/abstracts/AbstractAction.cpp.obj: CXX_COMP
   OBJECT_DIR = CMakeFiles\BirdsAreSwag.dir
   OBJECT_FILE_DIR = CMakeFiles\BirdsAreSwag.dir\src\abstracts
 
-build CMakeFiles/BirdsAreSwag.dir/src/abstracts/AbstractChoice.cpp.obj: CXX_COMPILER__BirdsAreSwag_unscanned_Debug C$:/Users/brine/Documents/GitHub/ProofBirdsAreSwag/src/abstracts/AbstractChoice.cpp || cmake_object_order_depends_target_BirdsAreSwag
-  DEFINES = -DSFML_STATIC
-  DEP_FILE = CMakeFiles\BirdsAreSwag.dir\src\abstracts\AbstractChoice.cpp.obj.d
-  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -isystem "C:/Program Files/SFML/include"
-  OBJECT_DIR = CMakeFiles\BirdsAreSwag.dir
-  OBJECT_FILE_DIR = CMakeFiles\BirdsAreSwag.dir\src\abstracts
-
 build CMakeFiles/BirdsAreSwag.dir/src/abstracts/ScreenElements/AbstractButton.cpp.obj: CXX_COMPILER__BirdsAreSwag_unscanned_Debug C$:/Users/brine/Documents/GitHub/ProofBirdsAreSwag/src/abstracts/ScreenElements/AbstractButton.cpp || cmake_object_order_depends_target_BirdsAreSwag
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\BirdsAreSwag.dir\src\abstracts\ScreenElements\AbstractButton.cpp.obj.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  INCLUDES = -isystem "C:/Program Files/SFML/include"
+  OBJECT_DIR = CMakeFiles\BirdsAreSwag.dir
+  OBJECT_FILE_DIR = CMakeFiles\BirdsAreSwag.dir\src\abstracts\ScreenElements
+
+build CMakeFiles/BirdsAreSwag.dir/src/abstracts/ScreenElements/TextButton.cpp.obj: CXX_COMPILER__BirdsAreSwag_unscanned_Debug C$:/Users/brine/Documents/GitHub/ProofBirdsAreSwag/src/abstracts/ScreenElements/TextButton.cpp || cmake_object_order_depends_target_BirdsAreSwag
+  DEFINES = -DSFML_STATIC
+  DEP_FILE = CMakeFiles\BirdsAreSwag.dir\src\abstracts\ScreenElements\TextButton.cpp.obj.d
   FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   INCLUDES = -isystem "C:/Program Files/SFML/include"
   OBJECT_DIR = CMakeFiles\BirdsAreSwag.dir
@@ -177,6 +185,22 @@ build CMakeFiles/BirdsAreSwag.dir/src/birds/abstracts/LevelElements/Surface.cpp.
   OBJECT_DIR = CMakeFiles\BirdsAreSwag.dir
   OBJECT_FILE_DIR = CMakeFiles\BirdsAreSwag.dir\src\birds\abstracts\LevelElements
 
+build CMakeFiles/BirdsAreSwag.dir/src/birds/levels/TestLevel.cpp.obj: CXX_COMPILER__BirdsAreSwag_unscanned_Debug C$:/Users/brine/Documents/GitHub/ProofBirdsAreSwag/src/birds/levels/TestLevel.cpp || cmake_object_order_depends_target_BirdsAreSwag
+  DEFINES = -DSFML_STATIC
+  DEP_FILE = CMakeFiles\BirdsAreSwag.dir\src\birds\levels\TestLevel.cpp.obj.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  INCLUDES = -isystem "C:/Program Files/SFML/include"
+  OBJECT_DIR = CMakeFiles\BirdsAreSwag.dir
+  OBJECT_FILE_DIR = CMakeFiles\BirdsAreSwag.dir\src\birds\levels
+
+build CMakeFiles/BirdsAreSwag.dir/src/birds/levels/LevelLibrary.cpp.obj: CXX_COMPILER__BirdsAreSwag_unscanned_Debug C$:/Users/brine/Documents/GitHub/ProofBirdsAreSwag/src/birds/levels/LevelLibrary.cpp || cmake_object_order_depends_target_BirdsAreSwag
+  DEFINES = -DSFML_STATIC
+  DEP_FILE = CMakeFiles\BirdsAreSwag.dir\src\birds\levels\LevelLibrary.cpp.obj.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  INCLUDES = -isystem "C:/Program Files/SFML/include"
+  OBJECT_DIR = CMakeFiles\BirdsAreSwag.dir
+  OBJECT_FILE_DIR = CMakeFiles\BirdsAreSwag.dir\src\birds\levels
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target BirdsAreSwag
@@ -185,7 +209,7 @@ build CMakeFiles/BirdsAreSwag.dir/src/birds/abstracts/LevelElements/Surface.cpp.
 #############################################
 # Link the executable BirdsAreSwag.exe
 
-build BirdsAreSwag.exe: CXX_EXECUTABLE_LINKER__BirdsAreSwag_Debug CMakeFiles/BirdsAreSwag.dir/src/main.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/Game.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/managers/ActionManager.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/managers/MenuManager.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/managers/AssetManager.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/managers/Settings.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/managers/InputManager.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/abstracts/AbstractMenu.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/abstracts/AbstractAction.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/abstracts/AbstractChoice.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/abstracts/ScreenElements/AbstractButton.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/menus/SplashScreen.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/menus/MainMenu.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/abstracts/AbstractPlayer.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/abstracts/AbstractLevel.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/abstracts/LevelElements/Surface.cpp.obj | C$:/Program$ Files/SFML/lib/libsfml-graphics-s-d.a C$:/Program$ Files/SFML/lib/libsfml-window-s-d.a C$:/Program$ Files/SFML/lib/libsfml-system-s-d.a C$:/Program$ Files/SFML/lib/libsfml-network-s-d.a C$:/Program$ Files/SFML/lib/libsfml-audio-s-d.a C$:/Program$ Files/SFML/lib/libfreetype.a C$:/Program$ Files/SFML/lib/libsfml-system-s-d.a C$:/Program$ Files/SFML/lib/libopenal32.a C$:/Program$ Files/SFML/lib/libvorbisfile.a C$:/Program$ Files/SFML/lib/libvorbisenc.a C$:/Program$ Files/SFML/lib/libvorbis.a C$:/Program$ Files/SFML/lib/libogg.a C$:/Program$ Files/SFML/lib/libFLAC.a
+build BirdsAreSwag.exe: CXX_EXECUTABLE_LINKER__BirdsAreSwag_Debug CMakeFiles/BirdsAreSwag.dir/src/main.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/MathLib.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/Game.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/managers/ActionManager.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/managers/MenuManager.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/managers/AssetManager.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/Settings.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/managers/InputManager.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/abstracts/AbstractMenu.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/abstracts/AbstractAction.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/abstracts/ScreenElements/AbstractButton.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/abstracts/ScreenElements/TextButton.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/menus/SplashScreen.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/menus/MainMenu.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/abstracts/AbstractPlayer.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/abstracts/AbstractLevel.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/abstracts/LevelElements/Surface.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/levels/TestLevel.cpp.obj CMakeFiles/BirdsAreSwag.dir/src/birds/levels/LevelLibrary.cpp.obj | C$:/Program$ Files/SFML/lib/libsfml-graphics-s-d.a C$:/Program$ Files/SFML/lib/libsfml-window-s-d.a C$:/Program$ Files/SFML/lib/libsfml-system-s-d.a C$:/Program$ Files/SFML/lib/libsfml-network-s-d.a C$:/Program$ Files/SFML/lib/libsfml-audio-s-d.a C$:/Program$ Files/SFML/lib/libfreetype.a C$:/Program$ Files/SFML/lib/libsfml-system-s-d.a C$:/Program$ Files/SFML/lib/libopenal32.a C$:/Program$ Files/SFML/lib/libvorbisfile.a C$:/Program$ Files/SFML/lib/libvorbisenc.a C$:/Program$ Files/SFML/lib/libvorbis.a C$:/Program$ Files/SFML/lib/libogg.a C$:/Program$ Files/SFML/lib/libFLAC.a
   FLAGS = -g
   LINK_FLAGS = -static
   LINK_LIBRARIES = "C:/Program Files/SFML/lib/libsfml-graphics-s-d.a"  "C:/Program Files/SFML/lib/libsfml-window-s-d.a"  "C:/Program Files/SFML/lib/libsfml-system-s-d.a"  "C:/Program Files/SFML/lib/libsfml-network-s-d.a"  "C:/Program Files/SFML/lib/libsfml-audio-s-d.a"  -lOpenGL32  -lgdi32  "C:/Program Files/SFML/lib/libfreetype.a"  -lws2_32  "C:/Program Files/SFML/lib/libsfml-system-s-d.a"  -lwinmm  "C:/Program Files/SFML/lib/libopenal32.a"  "C:/Program Files/SFML/lib/libvorbisfile.a"  "C:/Program Files/SFML/lib/libvorbisenc.a"  "C:/Program Files/SFML/lib/libvorbis.a"  "C:/Program Files/SFML/lib/libogg.a"  "C:/Program Files/SFML/lib/libFLAC.a"  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32

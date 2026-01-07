@@ -1,7 +1,7 @@
 #include "MenuManager.h"
+#include "../Settings.h"
 #include "ActionManager.h"
 #include "AssetManager.h"
-#include "Settings.h"
 
 std::vector<std::shared_ptr<AbstractMenu>> MenuManager::menus = std::vector<std::shared_ptr<AbstractMenu>>();
 std::shared_ptr<AbstractMenu> MenuManager::current_menu = nullptr;
@@ -19,6 +19,10 @@ void MenuManager::registerMenu(const std::shared_ptr<AbstractMenu>& new_menu) {
 }
 
 bool MenuManager::setMenu(unsigned menu_id) {
+  if (isLoading) {
+    return false;
+  }
+
   short lowest_index = -1;
   auto highest_index = (short)menus.size();
   while (highest_index != 1 + lowest_index) {
@@ -26,7 +30,7 @@ bool MenuManager::setMenu(unsigned menu_id) {
 
     if (menus[checking_index]->ID == menu_id) {
       ActionManager::addToBot(std::make_shared<OpenMenuAction>(checking_index));
-      return true;
+      return isLoading = true;
     }
     else if (menus[checking_index]->ID > menu_id) {
       highest_index = checking_index;
@@ -56,15 +60,6 @@ void MenuManager::render() {
 }
 
 const float MenuManager::OpenMenuAction::duration = 0.1f;
-
-void MenuManager::OpenMenuAction::start() {
-  isLoading = true;
-}
-
-void MenuManager::OpenMenuAction::update(float dt) {
-  tick(dt);
-}
-
 void MenuManager::OpenMenuAction::end() {
   isLoading = false;
   if (current_menu != nullptr) {
@@ -81,3 +76,19 @@ void MenuManager::OpenMenuAction::end() {
 }
 
 bool MenuManager::isLoading = false;
+
+bool MenuManager::closeMenu() {
+  if (current_menu != nullptr && !isLoading) {
+    isLoading = true;
+    ActionManager::addToBot(std::make_shared<CloseMenuAction>());
+    return true;
+  }
+  return false;
+}
+
+const float MenuManager::CloseMenuAction::duration = 0.1f;
+void MenuManager::CloseMenuAction::end() {
+  current_menu->close();
+  current_menu = nullptr;
+  isLoading = false;
+}

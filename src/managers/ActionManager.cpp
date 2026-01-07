@@ -1,14 +1,22 @@
 #include "ActionManager.h"
+#include <cstdio>
 
 void ActionManager::update(float dt) {
-  if (currentAction != nullptr && currentAction->isDone) {
-    currentAction = nullptr;
-  }
   if (refresh()) {
+    printf("Starting new action");
+    currentAction->identify();
     currentAction->start();
   }
   if (currentAction != nullptr && !currentAction->isDone) {
-    currentAction->update(dt);
+    currentAction->tick(dt);
+    if (currentAction->isDone) {
+      currentAction->end();
+      printf("Action Finished: ");
+      currentAction->identify();
+      currentAction = nullptr;
+    } else {
+      currentAction->update(dt);
+    }
   }
 }
 
