@@ -29,9 +29,8 @@ AbstractButton::AbstractButton(const Neighbours &n, const sf::Texture &texture) 
   sprite.setTexture(texture);
   sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 }
+
 AbstractButton::AbstractButton(const Neighbours &n, const sf::Texture &texture, const sf::Vector2f &ratio_) : AbstractButton(n, texture) {
   ratio = ratio_;
-}
-void AbstractButton::Reposition() {
-  sprite.setPosition(M::scale(ratio, S::Res));
+  sprite.setPosition(M::scale(S::Res, ratio));
 }

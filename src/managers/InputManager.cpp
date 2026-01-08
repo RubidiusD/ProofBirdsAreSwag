@@ -128,6 +128,6 @@ void InputManager::update(float dt) {
 }
 
 void InputManager::Resize() {
-  S::Res = (sf::Vector2f)S::Window.getSize();
+  S::ScreenSize = (sf::Vector2f)S::Window.getSize();
   getCurrentSubscriber()->Resize();
 }

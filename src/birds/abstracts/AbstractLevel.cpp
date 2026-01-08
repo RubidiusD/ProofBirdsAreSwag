@@ -1,6 +1,7 @@
 #include "AbstractLevel.h"
 #include "../../Settings.h"
 #include "../../managers/AssetManager.h"
+#include "../../managers/InputManager.h"
 
 void AbstractLevel::update(float dt) {
   player->update(dt);
@@ -12,18 +13,17 @@ void AbstractLevel::update(float dt) {
 }
 
 void AbstractLevel::render() {
-  S::Window.clear((player->floor == nullptr) ? sf::Color::White : sf::Color::Red);
   view.setCenter(player->getPosition());
+  S::Window.clear(sf::Color::White);
   S::Window.setView(view);
   player->render();
   for (Surface& surface : surfaces) {
     surface.render();
   }
-
-  S::Window.setView(S::Window.getDefaultView());
 }
 
 void AbstractLevel::load() {
+  InputManager::subscribe(this);
   player = std::make_shared<AbstractPlayer>();
   player->initialise();
   AssetManager::RegisterTexture("Data/images/FloorTiles.png", 100);
@@ -31,6 +31,7 @@ void AbstractLevel::load() {
     printf("make that texturonie \n");
     surface.initialiseTextures();
   }
+  view.setSize(960, 540);
 }
 
 void AbstractLevel::open() {
@@ -61,5 +62,15 @@ void AbstractLevel::Select(bool down) {
 }
 
 void AbstractLevel::Resize() {
-  view.setSize(S::Res);
+  view.setSize(960, 540);
+  float p = 16 * S::ScreenSize.y / 9 / S::ScreenSize.x;
+  if (1 > p) {
+    view.setViewport({(1 - p) / 2, 0, p, 1});
+  }
+  else if (1 < p){
+    view.setViewport({0, (1 - 1/p) / 2, 1, 1/p});
+  }
+  else {
+    view.setViewport({0, 0, 1, 1});
+  }
 }

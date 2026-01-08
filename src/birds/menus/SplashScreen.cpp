@@ -18,7 +18,7 @@ void SplashScreen::load() {
   UWE_Logo->setPosition(S::Res.x - UWE_Logo->getGlobalBounds().width, S::Res.y - UWE_Logo->getGlobalBounds().height);
   addDrawable(UWE_Logo);
   auto* Title = new sf::Text();
-  Title->setCharacterSize(52);
+  Title->setCharacterSize(36);
   Title->setFont(AssetManager::getFont(0));
   Title->setString("Birds are Swag");
   Title->setPosition((S::Res.x - Title->getGlobalBounds().width) / 2, (S::Res.y - Title->getGlobalBounds().height) / 2);

@@ -6,7 +6,9 @@ TextButton::TextButton(unsigned int font, const sf::String& text_, const Neighbo
     : AbstractButton(n, AssetManager::getTexture(1), ratio_) {
   text.setString(text_);
   text.setFont(AssetManager::getFont(font));
-  text.setOrigin(text.getGlobalBounds().width / 2, text.getGlobalBounds().height / 2);
+  text.setCharacterSize(24);
+  text.setOrigin(text.getGlobalBounds().width / 2, text.getGlobalBounds().height * 3 / 4);
+  text.setPosition(sprite.getPosition());
 }
 
 TextButton::TextButton(unsigned int font, const sf::String &text_, const Neighbours &n)
@@ -14,10 +16,6 @@ TextButton::TextButton(unsigned int font, const sf::String &text_, const Neighbo
 
 }
 
-void TextButton::Reposition() {
-  AbstractButton::Reposition();
-  text.setPosition(sprite.getPosition());
-}
 void TextButton::Render() {
   AbstractButton::Render();
   S::Window.draw(text);

@@ -20,7 +20,6 @@ public:
   bool isInside(const sf::Vector2f& vector);
   virtual void Render();
   void Update(float dt);
-  virtual void Reposition();
 
   // for when navigating a menu with directional inputs
   Neighbours neighbours = {0, 0, 0, 0};

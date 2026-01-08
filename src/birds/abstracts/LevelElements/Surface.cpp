@@ -3,6 +3,7 @@
 #include "../../../managers/AssetManager.h"
 
 Surface::Surface(const std::vector<sf::Vector2f>& points) {
+  AssetManager::RegisterTexture("Data/images/Pointer.png", 2);
   for (const sf::Vector2f& point : points) {
     edges.emplace_back(point);
   }
@@ -16,65 +17,62 @@ void Surface::initialiseTextures() {
   pen.setTexture(AssetManager::getTexture(100));
 
   for (Edge& edge : edges) {
-    const int length = (int) roundf(edge.getLength() / 8.0f) + 1;
-    edge.rt.create(length * 8, 32);
+    const int length = (int) roundf(edge.getLength() / 4.0f) + 1;
+    edge.rt.create(length * 4, 16);
     if (length < 5) {
       const int size1 = (int) M::Rand(1, M::MinU(4, length - 1));
       const int size2 = (int) length - size1;
 
-      pen.setTextureRect({0, (size1 - 1) * 32, 32, 32});
+      pen.setTextureRect({0, (size1 - 1) * 16, 16, 16});
       pen.setPosition(0, 0);
       edge.rt.draw(pen);
-      pen.setTextureRect({96, (size2 - 1) * 32, 32, 32});
-      pen.setPosition((float)size1 * 8, 0);
+      pen.setTextureRect({48, (size2 - 1) * 16, 16, 16});
+      pen.setPosition((float)size1 * 4, 0);
       edge.rt.draw(pen);
     }
     else {
       // left
       int position = M::Rand4();
-      pen.setPosition(0, 0);
-      pen.setTextureRect({0, position * 32, 32, 32});
+      pen.setPosition((float)position * 4.0f - 12.0f, 0);
+      pen.setTextureRect({0, position * 16, 16, 16});
       edge.rt.draw(pen);
       position ++;
 
       // middle
       while (length - position > 4) {
-        pen.setPosition((float)position * 8.0f, 0);
-        pen.setTextureRect({(M::Rand2() ? 32 : 64), 32 * M::Rand4(), 32, 32});
+        pen.setPosition((float)position * 4.0f, 0);
+        pen.setTextureRect({(M::Rand2() ? 16 : 32), 16 * M::Rand4(), 16, 16});
         position += 4;
         edge.rt.draw(pen);
       }
 
       // right
-      pen.setPosition((float)position * 8.0f, 0);
-      pen.setTextureRect({96, (length - position - 1) * 32, 32, 32});
+      pen.setPosition((float)position * 4.0f, 0);
+      pen.setTextureRect({48, (length - position - 1) * 16, 16, 16});
       edge.rt.draw(pen);
     }
     edge.rt.display();
     edge.sprite.setTexture(edge.rt.getTexture());
-    edge.sprite.setOrigin(4.0f * (float) length, 16);
-    edge.sprite.setPosition(M::avg(edge.point, edge.next->point) - M::scale(edge.norm, 16));
+    edge.sprite.setOrigin(2.0f * (float) length, 8);
+    edge.sprite.setPosition(M::avg(edge.point, edge.next->point) - M::scale(edge.norm, 8));
     edge.sprite.setRotation((atan2f(edge.norm.y, edge.norm.x) * 180.0f / 3.1415926535f)+90);
   }
 }
 
 std::shared_ptr<Collision> Surface::CollideCircle(const sf::Vector2f& c, float r) {
 
-  std::shared_ptr<Collision> first;
-  std::shared_ptr<Collision> second;
+  std::shared_ptr<Collision> first = nullptr;
+  std::shared_ptr<Collision> second = nullptr;
 
   for (auto& edge : edges) {
     std::shared_ptr<Collision> collision = edge.CollideCircle(c, r);
     if (collision == nullptr) {
       continue;
     }
-    if (M::distanceSQ(c, collision->point) < r*r) {
-      if (first == nullptr) {
-        first = collision;
-      } else {
-        second = collision;
-        break;
-      }
+    if (first == nullptr) {
+      first = collision; continue;
+    } else {
+      second = collision; break;
     }
   }
 
@@ -96,20 +94,16 @@ void Surface::render() {
 }
 
 std::shared_ptr<Collision> Edge::CollideCircle(const sf::Vector2f &c, float r) {
-  const sf::Vector2f& a = point;
-  const sf::Vector2f& b = next->point;
-  sf::Vector2f d = dire;
-  sf::Vector2f n = {-d.y,d.x};
-
-  float t3 = ((n.x*a.y - c.y*n.x + c.x*n.y - a.x*n.y) / (d.x*n.y - d.y*n.x));
+  float t3 = ((norm.x*point.y - c.y*norm.x + c.x*norm.y - point.x*norm.y) / (dire.x*norm.y - dire.y*norm.x));
   if (t3 < 0 || t3 > 1) {
     return nullptr;
   }
-  sf::Vector2f p = a + t3 * b;
-  if (M::distanceSQ(c, p) > r * r) {
+  sf::Vector2f p = point + t3 * dire;
+  float distance = M::distanceSQ(c, p);
+  if (distance > r * r) {
     return nullptr;
   }
-  return std::make_shared<Collision>(p, M::norm(n), this);
+  return std::make_shared<Collision>(p, norm, this);
 }
 
 Edge::Edge(sf::Vector2f p) { point = p; }

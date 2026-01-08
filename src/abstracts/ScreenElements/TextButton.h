@@ -11,7 +11,6 @@ public:
   TextButton(unsigned font, const sf::String& text_, const Neighbours& n);
   TextButton(unsigned font, const sf::String& text_, const Neighbours& n, const sf::Vector2f& ratio_);
 
-  void Reposition() override;
   void Render() override;
 };
 

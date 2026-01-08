@@ -17,10 +17,8 @@ void AbstractMenu::unload() {
 }
 
 void AbstractMenu::open() {
-  for (const std::shared_ptr<AbstractButton>& button : buttons) {
-    button->Reposition();
-  }
   listening_to_inputs = true;
+  Resize();
 }
 
 void AbstractMenu::close() {
@@ -34,6 +32,7 @@ void AbstractMenu::update(float dt) {
 }
 
 void AbstractMenu::render() {
+  S::Window.setView(S::UI_View);
   for (const std::shared_ptr<sf::Drawable>& drawable : static_visuals) {
     S::Window.draw(*drawable);
   }
@@ -106,6 +105,7 @@ void AbstractMenu::Right(bool down) {
 }
 
 void AbstractMenu::Point(sf::Vector2f vector) {
+  vector = S::Window.mapPixelToCoords(sf::Vector2i(vector), S::UI_View);
   if (current_button != nullptr) {
     if (S::CursorDown) {
       current_button->Drag(vector);
@@ -138,7 +138,16 @@ void AbstractMenu::Select(bool down) {
 }
 
 void AbstractMenu::Resize() {
-  for (const std::shared_ptr<AbstractButton>& button : buttons) {
-    button->Reposition();
+  S::UI_View.setSize(960, 540);
+  S::UI_View.setCenter(480, 270);
+  float p = 16 * S::ScreenSize.y / 9 / S::ScreenSize.x;
+  if (1 > p) {
+    S::UI_View.setViewport({(1 - p) / 2, 0, p, 1});
+  }
+  else if (1 < p){
+    S::UI_View.setViewport({0, (1 - 1/p) / 2, 1, 1/p});
+  }
+  else {
+    S::UI_View.setViewport({0, 0, 1, 1});
   }
 }
