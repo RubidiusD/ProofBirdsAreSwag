@@ -12,6 +12,7 @@ void AbstractLevel::update(float dt) {
 }
 
 void AbstractLevel::render() {
+  S::Window.clear((player->floor == nullptr) ? sf::Color::White : sf::Color::Red);
   view.setCenter(player->getPosition());
   S::Window.setView(view);
   player->render();

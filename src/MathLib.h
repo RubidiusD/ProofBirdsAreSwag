@@ -13,6 +13,7 @@ public:
   static sf::Vector2f scale(const sf::Vector2f& a, float b);
   static sf::Vector2f avg(const sf::Vector2f& a, const sf::Vector2f& b);
   static sf::Vector2f limit(const sf::Vector2f& v);
+  static sf::Vector2f splat(const sf::Vector2f& v, const sf::Vector2f& n);
   static float distanceSQ(const sf::Vector2f& a, const sf::Vector2f& b);
 
   static unsigned MaxU(unsigned a, unsigned b);
@@ -22,7 +23,6 @@ public:
   static unsigned short Rand4();
   static unsigned Rand();
   static unsigned Rand(unsigned lower_bound, unsigned upper_bound);
-  static void initialiseRandomness();
 
 private:
   typedef std::mt19937 MyRNG;

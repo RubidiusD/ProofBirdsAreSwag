@@ -14,7 +14,6 @@ int main() {
   MenuManager::setMenu("SPSH");
   LevelLoader::LoadLevels();
   Game game(S::Window);
-  M::initialiseRandomness();
 
   if (!game.init()) {
     return 0;

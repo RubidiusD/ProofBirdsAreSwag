@@ -34,8 +34,8 @@ float M::distanceSQ(const sf::Vector2f &a, const sf::Vector2f &b) {
   return (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y);
 }
 
-std::uniform_int_distribution<uint32_t> M::rand2(0,2);
-std::uniform_int_distribution<uint32_t> M::rand4(0,4);
+std::uniform_int_distribution<uint32_t> M::rand2(0,1);
+std::uniform_int_distribution<uint32_t> M::rand4(0,3);
 std::uniform_int_distribution<uint32_t> M::rand;
 M::MyRNG M::rng(_abs64(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())));
 
@@ -52,11 +52,7 @@ unsigned M::Rand() {
 }
 
 unsigned M::Rand(unsigned int min, unsigned int max) {
-  return min + (Rand() % max - min);
-}
-
-void M::initialiseRandomness() {
-//  rng.seed(_abs64(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())));
+  return min + (Rand() % (max - min));
 }
 
 unsigned M::MaxU(unsigned int a, unsigned int b) {
@@ -73,4 +69,9 @@ unsigned M::MinU(unsigned int a, unsigned int b) {
   } else {
     return b;
   }
+}
+
+sf::Vector2f M::splat(const sf::Vector2f &v, const sf::Vector2f &n) {
+  sf::Vector2f v2 = {fmaxf(0.0f, v.x*n.x + v.y*n.y), v.y*n.x - v.x*n.y};
+  return {v2.x*n.x - v2.y*n.y, v2.y*n.x + v2.x*n.y};
 }

@@ -22,12 +22,13 @@ struct Edge {
   sf::Vector2f point;
   Edge* next = nullptr;
   Edge* prev = nullptr;
+  sf::Vector2f dire;
   sf::Vector2f norm;
   sf::Sprite sprite;
   sf::RenderTexture rt;
 
   explicit Edge(sf::Vector2f p);
-  explicit Edge(const Edge& edge);
+  Edge(const Edge& edge);
   void setNext(Edge* n);
   float getLength() const;
   std::shared_ptr<Collision> CollideCircle(const sf::Vector2f& c, float r);
@@ -45,7 +46,7 @@ public:
   void render();
   void initialiseTextures();
 
-  Surface(const std::vector<sf::Vector2f>& points);
+  explicit Surface(const std::vector<sf::Vector2f>& points);
 };
 
 #endif // BIRDSARESWAG_SURFACE_H

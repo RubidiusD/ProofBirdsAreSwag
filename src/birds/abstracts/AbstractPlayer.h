@@ -12,12 +12,14 @@ protected:
   float speed = 120.0f;
   sf::Vector2f intent;
   bool jumping = false;
-  float acceleration_speed = 120.0f;
-  float air_acceleration_speed = 30.0f;
-  Edge* floor = nullptr;
+  float acceleration_speed = 8.0f;
+  float air_acceleration_speed = 2.0f;
 public:
+  Edge* floor = nullptr;
   float radius = 32.0f;
 
+  bool snapTo(const std::shared_ptr<Collision>& collision);
+  bool snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2);
   bool SurfaceCollide(Surface& surface);
   void setPosition(const sf::Vector2f& pos);
   sf::Vector2f getPosition() const;
