@@ -24,13 +24,13 @@ bool AbstractButton::isInside(const sf::Vector2f& vector) {
       vector.y > rect.top
   );
 }
-AbstractButton::AbstractButton(const Neighbours &n, const sf::Texture &texture) {
+AbstractButton::AbstractButton(const Neighbours& n, const sf::Texture& texture) {
   neighbours = n;
   sprite.setTexture(texture);
   sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 }
 
-AbstractButton::AbstractButton(const Neighbours &n, const sf::Texture &texture, const sf::Vector2f &ratio_) : AbstractButton(n, texture) {
+AbstractButton::AbstractButton(const Neighbours& n, const sf::Texture& texture, const sf::Vector2f& ratio_) : AbstractButton(n, texture) {
   ratio = ratio_;
   sprite.setPosition(M::scale(S::Res, ratio));
 }

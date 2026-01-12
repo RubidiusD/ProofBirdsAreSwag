@@ -16,7 +16,8 @@ struct Collision {
   sf::Vector2f point = {};
   sf::Vector2f normal = {};
   Edge* edge = nullptr;
-  Collision(const sf::Vector2f& p, const sf::Vector2f& n, Edge* e);
+  bool inRange = false;
+  Collision(const sf::Vector2f& p, const sf::Vector2f& n, Edge* e, bool inRange);
 };
 
 struct Edge {

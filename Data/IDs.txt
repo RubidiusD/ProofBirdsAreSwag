@@ -5,6 +5,8 @@
 099: Player
 100: Floor Tiles
 
+111: Bird1
+112: Bird1's wing
 
 
 

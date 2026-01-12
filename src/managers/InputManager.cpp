@@ -14,7 +14,7 @@ void InputManager::subscribe(InputSubscriber* new_subscriber) {
   subscribers.emplace_back(new_subscriber);
 }
 
-void InputManager::remove(InputSubscriber *subscriber) {
+void InputManager::remove(InputSubscriber* subscriber) {
   bool found = false;
   for (int index = 0; index != subscribers.size() - 1; index ++) {
     if (!found) {

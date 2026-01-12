@@ -11,7 +11,7 @@ TextButton::TextButton(unsigned int font, const sf::String& text_, const Neighbo
   text.setPosition(sprite.getPosition());
 }
 
-TextButton::TextButton(unsigned int font, const sf::String &text_, const Neighbours &n)
+TextButton::TextButton(unsigned int font, const sf::String& text_, const Neighbours& n)
     : TextButton(font, text_, n, {}) {
 
 }

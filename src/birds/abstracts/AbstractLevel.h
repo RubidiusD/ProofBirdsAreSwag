@@ -2,15 +2,18 @@
 #define BIRDSARESWAG_ABSTRACT_LEVEL_H
 
 #include "../../abstracts/InputSubscriber.h"
-#include "AbstractPlayer.h"
+#include "LevelElements/AbstractPlayer.h"
+#include "LevelElements/Wind.h"
 #include <vector>
 
 class AbstractLevel : InputSubscriber {
 protected:
   std::vector<Surface> surfaces;
   std::shared_ptr<AbstractPlayer> player;
+  std::vector<std::shared_ptr<AbstractLevelElement>> elements;
   sf::Vector2f player_spawn;
   sf::View view;
+  std::vector<std::shared_ptr<Wind>> winds;
 
 public:
   void update(float dt);

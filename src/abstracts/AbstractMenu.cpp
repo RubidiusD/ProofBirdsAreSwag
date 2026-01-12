@@ -41,7 +41,7 @@ void AbstractMenu::render() {
   }
 }
 
-unsigned AbstractMenu::makeID(const sf::String &menu_id) {
+unsigned AbstractMenu::makeID(const sf::String& menu_id) {
   unsigned int_id = 0;
   int_id += (unsigned) menu_id[0];
   int_id *= 256;

@@ -12,9 +12,16 @@ public:
   static sf::Vector2f scale(const sf::Vector2f& a, const sf::Vector2f& b);
   static sf::Vector2f scale(const sf::Vector2f& a, float b);
   static sf::Vector2f avg(const sf::Vector2f& a, const sf::Vector2f& b);
+  static sf::Vector2f times(const sf::Vector2f& a, const sf::Vector2f& b);
+  static sf::Vector2f divide(const sf::Vector2f& a, const sf::Vector2f& b);
   static sf::Vector2f limit(const sf::Vector2f& v);
+  static sf::Vector2f conjugate(const sf::Vector2f& v);
   static sf::Vector2f splat(const sf::Vector2f& v, const sf::Vector2f& n);
+  static float dot(const sf::Vector2f& a, const sf::Vector2f& b);
   static float distanceSQ(const sf::Vector2f& a, const sf::Vector2f& b);
+  static float lengthSQ(const sf::Vector2f& v);
+  static float parallelMag(const sf::Vector2f& v, const sf::Vector2f& n);
+  static float parallelMag(const sf::Vector2f& v, const sf::Vector2f& n, bool normalised);
 
   static unsigned MaxU(unsigned a, unsigned b);
   static unsigned MinU(unsigned a, unsigned b);

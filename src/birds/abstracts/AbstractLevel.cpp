@@ -4,6 +4,10 @@
 #include "../../managers/InputManager.h"
 
 void AbstractLevel::update(float dt) {
+  for (std::shared_ptr<Wind>& wind : winds) {
+    wind->update(dt);
+  }
+  player->applyWind(winds);
   player->update(dt);
   for (Surface& surface : surfaces) {
     if (player->SurfaceCollide(surface)) {
@@ -37,7 +41,7 @@ void AbstractLevel::load() {
 void AbstractLevel::open() {
   listening_to_inputs = true;
   Resize();
-  player->setPosition(player_spawn);
+  player->setPosition(player_spawn, true);
 }
 
 void AbstractLevel::close() {

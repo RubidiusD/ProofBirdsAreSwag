@@ -17,7 +17,7 @@ void Surface::initialiseTextures() {
   pen.setTexture(AssetManager::getTexture(100));
 
   for (Edge& edge : edges) {
-    const int length = (int) roundf(edge.getLength() / 4.0f) + 1;
+    const int length = (int) roundf(edge.getLength() / 4.0f) + 2;
     edge.rt.create(length * 4, 16);
     if (length < 5) {
       const int size1 = (int) M::Rand(1, M::MinU(4, length - 1));
@@ -66,7 +66,7 @@ std::shared_ptr<Collision> Surface::CollideCircle(const sf::Vector2f& c, float r
 
   for (auto& edge : edges) {
     std::shared_ptr<Collision> collision = edge.CollideCircle(c, r);
-    if (collision == nullptr) {
+    if (collision == nullptr || !collision->inRange) {
       continue;
     }
     if (first == nullptr) {
@@ -83,7 +83,7 @@ std::shared_ptr<Collision> Surface::CollideCircle(const sf::Vector2f& c, float r
     return first;
   }
   else {
-    return std::make_shared<Collision>(second->edge->point, M::norm(M::timesI(second->point - first->point)), nullptr);
+    return std::make_shared<Collision>(second->edge->point, M::norm(M::timesI(second->point - first->point)), nullptr, true);
   }
 }
 
@@ -93,17 +93,13 @@ void Surface::render() {
   }
 }
 
-std::shared_ptr<Collision> Edge::CollideCircle(const sf::Vector2f &c, float r) {
+std::shared_ptr<Collision> Edge::CollideCircle(const sf::Vector2f& c, float r) {
   float t3 = ((norm.x*point.y - c.y*norm.x + c.x*norm.y - point.x*norm.y) / (dire.x*norm.y - dire.y*norm.x));
   if (t3 < 0 || t3 > 1) {
     return nullptr;
   }
   sf::Vector2f p = point + t3 * dire;
-  float distance = M::distanceSQ(c, p);
-  if (distance > r * r) {
-    return nullptr;
-  }
-  return std::make_shared<Collision>(p, norm, this);
+  return std::make_shared<Collision>(p, norm, this, M::distanceSQ(c, p) <= r * r);
 }
 
 Edge::Edge(sf::Vector2f p) { point = p; }
@@ -118,14 +114,14 @@ void Edge::setNext(Edge* n) {
 float Edge::getLength() const {
   return sqrtf(M::distanceSQ(point, next->point));
 }
+
 Edge::Edge(const Edge& edge) {
   point = edge.point;
-  next = edge.next;
-  prev = edge.prev;
 }
 
-Collision::Collision(const sf::Vector2f &p, const sf::Vector2f &n, Edge *e) {
+Collision::Collision(const sf::Vector2f& p, const sf::Vector2f& n, Edge* e, bool r) {
   point = p;
   normal = n;
   edge = e;
+  inRange = r;
 }

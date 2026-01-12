@@ -4,7 +4,7 @@
 std::vector<std::shared_ptr<AbstractLevel>> LevelLibrary::levels;
 std::shared_ptr<AbstractLevel> LevelLibrary::current_level;
 
-void LevelLibrary::loadLevel(AbstractLevel *level) {
+void LevelLibrary::loadLevel(AbstractLevel* level) {
   levels.emplace_back(level);
 }
 

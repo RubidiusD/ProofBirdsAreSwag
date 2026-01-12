@@ -37,7 +37,7 @@ void ActionManager::addToBot(const std::shared_ptr<AbstractAction>& action) {
   actionStack.emplace_back(action);
 }
 
-void ActionManager::addToBot(AbstractAction *action_) {
+void ActionManager::addToBot(AbstractAction* action_) {
   addToBot(std::make_shared<AbstractAction>(*action_));
 }
 
