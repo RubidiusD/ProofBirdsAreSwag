@@ -19,6 +19,7 @@ private:
   static void Left(bool down);
   static void Right(bool down);
   static void Select(bool down);
+  static void Pause(bool down);
 public:
   static void subscribe(InputSubscriber* new_subscriber);
   static void remove(InputSubscriber* new_subscriber);

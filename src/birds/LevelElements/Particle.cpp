@@ -1,6 +1,6 @@
 #include "Particle.h"
-#include "../../../MathLib.h"
-#include "../../../managers/AssetManager.h"
+#include "../../MathLib.h"
+#include "../../managers/AssetManager.h"
 
 void Particle::update(float dt) {
   duration -= dt;

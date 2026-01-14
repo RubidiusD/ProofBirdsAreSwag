@@ -1,6 +1,6 @@
 #include "AbstractCircle.h"
-#include "../../levels/LevelLibrary.h"
-#include "Particle.h"
+#include "../levels/LevelLibrary.h"
+#include "../LevelElements/Particle.h"
 
 bool AbstractCircle::SurfaceCollide(Surface& surface) {
   std::shared_ptr<Collision> collision = surface.CollideCircle(sprite.getPosition(), radius);
@@ -149,9 +149,9 @@ void AbstractCircle::unsetFloor(Edge*& receptacle) const {
   receptacle = nullptr;
 }
 
-void AbstractCircle::applyWind(const std::vector<std::shared_ptr<Wind>>& winds) {
+void AbstractCircle::applyWind(const std::vector<std::shared_ptr<AbstractWind>>& winds) {
   air_current.x = 0.0f; air_current.y = 0.0f;
-  for (const std::shared_ptr<Wind>& wind : winds) {
+  for (const std::shared_ptr<AbstractWind>& wind : winds) {
     if (wind->isInside(sprite.getPosition(), radius)) {
       air_current += wind->velocity;
     }

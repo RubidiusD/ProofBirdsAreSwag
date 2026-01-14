@@ -32,24 +32,24 @@ set(SOURCE_FILES
     src/birds/menus/SplashScreen.h src/birds/menus/SplashScreen.cpp
     src/birds/menus/MainMenu.h src/birds/menus/MainMenu.cpp
 
-    src/birds/abstracts/LevelElements/AbstractPlayer.h src/birds/abstracts/LevelElements/AbstractPlayer.cpp
+    src/birds/abstracts/AbstractPlayer.h src/birds/abstracts/AbstractPlayer.cpp
     src/birds/abstracts/AbstractLevel.h src/birds/abstracts/AbstractLevel.cpp
-    src/birds/abstracts/LevelElements/Surface.h src/birds/abstracts/LevelElements/Surface.cpp
+    src/birds/LevelElements/Surface.h src/birds/LevelElements/Surface.cpp
     src/birds/levels/LevelLoader.hpp
     src/birds/levels/TestLevel.h src/birds/levels/TestLevel.cpp
     src/birds/levels/LevelLibrary.h src/birds/levels/LevelLibrary.cpp
-    src/birds/abstracts/LevelElements/Wind.h
-    src/birds/abstracts/LevelElements/AbstractCircle.cpp
-    src/birds/abstracts/LevelElements/AbstractCircle.h
-    src/birds/abstracts/LevelElements/Bird1.cpp
-    src/birds/abstracts/LevelElements/Bird1.h
-    src/birds/abstracts/LevelElements/AbstractLevelElement.h
-    src/birds/abstracts/LevelElements/BirdPlayer.cpp
-    src/birds/abstracts/LevelElements/BirdPlayer.h
+    src/birds/abstracts/AbstractWind.h
+    src/birds/abstracts/AbstractCircle.cpp
+    src/birds/abstracts/AbstractCircle.h
+    src/birds/LevelElements/Bird1.cpp
+    src/birds/LevelElements/Bird1.h
+    src/birds/abstracts/AbstractLevelElement.h
+    src/birds/LevelElements/BirdPlayer.cpp
+    src/birds/LevelElements/BirdPlayer.h
     src/birds/levels/FlyingLevel.cpp
     src/birds/levels/FlyingLevel.h
-    src/birds/abstracts/LevelElements/Particle.cpp
-    src/birds/abstracts/LevelElements/Particle.h
+    src/birds/LevelElements/Particle.cpp
+    src/birds/LevelElements/Particle.h
     src/birds/menus/PauseMenu.cpp
     src/birds/menus/PauseMenu.h
 )

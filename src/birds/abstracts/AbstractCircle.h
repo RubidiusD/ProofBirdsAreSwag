@@ -2,8 +2,8 @@
 #define BIRDSARESWAG_ABSTRACT_CIRCLE_H
 
 #include "AbstractLevelElement.h"
-#include "Surface.h"
-#include "Wind.h"
+#include "../LevelElements/Surface.h"
+#include "AbstractWind.h"
 #include <SFML/Graphics/Sprite.hpp>
 class AbstractCircle : public AbstractLevelElement {
 protected:
@@ -24,7 +24,7 @@ public:
   void setPosition(const sf::Vector2f& pos);
   void setPosition(const sf::Vector2f& pos, bool override);
   sf::Vector2f getPosition() const;
-  void applyWind(const std::vector<std::shared_ptr<Wind>>& winds) override;
+  void applyWind(const std::vector<std::shared_ptr<AbstractWind>>& winds) override;
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_CIRCLE_H

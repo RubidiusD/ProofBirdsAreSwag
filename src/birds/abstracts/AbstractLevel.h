@@ -2,8 +2,8 @@
 #define BIRDSARESWAG_ABSTRACT_LEVEL_H
 
 #include "../../abstracts/InputSubscriber.h"
-#include "LevelElements/AbstractPlayer.h"
-#include "LevelElements/Wind.h"
+#include "AbstractPlayer.h"
+#include "AbstractWind.h"
 #include <vector>
 
 class AbstractLevel : InputSubscriber {
@@ -13,11 +13,11 @@ protected:
   std::vector<std::shared_ptr<AbstractLevelElement>> elements;
   sf::Vector2f player_spawn;
   sf::View view;
-  std::vector<std::shared_ptr<Wind>> winds;
+  std::vector<std::shared_ptr<AbstractWind>> winds;
 
 public:
   void update(float dt);
-  void render();
+  virtual void render();
   virtual void load();
   void open();
   void close();
@@ -25,11 +25,10 @@ public:
   bool isLoaded = false;
   void Move(const sf::Vector2f& vector) override;
   void Select(bool down) override;
+  void Look(const sf::Vector2f &vector) override;
+  void Pause(bool down) override;
   void Resize() override;
   void addElement(AbstractLevelElement* element);
-
-private:
-  void Look(const sf::Vector2f &vector) override;
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_LEVEL_H

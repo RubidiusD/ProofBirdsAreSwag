@@ -10,12 +10,14 @@ class PauseMenu : public AbstractMenu {
 public:
   PauseMenu();
   void load() override;
+  void Pause(bool down) override;
 
   class CloseMenuButton : public TextButton {
   public:
     CloseMenuButton(const sf::String& text_, const Neighbours& n, const sf::Vector2f& ratio_) : TextButton(0, text_, n, ratio_) {}
     void Press() override {
       MenuManager::closeMenu();
+      LevelLibrary::resumeLevel(false);
     }
   };
 
@@ -23,17 +25,15 @@ public:
   public:
     ResetLevelButton(const sf::String& text_, const Neighbours& n, const sf::Vector2f& ratio_) : TextButton(0, text_, n, ratio_) {}
     void Press() override {
-      if (LevelLibrary::current_level != nullptr) {
-        LevelLibrary::current_level->open();
-      }
       MenuManager::closeMenu();
+      LevelLibrary::resumeLevel(true);
     }
   };
 
   class LoadMenuButton : public TextButton {
-    const sf::String& ID;
+    unsigned ID;
   public:
-    LoadMenuButton(const sf::String& text_, const Neighbours& n, const sf::Vector2f& ratio_, const sf::String& menu_id) : TextButton(0, text_, n, ratio_), ID(menu_id) {}
+    LoadMenuButton(const sf::String& text_, const Neighbours& n, const sf::Vector2f& ratio_, const sf::String& menu_id) : TextButton(0, text_, n, ratio_) {ID = AbstractMenu::makeID(menu_id);}
     void Press() override {
       printf("Trying to load Menu \n");
       MenuManager::setMenu(ID);

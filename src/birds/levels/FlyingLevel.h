@@ -4,7 +4,7 @@
 #include "../abstracts/AbstractLevel.h"
 
 class FlyingLevel : public AbstractLevel {
-      public:
+public:
   void load() override;
 };
 

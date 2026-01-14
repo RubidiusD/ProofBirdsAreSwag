@@ -10,6 +10,7 @@ enum InputActions {
   LEFT,
   RIGHT,
   SELECT,
+  PAUSE,
   TOTAL
 };
 
@@ -22,6 +23,7 @@ public:
   virtual void Left(bool down) {}
   virtual void Right(bool down) {}
   virtual void Select(bool down) {}
+  virtual void Pause(bool down) {}
   virtual void Move(const sf::Vector2f& vector) {} // relative to the player, made of the left joystick or wasd
   virtual void Look(const sf::Vector2f& vector) {} // relative to the player, made of mouse or right joystick
   virtual void Point(const sf::Vector2f& vector) {} // position on the screen

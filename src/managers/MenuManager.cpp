@@ -62,7 +62,15 @@ void MenuManager::render() {
   }
 }
 
+bool MenuManager::isLoading = false;
+
 const float MenuManager::OpenMenuAction::duration = 0.1f;
+
+MenuManager::OpenMenuAction::OpenMenuAction(unsigned int menu_index) : AbstractAction("OpenMenuAction") {
+  index = menu_index;
+  timer = duration;
+}
+
 void MenuManager::OpenMenuAction::end() {
   isLoading = false;
   if (current_menu != nullptr) {
@@ -78,8 +86,6 @@ void MenuManager::OpenMenuAction::end() {
   debug_text.setString(std::to_string(current_menu->ID));
 }
 
-bool MenuManager::isLoading = false;
-
 bool MenuManager::closeMenu() {
   if (current_menu != nullptr && !isLoading) {
     isLoading = true;
@@ -89,16 +95,12 @@ bool MenuManager::closeMenu() {
   return false;
 }
 
-void MenuManager::pause() {
-  if (current_menu == nullptr) {
-    setMenu("PAUS");
-  }
-  else if (current_menu->ID == AbstractMenu::makeID("PAUS")) {
-    closeMenu();
-  }
+const float MenuManager::CloseMenuAction::duration = 0.1f;
+
+MenuManager::CloseMenuAction::CloseMenuAction() : AbstractAction("CloseMenuAction") {
+  timer = duration;
 }
 
-const float MenuManager::CloseMenuAction::duration = 0.1f;
 void MenuManager::CloseMenuAction::end() {
   current_menu->close();
   current_menu = nullptr;

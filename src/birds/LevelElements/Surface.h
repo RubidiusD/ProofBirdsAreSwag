@@ -1,7 +1,7 @@
 #ifndef BIRDSARESWAG_SURFACE_H
 #define BIRDSARESWAG_SURFACE_H
 
-#include "../../../MathLib.h"
+#include "../../MathLib.h"
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>

@@ -580,13 +580,13 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/birds/abstracts/LevelElements/AbstractPlayer.h",
+			"path" : "src/birds/abstracts/AbstractPlayer.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/birds/abstracts/LevelElements/AbstractPlayer.cpp",
+			"path" : "src/birds/abstracts/AbstractPlayer.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -602,13 +602,13 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/birds/abstracts/LevelElements/Surface.h",
+			"path" : "src/birds/LevelElements/Surface.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/birds/abstracts/LevelElements/Surface.cpp",
+			"path" : "src/birds/LevelElements/Surface.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -640,45 +640,45 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/birds/abstracts/LevelElements/Wind.h",
+			"path" : "src/birds/abstracts/AbstractWind.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/birds/abstracts/LevelElements/AbstractCircle.cpp",
+			"path" : "src/birds/abstracts/AbstractCircle.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/birds/abstracts/LevelElements/AbstractCircle.h",
+			"path" : "src/birds/abstracts/AbstractCircle.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/birds/abstracts/LevelElements/Bird1.cpp",
+			"path" : "src/birds/LevelElements/Bird1.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/birds/abstracts/LevelElements/Bird1.h",
+			"path" : "src/birds/LevelElements/Bird1.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/birds/abstracts/LevelElements/AbstractLevelElement.h",
+			"path" : "src/birds/abstracts/AbstractLevelElement.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/birds/abstracts/LevelElements/BirdPlayer.cpp",
+			"path" : "src/birds/LevelElements/BirdPlayer.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/birds/abstracts/LevelElements/BirdPlayer.h",
+			"path" : "src/birds/LevelElements/BirdPlayer.h",
 			"sourceGroupIndex" : 1
 		},
 		{
@@ -695,12 +695,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/birds/abstracts/LevelElements/Particle.cpp",
+			"path" : "src/birds/LevelElements/Particle.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/birds/abstracts/LevelElements/Particle.h",
+			"path" : "src/birds/LevelElements/Particle.h",
 			"sourceGroupIndex" : 1
 		},
 		{

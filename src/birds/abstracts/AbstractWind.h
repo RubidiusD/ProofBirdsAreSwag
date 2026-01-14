@@ -1,21 +1,21 @@
-#ifndef BIRDSARESWAG_WIND_H
-#define BIRDSARESWAG_WIND_H
+#ifndef BIRDSARESWAG_ABSTRACTWIND_H
+#define BIRDSARESWAG_ABSTRACTWIND_H
 
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
-struct Wind {
+struct AbstractWind {
   sf::Vector2f velocity;
   sf::Rect<float> bounds;
   bool global;
 
-  Wind(const sf::Vector2f& v, const sf::FloatRect& b) {
+  AbstractWind(const sf::Vector2f& v, const sf::FloatRect& b) {
     velocity = v;
     bounds = b;
     global = false;
   }
 
-  explicit Wind(const sf::Vector2f& v) {
+  explicit AbstractWind(const sf::Vector2f& v) {
     velocity = v;
     global = true;
   }
@@ -39,4 +39,4 @@ struct Wind {
   void update(float dt) {}
 };
 
-#endif // BIRDSARESWAG_WIND_H
+#endif // BIRDSARESWAG_ABSTRACTWIND_H

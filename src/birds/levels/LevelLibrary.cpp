@@ -19,7 +19,21 @@ bool LevelLibrary::setLevel(unsigned index) {
   return true;
 }
 
+bool LevelLibrary::resumeLevel(bool reset) {
+  if (isLoading) {
+    return false;
+  }
+  isLoading = true;
+  ActionManager::addToBot(std::make_shared<ResumeLevelAction>(reset));
+  return true;
+}
+
 const float LevelLibrary::LoadLevelAction::duration = 0.1f;
+
+LevelLibrary::LoadLevelAction::LoadLevelAction(unsigned int menu_index) : AbstractAction("LoadLevelAction") {
+  index = menu_index;
+  timer = duration;
+}
 
 void LevelLibrary::LoadLevelAction::end() {
   isLoading = false;
@@ -34,4 +48,23 @@ void LevelLibrary::LoadLevelAction::end() {
   }
   current_level->open();
   printf("Opened Level %d \n", index);
+}
+
+const float LevelLibrary::ResumeLevelAction::duration = 0.1f;
+
+LevelLibrary::ResumeLevelAction::ResumeLevelAction(bool reset) : AbstractAction("ResumeLevelAction") {
+  timer = duration;
+  r = reset;
+}
+
+void LevelLibrary::ResumeLevelAction::end() {
+  isLoading = false;
+  if (current_level != nullptr) {
+    if (r) {
+      current_level->open();
+    }
+    else {
+      current_level->Pause(false);
+    }
+  }
 }

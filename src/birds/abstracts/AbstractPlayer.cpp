@@ -1,6 +1,6 @@
 #include "AbstractPlayer.h"
-#include "../../../Settings.h"
-#include "../../../managers/AssetManager.h"
+#include "../../Settings.h"
+#include "../../managers/AssetManager.h"
 
 void AbstractPlayer::update(float dt) {
   if (jumping && floor != nullptr) { // the moment you jump

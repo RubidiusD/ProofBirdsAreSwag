@@ -1,10 +1,11 @@
 #include "AbstractLevel.h"
 #include "../../managers/AssetManager.h"
 #include "../../managers/InputManager.h"
+#include "../../managers/MenuManager.h"
 
 void AbstractLevel::update(float dt) {
   // update wind
-  for (std::shared_ptr<Wind>& wind : winds) {
+  for (std::shared_ptr<AbstractWind>& wind : winds) {
     wind->update(dt);
   }
 
@@ -77,6 +78,13 @@ void AbstractLevel::Move(const sf::Vector2f& vector) {
   if (player != nullptr) {
     player->Move(vector);
   }
+}
+
+void AbstractLevel::Pause(bool down) {
+  if (down) {
+    MenuManager::setMenu("PAUS");
+  }
+  listening_to_inputs = !down;
 }
 
 void AbstractLevel::Select(bool down) {

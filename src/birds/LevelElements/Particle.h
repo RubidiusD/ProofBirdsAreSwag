@@ -1,7 +1,7 @@
 #ifndef BIRDSARESWAG_PARTICLE_H
 #define BIRDSARESWAG_PARTICLE_H
 
-#include "AbstractLevelElement.h"
+#include "../abstracts/AbstractLevelElement.h"
 
 class Particle : public AbstractLevelElement {
 protected:

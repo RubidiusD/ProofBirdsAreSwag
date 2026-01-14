@@ -1,5 +1,5 @@
 #include "Bird1.h"
-#include "../../../managers/AssetManager.h"
+#include "../../managers/AssetManager.h"
 
 void Bird1::initialise() {
   AssetManager::RegisterTexture("Data/images/Bird1.png", 111);

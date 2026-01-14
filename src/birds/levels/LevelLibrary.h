@@ -10,17 +10,21 @@ public:
   static void loadLevel(AbstractLevel* level);
   static bool isLoading;
   static bool setLevel(unsigned index);
+  static bool resumeLevel(bool reset);
 
   class LoadLevelAction : public AbstractAction {
-  private:
     unsigned index;
     static const float duration;
-
   public:
-    explicit LoadLevelAction(unsigned menu_index) : AbstractAction("LoadLevelAction") {
-      index = menu_index;
-      timer = duration;
-    }
+    explicit LoadLevelAction(unsigned menu_index);
+    void end() override;
+  };
+
+  class ResumeLevelAction : public AbstractAction {
+    static const float duration;
+    bool r;
+  public:
+    explicit ResumeLevelAction(bool reset);
     void end() override;
   };
 };

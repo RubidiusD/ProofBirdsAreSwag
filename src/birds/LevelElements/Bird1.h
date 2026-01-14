@@ -1,7 +1,7 @@
 #ifndef BIRDSARESWAG_BIRD1_H
 #define BIRDSARESWAG_BIRD1_H
 
-#include "AbstractCircle.h"
+#include "../abstracts/AbstractCircle.h"
 
 class Bird1 : AbstractCircle {
 private:

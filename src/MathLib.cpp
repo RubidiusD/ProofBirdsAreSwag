@@ -2,8 +2,7 @@
 #include <chrono>
 
 sf::Vector2f M::norm(const sf::Vector2f& v) {
-  float mag = v.x * v.x + v.y * v.y;
-  return v / sqrtf(mag);
+  return v / sqrtf(lengthSQ(v));
 }
 
 sf::Vector2f M::timesI(const sf::Vector2f& v) {
@@ -99,7 +98,7 @@ float M::parallelMag(const sf::Vector2f& v, const sf::Vector2f& n, bool normalis
 }
 
 sf::Vector2f M::times(const sf::Vector2f &a, const sf::Vector2f &b) {
-  return {a.x * b.x - a.y * b.y, a.y * b.x + a.x + b.y};
+  return {a.x * b.x - a.y * b.y, a.y * b.x + a.x * b.y};
 }
 
 sf::Vector2f M::divide(const sf::Vector2f &a, const sf::Vector2f &b) {

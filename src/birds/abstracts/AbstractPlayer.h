@@ -1,10 +1,10 @@
 #ifndef BIRDSARESWAG_ABSTRACTPLAYER_H
 #define BIRDSARESWAG_ABSTRACTPLAYER_H
 
-#include "../../../abstracts/InputSubscriber.h"
+#include "../../abstracts/InputSubscriber.h"
 #include "AbstractCircle.h"
-#include "Surface.h"
-#include "Wind.h"
+#include "../LevelElements/Surface.h"
+#include "AbstractWind.h"
 #include <SFML/Graphics/Sprite.hpp>
 #include <memory>
 

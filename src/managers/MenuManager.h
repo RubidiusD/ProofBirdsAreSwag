@@ -19,7 +19,6 @@ public:
   static bool closeMenu();
   static bool update(float id);
   static void render();
-  static void pause();
 
   static bool isLoading;
 
@@ -30,10 +29,7 @@ public:
     static const float duration;
 
   public:
-    explicit OpenMenuAction(unsigned menu_index) : AbstractAction("OpenMenuAction") {
-      index = menu_index;
-      timer = duration;
-    }
+    explicit OpenMenuAction(unsigned menu_index);
     void end() override;
   };
   // The action for closing the open menu
@@ -42,9 +38,7 @@ public:
     static const float duration;
 
   public:
-    explicit CloseMenuAction() : AbstractAction("CloseMenuAction") {
-      timer = duration;
-    }
+    explicit CloseMenuAction();
     void end() override;
   };
 };

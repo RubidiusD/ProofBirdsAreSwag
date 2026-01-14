@@ -63,7 +63,7 @@ void InputManager::manageInput(sf::Event event) {
     case (sf::Keyboard::Space):
       Select(event.type == sf::Event::KeyPressed); return;
     case (sf::Keyboard::Escape):
-      MenuManager::pause(); return;
+      Pause(event.type == sf::Event::KeyPressed); return;
     default:
       return;
     }
@@ -83,9 +83,9 @@ void InputManager::manageInput(sf::Event event) {
 }
 
 const std::shared_ptr<InputSubscriber>& InputManager::getCurrentSubscriber() {
-  for (int index = subscribers.size() - 1; index != -1; index --) {
-    if (subscribers[index]->listening_to_inputs) {
-      return subscribers[index];
+  for (const std::shared_ptr<InputSubscriber>& subscriber : subscribers) {
+    if (subscriber->listening_to_inputs) {
+      return subscriber;
     }
   }
   return NothingBurger;
@@ -123,6 +123,13 @@ void InputManager::Select(bool down) {
   if (down != action_pressed[SELECT]) {
     action_pressed[SELECT] = down;
     CurrentSubscriber->Select(down);
+  }
+}
+
+void InputManager::Pause(bool down) {
+  if (down != action_pressed[PAUSE]) {
+    action_pressed[PAUSE] = down;
+    CurrentSubscriber->Pause(down);
   }
 }
 

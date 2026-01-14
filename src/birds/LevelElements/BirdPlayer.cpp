@@ -1,5 +1,5 @@
 #include "BirdPlayer.h"
-#include "../../../managers/AssetManager.h"
+#include "../../managers/AssetManager.h"
 
 void BirdPlayer::initialise() {
   AssetManager::RegisterTexture("Data/images/Bird1.png", 111);
@@ -30,6 +30,8 @@ void BirdPlayer::update(float dt) {
   }
   M::limit(velocity);
 
+
+
   sprite.setRotation(atan2f(velocity.y, velocity.x) * 180.0f / 3.1415926535f);
   moveTo(sprite.getPosition() + velocity * speed * dt);
 
@@ -37,26 +39,31 @@ void BirdPlayer::update(float dt) {
 }
 
 void BirdPlayer::fly(float dt) {
-  sf::Vector2f wing_normal = M::timesI(wing_direction);
+  const sf::Vector2f& n = wing_direction;
+  sf::Vector2f j = M::timesI(n); // wing normal
 
-  sf::Vector2f wind = air_current / speed - velocity;
-  sf::Vector2f r_wind = M::times(wind, M::conjugate(wing_direction));
-  sf::Vector2f P = wing_direction * para_resistance * r_wind.x;
-  sf::Vector2f Q = wing_normal * perp_resistance * r_wind.y;
-  sf::Vector2f L = wing_normal * -1.0f * lift_coefficient * para_resistance * atanf(r_wind.y / r_wind.x) * sqrtf(M::lengthSQ(wind));
+  sf::Vector2f v = air_current / speed - velocity; // relative air current
+  sf::Vector2f v1 = M::times(v, M::conjugate(n));
+  sf::Vector2f P = n * para_resistance * v1.x;
+  sf::Vector2f Q = j * perp_resistance * v1.y;
+  sf::Vector2f L = j * lift_coefficient * asinf(v1.y) * sqrtf(M::lengthSQ(v));
   sf::Vector2f G = {0, gravity};
 
-  if (r_wind.x < 0) {
+  if (v1.x < 0) {
     velocity += (P + Q + L + G) * dt;
   }
   else {
-    sf::Vector2f W = wind * (perp_resistance + para_resistance);
+    sf::Vector2f W = v * (perp_resistance + para_resistance);
     velocity += (W + G) * dt;
   }
+//  printf("Wing: %f, %f ", wing_direction.x, wing_direction.y);
+//  printf("AoA: %f ", atanf(v1.y / v1.x));
+//  printf("Lift: %f, %f ", L.x, L.y);
+//  printf("Velocity: %f, %f \n", velocity.x, velocity.y);
 }
 
 void BirdPlayer::Look(const sf::Vector2f &vector) {
-  wing_direction = vector;
+  wing_direction = M::norm(vector);
   wing.setRotation(atan2f(vector.y, vector.x) * 180.0f / 3.1415926535f);
 }
 

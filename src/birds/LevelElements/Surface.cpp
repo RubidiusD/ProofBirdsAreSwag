@@ -1,6 +1,6 @@
 #include "Surface.h"
-#include "../../../Settings.h"
-#include "../../../managers/AssetManager.h"
+#include "../../Settings.h"
+#include "../../managers/AssetManager.h"
 
 Surface::Surface(const std::vector<sf::Vector2f>& points) {
   AssetManager::RegisterTexture("Data/images/Pointer.png", 2);
