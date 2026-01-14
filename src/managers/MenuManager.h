@@ -17,8 +17,9 @@ public:
   static bool setMenu(unsigned menu_id);
   static bool setMenu(const sf::String& menu_id);
   static bool closeMenu();
-  static void update(float id);
+  static bool update(float id);
   static void render();
+  static void pause();
 
   static bool isLoading;
 

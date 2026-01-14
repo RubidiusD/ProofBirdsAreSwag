@@ -104,13 +104,13 @@ void AbstractMenu::Right(bool down) {
   }
 }
 
-void AbstractMenu::Point(sf::Vector2f vector) {
-  vector = S::Window.mapPixelToCoords(sf::Vector2i(vector), S::UI_View);
+void AbstractMenu::Point(const sf::Vector2f& vector) {
+  sf::Vector2f v = S::Window.mapPixelToCoords(sf::Vector2i(vector), S::UI_View);
   if (current_button != nullptr) {
     if (S::CursorDown) {
-      current_button->Drag(vector);
+      current_button->Drag(v);
     }
-    else if (!current_button->isInside(vector)) {
+    else if (!current_button->isInside(v)) {
       current_button->Deselect();
       current_button = nullptr;
       current_index = -1;
@@ -119,7 +119,7 @@ void AbstractMenu::Point(sf::Vector2f vector) {
 
   if (current_button == nullptr) {
     for (unsigned short index = 0; index != buttons.size(); index ++) {
-      if (buttons[index]->isInside(vector)) {
+      if (buttons[index]->isInside(v)) {
         selectButton(index);
         break;
       }

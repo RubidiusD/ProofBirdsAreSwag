@@ -22,6 +22,7 @@ bool MenuManager::setMenu(unsigned menu_id) {
   if (isLoading) {
     return false;
   }
+  printf("Wasn't already loading \n");
 
   short lowest_index = -1;
   auto highest_index = (short)menus.size();
@@ -46,10 +47,12 @@ bool MenuManager::setMenu(const sf::String& menu_id) {
   return setMenu(AbstractMenu::makeID(menu_id));
 }
 
-void MenuManager::update(float dt) {
+bool MenuManager::update(float dt) {
   if (current_menu != nullptr) {
     current_menu->update(dt);
+    return true;
   }
+  return false;
 }
 
 void MenuManager::render() {
@@ -84,6 +87,15 @@ bool MenuManager::closeMenu() {
     return true;
   }
   return false;
+}
+
+void MenuManager::pause() {
+  if (current_menu == nullptr) {
+    setMenu("PAUS");
+  }
+  else if (current_menu->ID == AbstractMenu::makeID("PAUS")) {
+    closeMenu();
+  }
 }
 
 const float MenuManager::CloseMenuAction::duration = 0.1f;

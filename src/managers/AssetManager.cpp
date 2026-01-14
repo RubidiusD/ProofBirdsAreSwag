@@ -19,7 +19,7 @@ bool AssetManager::Insert(std::vector<std::shared_ptr<type>>& array, const std::
   return true;
 }
 
-bool AssetManager::RegisterTexture(sf::String path, unsigned ID) {
+bool AssetManager::RegisterTexture(const sf::String& path, unsigned ID) {
   std::shared_ptr<TextureAsset> textureAsset = std::make_shared<TextureAsset>(ID);
   if (Insert<TextureAsset>(Textures, textureAsset)) {
     textureAsset->texture.loadFromFile(path);
@@ -28,7 +28,7 @@ bool AssetManager::RegisterTexture(sf::String path, unsigned ID) {
   return false;
 }
 
-bool AssetManager::RegisterFont(sf::String path, unsigned ID) {
+bool AssetManager::RegisterFont(const sf::String& path, unsigned ID) {
   std::shared_ptr<FontAsset> fontAsset = std::make_shared<FontAsset>(ID);
   if (Insert<FontAsset>(Fonts, fontAsset)) {
     fontAsset->font.loadFromFile(path);
@@ -37,7 +37,7 @@ bool AssetManager::RegisterFont(sf::String path, unsigned ID) {
   return false;
 }
 
-bool AssetManager::RegisterSound(sf::String path, unsigned ID) {
+bool AssetManager::RegisterSound(const sf::String& path, unsigned ID) {
   std::shared_ptr<SoundAsset> soundAsset = std::make_shared<SoundAsset>(ID);
   if (Insert<SoundAsset>(Sounds, soundAsset)) {
     soundAsset->sound.loadFromFile(path);

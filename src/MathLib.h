@@ -14,7 +14,7 @@ public:
   static sf::Vector2f avg(const sf::Vector2f& a, const sf::Vector2f& b);
   static sf::Vector2f times(const sf::Vector2f& a, const sf::Vector2f& b);
   static sf::Vector2f divide(const sf::Vector2f& a, const sf::Vector2f& b);
-  static sf::Vector2f limit(const sf::Vector2f& v);
+  static bool limit(sf::Vector2f& v);
   static sf::Vector2f conjugate(const sf::Vector2f& v);
   static sf::Vector2f splat(const sf::Vector2f& v, const sf::Vector2f& n);
   static float dot(const sf::Vector2f& a, const sf::Vector2f& b);
@@ -30,6 +30,7 @@ public:
   static unsigned short Rand4();
   static unsigned Rand();
   static unsigned Rand(unsigned lower_bound, unsigned upper_bound);
+  static float Randf(float lower_bound, float upper_bound);
 
 private:
   typedef std::mt19937 MyRNG;

@@ -28,6 +28,14 @@ struct Wind {
         bounds.top + bounds.height > center.y - radius);
   }
 
+  bool isInside(const sf::FloatRect& b) const {
+    return global || (
+        bounds.left < b.left + b.width &&
+        bounds.top < b.top + b.height &&
+        bounds.left + bounds.width > b.left &&
+        bounds.top + bounds.height > b.top);
+  }
+
   void update(float dt) {}
 };
 

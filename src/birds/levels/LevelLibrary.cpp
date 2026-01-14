@@ -10,7 +10,7 @@ void LevelLibrary::loadLevel(AbstractLevel* level) {
 
 bool LevelLibrary::isLoading = false;
 
-bool LevelLibrary::setLevel(unsigned int index) {
+bool LevelLibrary::setLevel(unsigned index) {
   if (isLoading) {
     return false;
   }

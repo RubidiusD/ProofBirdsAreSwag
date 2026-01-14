@@ -22,9 +22,9 @@ public:
   virtual void Left(bool down) {}
   virtual void Right(bool down) {}
   virtual void Select(bool down) {}
-  virtual void Move(sf::Vector2f vector) {} // relative to the player, made of the left joystick or wasd
-  virtual void Look(sf::Vector2f vector) {} // relative to the player, made of mouse or right joystick
-  virtual void Point(sf::Vector2f vector) {} // position on the screen
+  virtual void Move(const sf::Vector2f& vector) {} // relative to the player, made of the left joystick or wasd
+  virtual void Look(const sf::Vector2f& vector) {} // relative to the player, made of mouse or right joystick
+  virtual void Point(const sf::Vector2f& vector) {} // position on the screen
   virtual void KeyPressed(sf::Keyboard::Key key, bool down) {}
   virtual void ManageInputs(sf::Event event) {}
   virtual void Resize() {}

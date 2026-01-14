@@ -8,18 +8,17 @@ bool Game::init() {
 }
 
 void Game::update(float dt) {
-  MenuManager::update(dt);
   ActionManager::update(dt);
-  if (level != nullptr) {
+  if (!MenuManager::update(dt) && level != nullptr) {
     level->update(dt);
   }
 }
 
 void Game::render() {
   window.clear();
-  MenuManager::render();
   if (level != nullptr) {
     level->render();
   }
+  MenuManager::render();
 }
 

@@ -12,8 +12,6 @@ void Bird1::initialise() {
   wing.setOrigin(23, 5);
 }
 
-
-
 void Bird1::update(float dt) {
   if (floor == nullptr) {
     fly(dt);
@@ -40,13 +38,9 @@ void Bird1::fly(float dt) {
   sprite.setRotation(atan2f(velocity.y, velocity.x));
 }
 
-const float Bird1::speed = 32.0f;
-const float Bird1::para_resistance = 0.1f;
-const float Bird1::perp_resistance = 0.65f;
-const float Bird1::lift_coefficient = 10.0f;
-
 void Bird1::render() {
   AbstractCircle::render();
+  S::Window.draw(wing);
 }
 
 void Bird1::Point(const std::shared_ptr<AbstractCircle> &t) {

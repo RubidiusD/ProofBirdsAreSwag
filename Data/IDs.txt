@@ -4,6 +4,7 @@
 
 099: Player
 100: Floor Tiles
+101: Particles
 
 111: Bird1
 112: Bird1's wing

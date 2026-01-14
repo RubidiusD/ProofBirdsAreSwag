@@ -2,7 +2,7 @@
 #include "../../Settings.h"
 #include "../../managers/AssetManager.h"
 
-TextButton::TextButton(unsigned int font, const sf::String& text_, const Neighbours& n, const sf::Vector2f& ratio_)
+TextButton::TextButton(unsigned font, const sf::String& text_, const Neighbours& n, const sf::Vector2f& ratio_)
     : AbstractButton(n, AssetManager::getTexture(1), ratio_) {
   text.setString(text_);
   text.setFont(AssetManager::getFont(font));
@@ -11,7 +11,7 @@ TextButton::TextButton(unsigned int font, const sf::String& text_, const Neighbo
   text.setPosition(sprite.getPosition());
 }
 
-TextButton::TextButton(unsigned int font, const sf::String& text_, const Neighbours& n)
+TextButton::TextButton(unsigned font, const sf::String& text_, const Neighbours& n)
     : TextButton(font, text_, n, {}) {
 
 }

@@ -4,12 +4,13 @@
 #include "AbstractCircle.h"
 
 class Bird1 : AbstractCircle {
+private:
+  const float gravity = 2.5f;
+  const float speed = 480.0f;
+  const float para_resistance = 0.1f;
+  const float perp_resistance = 0.65f;
+  const float lift_coefficient = 10.0f;
 protected:
-  const static float speed;
-  const static float para_resistance;
-  const static float perp_resistance;
-  const static float lift_coefficient;
-
   sf::Sprite wing;
   sf::Vector2f wing_direction;
 
@@ -23,8 +24,6 @@ public:
   void update(float dt) override;
   void render() override;
   void Point(const std::shared_ptr<AbstractCircle>& t);
-
-private:
   void moveTo(const sf::Vector2f &pos) override;
 };
 

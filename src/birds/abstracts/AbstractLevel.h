@@ -23,9 +23,13 @@ public:
   void close();
   void unload();
   bool isLoaded = false;
-  void Move(sf::Vector2f vector) override;
+  void Move(const sf::Vector2f& vector) override;
   void Select(bool down) override;
   void Resize() override;
+  void addElement(AbstractLevelElement* element);
+
+private:
+  void Look(const sf::Vector2f &vector) override;
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_LEVEL_H

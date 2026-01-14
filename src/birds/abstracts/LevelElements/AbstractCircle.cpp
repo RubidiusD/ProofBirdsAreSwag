@@ -1,10 +1,18 @@
 #include "AbstractCircle.h"
-#include "../../../Settings.h"
+#include "../../levels/LevelLibrary.h"
+#include "Particle.h"
 
 bool AbstractCircle::SurfaceCollide(Surface& surface) {
   std::shared_ptr<Collision> collision = surface.CollideCircle(sprite.getPosition(), radius);
   if (collision != nullptr && collision->edge != floor && collision->edge != floor2) {
+    sf::Vector2f old_vel = velocity;
     snapTo(collision);
+    float change = M::distanceSQ(old_vel, velocity);
+    if (change > 0.1f) {
+      for (unsigned index = 0; index != 4; index ++) {
+        LevelLibrary::current_level->addElement(new Particle(collision->point, M::times(collision->normal, M::norm({1.0f, M::Randf(-2.0f, 2.0f)})) * (100.0f + (float)M::Rand(0, 80)) * change, 0.3f));
+      }
+    }
 
     return true;
   }
@@ -113,13 +121,15 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& c1, const std::sha
   return true;
 }
 
-const float AbstractCircle::gravity = 6.0f;
-const float AbstractCircle::max_steepness = -0.6f;
-
-bool AbstractCircle::setFloor(Edge*& receptacle, Edge* new_edge) {
+bool AbstractCircle::setFloor(Edge*& receptacle, Edge* new_edge) const {
   if (receptacle != nullptr) {
     receptacle->sprite.setColor(sf::Color::Red);
   }
+  if (new_edge == nullptr) {
+    receptacle = nullptr;
+    return false;
+  }
+
   if (new_edge->norm.y < max_steepness) {
     receptacle = new_edge;
     new_edge->sprite.setColor(sf::Color::Green);
@@ -132,7 +142,7 @@ bool AbstractCircle::setFloor(Edge*& receptacle, Edge* new_edge) {
   }
 }
 
-void AbstractCircle::unsetFloor(Edge*& receptacle) {
+void AbstractCircle::unsetFloor(Edge*& receptacle) const {
   if (receptacle != nullptr) {
     receptacle->sprite.setColor(sf::Color::Red);
   }

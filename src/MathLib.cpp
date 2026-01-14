@@ -22,12 +22,13 @@ sf::Vector2f M::avg(const sf::Vector2f& a, const sf::Vector2f& b) {
   return {(a.x + b.x) / 2, (a.y + b.y) / 2};
 }
 
-sf::Vector2f M::limit(const sf::Vector2f& v) {
+bool M::limit(sf::Vector2f& v) {
   float mag = v.x * v.x + v.y * v.y;
-  if (mag > 1) {
-    return v / sqrtf(mag);
+  if (mag > 1.0f) {
+    v = v / sqrtf(mag);
+    return true;
   }
-  return v;
+  return false;
 }
 
 float M::distanceSQ(const sf::Vector2f& a, const sf::Vector2f& b) {
@@ -51,11 +52,15 @@ unsigned M::Rand() {
   return rand(rng);
 }
 
-unsigned M::Rand(unsigned int min, unsigned int max) {
-  return min + (Rand() % (max - min));
+unsigned M::Rand(unsigned min, unsigned max) {
+  return min + (Rand() % (max - min + 1));
 }
 
-unsigned M::MaxU(unsigned int a, unsigned int b) {
+float M::Randf(float lower_bound, float upper_bound) {
+  return lower_bound + ((float) (Rand() % ((unsigned)(ceilf(upper_bound) - floorf(lower_bound)) * 100))) / 100.0f;
+}
+
+unsigned M::MaxU(unsigned a, unsigned b) {
   if (a > b) {
     return a;
   } else {
@@ -63,7 +68,7 @@ unsigned M::MaxU(unsigned int a, unsigned int b) {
   }
 }
 
-unsigned M::MinU(unsigned int a, unsigned int b) {
+unsigned M::MinU(unsigned a, unsigned b) {
   if (a < b) {
     return a;
   } else {

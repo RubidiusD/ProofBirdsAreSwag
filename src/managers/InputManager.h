@@ -10,6 +10,7 @@ private:
   static bool action_pressed[TOTAL];
   static std::vector<std::shared_ptr<InputSubscriber>> subscribers;
   static std::shared_ptr<InputSubscriber> NothingBurger;
+  static std::shared_ptr<InputSubscriber> CurrentSubscriber;
 
   static const std::shared_ptr<InputSubscriber>& getCurrentSubscriber();
 

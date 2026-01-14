@@ -4,7 +4,7 @@
 
 void AbstractPlayer::update(float dt) {
   if (jumping && floor != nullptr) { // the moment you jump
-    velocity = floor->norm * 1.5f + velocity;
+    velocity += floor->norm + intent * 0.5f;
     unsetFloor(floor);
     unsetFloor(floor2);
     jumping = false;
@@ -13,10 +13,7 @@ void AbstractPlayer::update(float dt) {
     if (floor != nullptr) { // otherwise
       velocity += intent * acceleration_speed * dt;
     } else {
-      velocity.x += intent.x * air_acceleration_speed * dt;
-      if (intent.y > 0.0f) {
-        velocity.y += intent.y * air_acceleration_speed * dt;
-      }
+      velocity += intent * air_acceleration_speed * dt;
     }
     velocity.y += gravity * dt;
     velocity += air_current * dt / speed;
@@ -27,10 +24,6 @@ void AbstractPlayer::update(float dt) {
 
   stickToFloor();
 }
-
-const float AbstractPlayer::speed = 24.0f;
-const float AbstractPlayer::acceleration_speed = 18.0f;
-const float AbstractPlayer::air_acceleration_speed = 4.0f;
 
 void AbstractPlayer::Move(const sf::Vector2f& vector) {
   intent = vector;

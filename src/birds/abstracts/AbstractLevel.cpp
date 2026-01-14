@@ -1,17 +1,32 @@
 #include "AbstractLevel.h"
-#include "../../Settings.h"
 #include "../../managers/AssetManager.h"
 #include "../../managers/InputManager.h"
 
 void AbstractLevel::update(float dt) {
+  // update wind
   for (std::shared_ptr<Wind>& wind : winds) {
     wind->update(dt);
   }
+
+  // update player
   player->applyWind(winds);
   player->update(dt);
   for (Surface& surface : surfaces) {
     if (player->SurfaceCollide(surface)) {
       break;
+    }
+  }
+
+  // update elements
+  for (long index = 0; index != elements.size(); index ++) {
+    elements[index]->applyWind(winds);
+    elements[index]->update(dt);
+    if (!elements[index]->alive) {
+      for (long index2 = index + 1; index2 != elements.size(); index2 ++) {
+        elements[index2 - 1] = elements[index2];
+      }
+      elements.pop_back();
+      index --;
     }
   }
 }
@@ -24,13 +39,18 @@ void AbstractLevel::render() {
   for (Surface& surface : surfaces) {
     surface.render();
   }
+  for (std::shared_ptr<AbstractLevelElement>& element : elements) {
+    element->render();
+  }
 }
 
 void AbstractLevel::load() {
   InputManager::subscribe(this);
-  player = std::make_shared<AbstractPlayer>();
-  player->initialise();
+  if (player != nullptr) {
+    player->initialise();
+  }
   AssetManager::RegisterTexture("Data/images/FloorTiles.png", 100);
+  AssetManager::RegisterTexture("Data/images/Particles.png", 101);
   for (Surface& surface : surfaces) {
     printf("make that texturonie \n");
     surface.initialiseTextures();
@@ -53,7 +73,7 @@ void AbstractLevel::unload() {
   player = nullptr;
 }
 
-void AbstractLevel::Move(sf::Vector2f vector) {
+void AbstractLevel::Move(const sf::Vector2f& vector) {
   if (player != nullptr) {
     player->Move(vector);
   }
@@ -77,4 +97,12 @@ void AbstractLevel::Resize() {
   else {
     view.setViewport({0, 0, 1, 1});
   }
+}
+
+void AbstractLevel::addElement(AbstractLevelElement *element) {
+  elements.emplace_back(element);
+  element->initialise();
+}
+void AbstractLevel::Look(const sf::Vector2f &vector) {
+  player->Look(vector);
 }

@@ -32,9 +32,9 @@ private:
   template<typename type>
   static type* BinarySearch(const std::vector<std::shared_ptr<type>>& array, unsigned ID);
 public:
-  static bool RegisterTexture(sf::String path, unsigned ID);
-  static bool RegisterFont(sf::String path, unsigned ID);
-  static bool RegisterSound(sf::String path, unsigned ID);
+  static bool RegisterTexture(const sf::String& path, unsigned ID);
+  static bool RegisterFont   (const sf::String& path, unsigned ID);
+  static bool RegisterSound  (const sf::String& path, unsigned ID);
   static const sf::Texture& getTexture(unsigned ID);
   static const sf::Font& getFont(unsigned ID);
   static const sf::SoundBuffer& getSound(unsigned ID);

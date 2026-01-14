@@ -44,6 +44,14 @@ set(SOURCE_FILES
     src/birds/abstracts/LevelElements/Bird1.cpp
     src/birds/abstracts/LevelElements/Bird1.h
     src/birds/abstracts/LevelElements/AbstractLevelElement.h
+    src/birds/abstracts/LevelElements/BirdPlayer.cpp
+    src/birds/abstracts/LevelElements/BirdPlayer.h
+    src/birds/levels/FlyingLevel.cpp
+    src/birds/levels/FlyingLevel.h
+    src/birds/abstracts/LevelElements/Particle.cpp
+    src/birds/abstracts/LevelElements/Particle.h
+    src/birds/menus/PauseMenu.cpp
+    src/birds/menus/PauseMenu.h
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 

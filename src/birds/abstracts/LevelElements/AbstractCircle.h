@@ -7,15 +7,13 @@
 #include <SFML/Graphics/Sprite.hpp>
 class AbstractCircle : public AbstractLevelElement {
 protected:
-  sf::Vector2f air_current;
-  const static float gravity;
-  const static float max_steepness;
+  const float max_steepness = -0.0f;
   Edge* floor = nullptr;
   Edge* floor2 = nullptr;
 
   void stickToFloor();
-  static bool setFloor(Edge*&, Edge*);
-  static void unsetFloor(Edge*&);
+  bool setFloor(Edge*&, Edge*) const;
+  void unsetFloor(Edge*&) const;
 
 public:
   float radius = 16.0f;
@@ -26,7 +24,7 @@ public:
   void setPosition(const sf::Vector2f& pos);
   void setPosition(const sf::Vector2f& pos, bool override);
   sf::Vector2f getPosition() const;
-  void applyWind(const std::vector<std::shared_ptr<Wind>>& winds);
+  void applyWind(const std::vector<std::shared_ptr<Wind>>& winds) override;
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_CIRCLE_H
