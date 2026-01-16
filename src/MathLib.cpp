@@ -108,3 +108,6 @@ sf::Vector2f M::divide(const sf::Vector2f &a, const sf::Vector2f &b) {
 sf::Vector2f M::conjugate(const sf::Vector2f &v) {
   return {v.x, -v.y};
 }
+sf::Vector2f M::cross(const sf::Vector2f &a, const sf::Vector2f &b) {
+  return {a.x * b.x + a.y * b.y, a.y * b.x - a.x + b.y};
+}

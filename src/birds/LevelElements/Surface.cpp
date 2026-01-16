@@ -17,7 +17,13 @@ void Surface::initialiseTextures() {
   pen.setTexture(AssetManager::getTexture(100));
 
   for (Edge& edge : edges) {
-    const int length = (int) roundf(edge.getLength() / 4.0f) + 2;
+    bool right_convex = (M::cross(edge.prev->dire, edge.dire).y >= 0.0f);
+    bool left_convex =  (M::cross(edge.dire, edge.next->dire).y >= 0.0f);
+    printf(left_convex ? "T" : "F");
+    printf(right_convex ? "T" : "F");
+    printf("\n");
+
+    const int length = (int) floorf(edge.getLength() / 4.0f) + (left_convex ? 0 : 2) + (right_convex ? 0 : 2);
     edge.rt.create(length * 4, 16);
     if (length < 5) {
       const int size1 = (int) M::Rand(1, M::MinU(4, length - 1));
@@ -56,6 +62,13 @@ void Surface::initialiseTextures() {
     edge.sprite.setOrigin(2.0f * (float) length, 8);
     edge.sprite.setPosition(M::avg(edge.point, edge.next->point) - M::scale(edge.norm, 8));
     edge.sprite.setRotation((atan2f(edge.norm.y, edge.norm.x) * 180.0f / 3.1415926535f)+90);
+
+    if (left_convex && !right_convex) {
+      edge.sprite.move(M::norm(edge.dire) * 4.0f);
+    }
+    else if (right_convex && !left_convex) {
+      edge.sprite.move(M::norm(edge.dire) * -4.0f);
+    }
   }
 }
 

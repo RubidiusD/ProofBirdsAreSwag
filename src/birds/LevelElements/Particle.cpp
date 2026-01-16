@@ -18,6 +18,7 @@ Particle::Particle(const sf::Vector2f& pos, const sf::Vector2f& vel, float dur) 
   sprite.setTextureRect({0, M::Rand4() * 2, 2, 2});
   sprite.setOrigin(1, 1);
   sprite.setPosition(pos);
+  sprite.setRotation((float)M::Rand(0, 359));
   velocity = vel;
   duration = dur;
 }

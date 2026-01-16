@@ -14,6 +14,7 @@ public:
   static sf::Vector2f avg(const sf::Vector2f& a, const sf::Vector2f& b);
   static sf::Vector2f times(const sf::Vector2f& a, const sf::Vector2f& b);
   static sf::Vector2f divide(const sf::Vector2f& a, const sf::Vector2f& b);
+  static sf::Vector2f cross(const sf::Vector2f& a, const sf::Vector2f& b);
   static bool limit(sf::Vector2f& v);
   static sf::Vector2f conjugate(const sf::Vector2f& v);
   static sf::Vector2f splat(const sf::Vector2f& v, const sf::Vector2f& n);
