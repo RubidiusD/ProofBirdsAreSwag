@@ -19,8 +19,8 @@ set(SOURCE_FILES
     src/managers/ActionManager.h src/managers/ActionManager.cpp
     src/managers/MenuManager.h src/managers/MenuManager.cpp
     src/managers/AssetManager.h src/managers/AssetManager.cpp
-    src/Settings.h src/Settings.cpp
     src/managers/InputManager.h src/managers/InputManager.cpp
+    src/Settings.h src/Settings.cpp
 
     src/abstracts/AbstractMenu.h src/abstracts/AbstractMenu.cpp
     src/abstracts/AbstractAction.h src/abstracts/AbstractAction.cpp
@@ -31,27 +31,25 @@ set(SOURCE_FILES
 
     src/birds/menus/SplashScreen.h src/birds/menus/SplashScreen.cpp
     src/birds/menus/MainMenu.h src/birds/menus/MainMenu.cpp
+    src/birds/menus/PauseMenu.h src/birds/menus/PauseMenu.cpp
 
+    src/birds/abstracts/AbstractWind.h
+    src/birds/abstracts/AbstractLevelElement.h
+    src/birds/abstracts/AbstractCircle.h src/birds/abstracts/AbstractCircle.cpp
     src/birds/abstracts/AbstractPlayer.h src/birds/abstracts/AbstractPlayer.cpp
     src/birds/abstracts/AbstractLevel.h src/birds/abstracts/AbstractLevel.cpp
+
     src/birds/LevelElements/Surface.h src/birds/LevelElements/Surface.cpp
+    src/birds/LevelElements/Particle.h src/birds/LevelElements/Particle.cpp
+    src/birds/LevelElements/Bird1.h src/birds/LevelElements/Bird1.cpp
+    src/birds/LevelElements/BirdPlayer.h src/birds/LevelElements/BirdPlayer.cpp
+
     src/birds/levels/LevelLoader.hpp
-    src/birds/levels/TestLevel.h src/birds/levels/TestLevel.cpp
     src/birds/levels/LevelLibrary.h src/birds/levels/LevelLibrary.cpp
-    src/birds/abstracts/AbstractWind.h
-    src/birds/abstracts/AbstractCircle.cpp
-    src/birds/abstracts/AbstractCircle.h
-    src/birds/LevelElements/Bird1.cpp
-    src/birds/LevelElements/Bird1.h
-    src/birds/abstracts/AbstractLevelElement.h
-    src/birds/LevelElements/BirdPlayer.cpp
-    src/birds/LevelElements/BirdPlayer.h
-    src/birds/levels/FlyingLevel.cpp
-    src/birds/levels/FlyingLevel.h
-    src/birds/LevelElements/Particle.cpp
-    src/birds/LevelElements/Particle.h
-    src/birds/menus/PauseMenu.cpp
-    src/birds/menus/PauseMenu.h
+
+    src/birds/levels/FlyingLevel.h src/birds/levels/FlyingLevel.cpp
+    src/birds/levels/TestLevel.h src/birds/levels/TestLevel.cpp
+
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 

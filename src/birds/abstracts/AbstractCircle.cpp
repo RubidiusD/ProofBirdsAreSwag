@@ -122,9 +122,6 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& c1, const std::sha
 }
 
 bool AbstractCircle::setFloor(Edge*& receptacle, Edge* new_edge) const {
-  if (receptacle != nullptr) {
-    receptacle->sprite.setColor(sf::Color::Red);
-  }
   if (new_edge == nullptr) {
     receptacle = nullptr;
     return false;
@@ -132,20 +129,15 @@ bool AbstractCircle::setFloor(Edge*& receptacle, Edge* new_edge) const {
 
   if (new_edge->norm.y < max_steepness) {
     receptacle = new_edge;
-    new_edge->sprite.setColor(sf::Color::Green);
     return true;
   }
   else {
-    new_edge->sprite.setColor(sf::Color::Blue);
     receptacle = nullptr;
     return false;
   }
 }
 
 void AbstractCircle::unsetFloor(Edge*& receptacle) const {
-  if (receptacle != nullptr) {
-    receptacle->sprite.setColor(sf::Color::Red);
-  }
   receptacle = nullptr;
 }
 

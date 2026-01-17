@@ -15,7 +15,7 @@ void FlyingLevel::load() {
   }));
   player_spawn = {0, 0};
   player = std::make_shared<BirdPlayer>();
-//  winds.emplace_back(std::make_shared<AbstractWind>(sf::Vector2f(32.0f, -3.0f)));
+  winds.emplace_back(std::make_shared<AbstractWind>(sf::Vector2f(302.0f, -3.0f)));
 
   AbstractLevel::load();
 }

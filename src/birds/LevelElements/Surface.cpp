@@ -19,9 +19,6 @@ void Surface::initialiseTextures() {
   for (Edge& edge : edges) {
     bool right_convex = (M::cross(edge.prev->dire, edge.dire).y >= 0.0f);
     bool left_convex =  (M::cross(edge.dire, edge.next->dire).y >= 0.0f);
-    printf(left_convex ? "T" : "F");
-    printf(right_convex ? "T" : "F");
-    printf("\n");
 
     const int length = (int) floorf(edge.getLength() / 4.0f) + (left_convex ? 0 : 2) + (right_convex ? 0 : 2);
     edge.rt.create(length * 4, 16);
