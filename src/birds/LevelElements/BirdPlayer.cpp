@@ -22,10 +22,11 @@ void BirdPlayer::update(float dt) {
     flap_cooldown = 0.0f;
     jumping = false;
   }
-  else if (jumping && flap_cooldown == 0.0f) { // the moment you flap (and can)
-    velocity += intent * 0.125f + sf::Vector2f(0.0f, -0.375f);
+  else if (jumping && flap_cooldown == 0.0f && stamina >= 1.0f) { // the moment you flap (and can)
+    velocity += intent * 0.125f + sf::Vector2f(0.0f, -0.09375f);
     jumping = false;
     flap_cooldown = max_flap;
+    stamina -= 1.0f;
     for (unsigned index = 0; index != 8; index ++) {
       LevelLibrary::current_level->addElement(new Particle(getPosition(), M::times({0.0f, 1.0f}, M::norm({1.0f, M::Randf(-2.0f, 2.0f)})) * (100.0f + (float)M::Rand(0, 80)), 0.3f));
     }
@@ -48,6 +49,13 @@ void BirdPlayer::update(float dt) {
   sprite.setRotation(atan2f(velocity.y, velocity.x) * 180.0f / 3.1415926535f);
   moveTo(sprite.getPosition() + velocity * speed * dt);
 
+  if (stamina < max_stamina) {
+    stamina += dt * stamina_refresh;
+    if (stamina > max_stamina) {
+      stamina = max_stamina;
+    }
+  }
+
   stickToFloor();
 }
 
@@ -58,7 +66,7 @@ void BirdPlayer::fly(float dt) {
   sf::Vector2f v1 = M::times(relative_air_current, M::conjugate(wing_direction));
   sf::Vector2f P = wing_direction * para_resistance * v1.x;
   sf::Vector2f Q = wing_normal * perp_resistance * v1.y;
-  sf::Vector2f L = wing_normal * lift_coefficient * asinf(v1.y) * sqrtf(M::lengthSQ(relative_air_current));
+  sf::Vector2f L = sf::Vector2f(-relative_air_current.y, relative_air_current.x) * -1.0f * lift_coefficient * asinf(M::norm(v1).y);
   sf::Vector2f G = {0, gravity};
 
   if (v1.x < 0) {
