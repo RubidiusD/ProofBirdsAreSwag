@@ -1,6 +1,7 @@
 #include "TestLevel.h"
+
 void TestLevel::load() {
-  surfaces.emplace_back(std::vector<sf::Vector2f>({
+  surfaces.emplace_back(std::vector<Vector2f>({
       {  50,  250},
       {-210,  300},
       {-250,  250},
@@ -23,7 +24,7 @@ void TestLevel::load() {
       { 250,  200},
       { 120,  260}
   }));
-  surfaces.emplace_back(std::vector<sf::Vector2f>({
+  surfaces.emplace_back(std::vector<Vector2f>({
       { 27,  50},
       {135,  74},
       { 77,   0},
@@ -32,7 +33,7 @@ void TestLevel::load() {
   }));
   player_spawn = {200, 50};
   player = std::make_shared<AbstractPlayer>();
-  winds.emplace_back(std::make_shared<AbstractWind>(sf::Vector2f(-9/6.0f, 12.0f)));
+  winds.emplace_back(std::make_shared<AbstractWind>(Vector2f(-9/6.0f, 12.0f)));
 
   AbstractLevel::load();
 }

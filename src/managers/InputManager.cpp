@@ -1,5 +1,5 @@
 #include "InputManager.h"
-#include "../MathLib.h"
+#include "../../../QuacksOfQuedlinburg/src/MathLib.h"
 #include "../Settings.h"
 #include "MenuManager.h"
 
@@ -74,7 +74,7 @@ void InputManager::manageInput(sf::Event event) {
     } return;
   case (sf::Event::MouseMoved):
     CurrentSubscriber->Point({(float)event.mouseMove.x, (float)event.mouseMove.y});
-    CurrentSubscriber->Look(M::norm({(float)event.mouseMove.x - S::ScreenSize.x / 2, (float)event.mouseMove.y - S::ScreenSize.y / 2})); return;
+    CurrentSubscriber->Look((Vector2f(event.mouseMove.x, event.mouseMove.y) - Vector2f(S::ScreenSize.x, S::ScreenSize.y) / 2).norm()); return;
   case (sf::Event::Resized):
     Resize();
   default:
@@ -142,6 +142,6 @@ void InputManager::update(float dt) {
 }
 
 void InputManager::Resize() {
-  S::ScreenSize = (sf::Vector2f)S::Window.getSize();
+  S::ScreenSize = (Vector2f)S::Window.getSize();
   CurrentSubscriber->Resize();
 }

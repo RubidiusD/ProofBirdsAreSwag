@@ -8,7 +8,7 @@
 int main() {
   S::Window.setFramerateLimit(60);
 //  S::Window.setMouseCursorVisible(false);
-  S::ScreenSize = sf::Vector2f(S::Window.getSize());
+  S::ScreenSize = S::Window.getSize();
 
   MenuLoader::LoadMenus();
   MenuManager::setMenu("SPSH");

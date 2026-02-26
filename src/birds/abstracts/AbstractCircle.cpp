@@ -1,30 +1,24 @@
 #include "AbstractCircle.h"
-#include "../levels/LevelLibrary.h"
+#include "../../MathLib.h"
 #include "../LevelElements/Particle.h"
+#include "../levels/LevelLibrary.h"
 
 bool AbstractCircle::SurfaceCollide(Surface& surface) {
-  std::shared_ptr<Collision> collision = surface.CollideCircle(sprite.getPosition(), radius);
+  std::shared_ptr<Collision> collision = surface.CollideCircle(getPosition(), radius);
   if (collision != nullptr && collision->edge != floor && collision->edge != floor2) {
-    sf::Vector2f old_vel = velocity;
     snapTo(collision);
-    float change = M::distanceSQ(old_vel, velocity);
-    if (change > 0.1f) {
-      for (unsigned index = 0; index != 4; index ++) {
-        LevelLibrary::current_level->addElement(new Particle(collision->point, M::times(collision->normal, M::norm({1.0f, M::Randf(-2.0f, 2.0f)})) * (100.0f + (float)M::Rand(0, 80)) * change, 0.3f));
-      }
-    }
 
     return true;
   }
   return false;
 }
 
-void AbstractCircle::setPosition(const sf::Vector2f& pos) {
+void AbstractCircle::setPosition(const Vector2f& pos) {
   setPosition(pos, false);
 }
 
-void AbstractCircle::setPosition(const sf::Vector2f& pos, bool override) {
-  if (override || M::distanceSQ(sprite.getPosition(), pos) < 400) {
+void AbstractCircle::setPosition(const Vector2f& pos, bool override) {
+  if (override || M::distanceSQ(getPosition(), pos) < 400) {
     moveTo(pos);
   }
 }
@@ -32,9 +26,9 @@ void AbstractCircle::setPosition(const sf::Vector2f& pos, bool override) {
 void AbstractCircle::stickToFloor() {
   if (floor != nullptr) {
     if (floor2 == nullptr) {
-      std::shared_ptr<Collision> cA = floor->prev->CollideCircle(sprite.getPosition(), radius);
-      std::shared_ptr<Collision> cB = floor->CollideCircle(sprite.getPosition(), radius);
-      std::shared_ptr<Collision> cC = floor->next->CollideCircle(sprite.getPosition(), radius);
+      std::shared_ptr<Collision> cA = floor->prev->CollideCircle(getPosition(), radius);
+      std::shared_ptr<Collision> cB = floor->CollideCircle(getPosition(), radius);
+      std::shared_ptr<Collision> cC = floor->next->CollideCircle(getPosition(), radius);
 
       if (cB == nullptr) { // no longer touching or in line with current floor
         if (!snapTo(cA) && !snapTo(cC)) {
@@ -48,8 +42,8 @@ void AbstractCircle::stickToFloor() {
       }
     }
     else {
-      std::shared_ptr<Collision> cA = floor->CollideCircle(sprite.getPosition(), radius);
-      std::shared_ptr<Collision> cB = floor2->CollideCircle(sprite.getPosition(), radius);
+      std::shared_ptr<Collision> cA = floor->CollideCircle(getPosition(), radius);
+      std::shared_ptr<Collision> cB = floor2->CollideCircle(getPosition(), radius);
 
       if (cA == nullptr && cB == nullptr) {
         unsetFloor(floor);
@@ -68,11 +62,11 @@ void AbstractCircle::stickToFloor() {
         snapTo(cA, cB);
       }
       else {
-        sf::Vector2f dire = M::norm(velocity);
-        sf::Vector2f floor1Dire = M::scale(M::norm(floor->dire), -1.0);
-        sf::Vector2f floor2Dire = M::norm(floor2->dire);
+        Vector2f dire = velocity.norm();
+        Vector2f floor1Dire = floor->direN * -1.0;
+        Vector2f floor2Dire = floor2->direN;
 
-        if (M::dot(dire, floor1Dire) > M::dot(dire, floor2Dire)) {
+        if (dire.dot(floor1Dire) > dire.dot(floor2Dire)) {
           snapTo(cA);
         }
         else {
@@ -83,7 +77,7 @@ void AbstractCircle::stickToFloor() {
   }
 }
 
-sf::Vector2f AbstractCircle::getPosition() const {
+Vector2f AbstractCircle::getPosition() const {
   return sprite.getPosition();
 }
 
@@ -91,12 +85,19 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   if (collision == nullptr) {
     return false;
   }
+  Vector2f old_vel = velocity;
+  velocity = velocity.splat(collision->normal, collision->elasticity(elasticity));
   if (collision->normal.y < max_steepness) {
     setFloor(floor, collision->edge);
     unsetFloor(floor2);
   }
-  velocity = M::splat(velocity, collision->normal);
-  setPosition(collision->point + M::scale(collision->normal, radius));
+  setPosition(collision->point + collision->normal * radius);
+  float change = M::distanceSQ(old_vel, velocity);
+  if (change > 1000.0f) {
+    for (unsigned index = 0; index != 4; index ++) {
+      LevelLibrary::current_level->addElement(new Particle(collision->point, collision->normal * Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm() * (1.0f + (float)M::Rand(0, 80) / 100.0f) * change, 0.3f));
+    }
+  }
   return true;
 }
 
@@ -104,25 +105,35 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& c1, const std::sha
   if (c1 == nullptr || c2 == nullptr) {
     return false;
   }
-  Edge *e1 = c1->edge;
-  Edge *e2 = c2->edge;
-  setPosition(e2->point + M::scale(e2->dire, radius * ((e1->dire.x*(e2->norm.y - e1->norm.y) - e1->dire.y*(e2->norm.x - e1->norm.x)) /(e2->dire.x * e1->dire.y - e2->dire.y * e1->dire.x))) + M::scale(e2->norm, radius));
+  Edge* e1 = c1->edge;
+  Edge* e2 = c2->edge;
+  setPosition(e1->chop(radius));
+
+  float E1 = c1->elasticity(elasticity);
+  float E2 = c2->elasticity(elasticity);
+  Vector2f a = velocity.splat(e1->norm, E1).splat(e2->norm, E2);
+  Vector2f b = velocity.splat(e2->norm, E2).splat(e1->norm, E1);
+  Vector2f old_vel = velocity;
+  velocity = (M::lengthSQ(a) > M::lengthSQ(b)) ? a : b;
   if (setFloor(floor, e1)) {
     setFloor(floor2, e2);
   }
   else {
     setFloor(floor, e2);
   }
-
-  sf::Vector2f a = M::splat(M::splat(velocity, e1->norm), e2->norm);
-  sf::Vector2f b = M::splat(M::splat(velocity, e2->norm), e1->norm);
-  velocity = (M::lengthSQ(a) > M::lengthSQ(b)) ? a : b;
+  float change = M::distanceSQ(old_vel, velocity);
+  if (change > 1000.0f) {
+    for (unsigned index = 0; index != 2; index ++) {
+      LevelLibrary::current_level->addElement(new Particle(c1->point, c1->normal * Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm() * (1.0f + (float)M::Rand(0, 80) / 100.0f) * change, 0.3f));
+      LevelLibrary::current_level->addElement(new Particle(c2->point, c2->normal * Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm() * (1.0f + (float)M::Rand(0, 80) / 100.0f) * change, 0.3f));
+    }
+  }
 
   return true;
 }
 
 bool AbstractCircle::setFloor(Edge*& receptacle, Edge* new_edge) const {
-  if (new_edge == nullptr) {
+  if (new_edge == nullptr || new_edge->norm.dot(velocity) > S::stick_tolerance) {
     receptacle = nullptr;
     return false;
   }
@@ -144,7 +155,7 @@ void AbstractCircle::unsetFloor(Edge*& receptacle) const {
 void AbstractCircle::applyWind(const std::vector<std::shared_ptr<AbstractWind>>& winds) {
   air_current.x = 0.0f; air_current.y = 0.0f;
   for (const std::shared_ptr<AbstractWind>& wind : winds) {
-    if (wind->isInside(sprite.getPosition(), radius)) {
+    if (wind->isInside(getPosition(), radius)) {
       air_current += wind->velocity;
     }
   }

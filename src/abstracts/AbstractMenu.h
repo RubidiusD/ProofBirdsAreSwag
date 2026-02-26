@@ -4,7 +4,6 @@
 #include "InputSubscriber.h"
 #include "ScreenElements/AbstractButton.h"
 #include <SFML/System/String.hpp>
-#include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <memory>
 #include <vector>
@@ -45,7 +44,7 @@ public:
   void Down(bool down) override;
   void Left(bool down) override;
   void Right(bool down) override;
-  void Point(const sf::Vector2f& vector) override;
+  void Point(const Vector2f& vector) override;
   void Select(bool down) override;
   void Resize() override;
 };

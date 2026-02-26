@@ -1,6 +1,7 @@
 ----------------------------------------Textures
 000: Uwe Logo
 001: Text Box
+002: Cursor
 
 099: Player
 100: Floor Tiles

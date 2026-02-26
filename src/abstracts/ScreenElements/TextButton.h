@@ -9,7 +9,7 @@ protected:
   sf::Text text;
 public:
   TextButton(unsigned font, const sf::String& text_, const Neighbours& n);
-  TextButton(unsigned font, const sf::String& text_, const Neighbours& n, const sf::Vector2f& ratio_);
+  TextButton(unsigned font, const sf::String& text_, const Neighbours& n, const Vector2f& ratio_);
 
   void Render() override;
 };

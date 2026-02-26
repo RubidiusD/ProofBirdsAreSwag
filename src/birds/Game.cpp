@@ -21,4 +21,3 @@ void Game::render() {
   }
   MenuManager::render();
 }
-

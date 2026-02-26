@@ -2,14 +2,16 @@
 #define BIRDSARESWAG_ABSTRACT_LEVEL_ELEMENT_H
 
 #include "../../Settings.h"
+#include "../../Vector2f.hpp"
 #include "AbstractWind.h"
 #include <SFML/Graphics/Sprite.hpp>
+#include <memory>
 
 class AbstractLevelElement {
 protected:
   sf::Sprite sprite;
-  sf::Vector2f velocity;
-  sf::Vector2f air_current;
+  Vector2f velocity;
+  Vector2f air_current;
 
 public:
   bool alive = true;
@@ -17,7 +19,8 @@ public:
   virtual void update(float dt) { sprite.move(velocity * dt); }
   virtual void render() { S::Window.draw(sprite); }
   virtual void initialise() {}
-  virtual void moveTo(const sf::Vector2f& pos) {sprite.setPosition(pos);}
+  virtual void moveTo(const Vector2f& pos) {sprite.setPosition(pos);}
+  virtual void moveTo(float x, float y) {sprite.setPosition(x, y);}
   virtual void applyWind(const std::vector<std::shared_ptr<AbstractWind>>& winds) {
     air_current.x = 0.0f; air_current.y = 0.0f;
     for (const std::shared_ptr<AbstractWind>& wind : winds) {

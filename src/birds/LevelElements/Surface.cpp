@@ -1,10 +1,11 @@
 #include "Surface.h"
+#include "../../MathLib.h"
 #include "../../Settings.h"
 #include "../../managers/AssetManager.h"
 
-Surface::Surface(const std::vector<sf::Vector2f>& points) {
+Surface::Surface(const std::vector<Vector2f>& points) {
   AssetManager::RegisterTexture("Data/images/Pointer.png", 2);
-  for (const sf::Vector2f& point : points) {
+  for (const Vector2f& point : points) {
     edges.emplace_back(point);
   }
   for (unsigned index = 0; index != edges.size() - 1; index ++) {
@@ -23,7 +24,7 @@ void Surface::initialiseTextures() {
     const int length = (int) floorf(edge.getLength() / 4.0f) + (left_convex ? 0 : 2) + (right_convex ? 0 : 2);
     edge.rt.create(length * 4, 16);
     if (length < 5) {
-      const int size1 = (int) M::Rand(1, M::MinU(4, length - 1));
+      const int size1 = (int) M::Rand(1, std::min(4, length - 1));
       const int size2 = (int) length - size1;
 
       pen.setTextureRect({0, (size1 - 1) * 16, 16, 16});
@@ -57,19 +58,19 @@ void Surface::initialiseTextures() {
     edge.rt.display();
     edge.sprite.setTexture(edge.rt.getTexture());
     edge.sprite.setOrigin(2.0f * (float) length, 8);
-    edge.sprite.setPosition(M::avg(edge.point, edge.next->point) - M::scale(edge.norm, 8));
+    edge.sprite.setPosition(edge.point.avg(edge.next->point) - edge.norm * 8.0f);
     edge.sprite.setRotation((atan2f(edge.norm.y, edge.norm.x) * 180.0f / 3.1415926535f)+90);
 
     if (left_convex && !right_convex) {
-      edge.sprite.move(M::norm(edge.dire) * 4.0f);
+      edge.sprite.move(edge.direN * 4.0f);
     }
     else if (right_convex && !left_convex) {
-      edge.sprite.move(M::norm(edge.dire) * -4.0f);
+      edge.sprite.move(edge.direN * -4.0f);
     }
   }
 }
 
-std::shared_ptr<Collision> Surface::CollideCircle(const sf::Vector2f& c, float r) {
+std::shared_ptr<Collision> Surface::CollideCircle(const Vector2f& c, float r) {
 
   std::shared_ptr<Collision> first = nullptr;
   std::shared_ptr<Collision> second = nullptr;
@@ -93,7 +94,7 @@ std::shared_ptr<Collision> Surface::CollideCircle(const sf::Vector2f& c, float r
     return first;
   }
   else {
-    return std::make_shared<Collision>(second->edge->point, M::norm(M::timesI(second->point - first->point)), nullptr, true);
+    return std::make_shared<Collision>(second->edge->point, (second->point - first->point).i().norm(), nullptr, true);
   }
 }
 
@@ -103,22 +104,23 @@ void Surface::render() {
   }
 }
 
-std::shared_ptr<Collision> Edge::CollideCircle(const sf::Vector2f& c, float r) {
+std::shared_ptr<Collision> Edge::CollideCircle(const Vector2f& c, float r) {
   float t3 = ((norm.x*point.y - c.y*norm.x + c.x*norm.y - point.x*norm.y) / (dire.x*norm.y - dire.y*norm.x));
   if (t3 < 0 || t3 > 1) {
     return nullptr;
   }
-  sf::Vector2f p = point + t3 * dire;
+  Vector2f p = point + dire * t3;
   return std::make_shared<Collision>(p, norm, this, M::distanceSQ(c, p) <= r * r);
 }
 
-Edge::Edge(sf::Vector2f p) { point = p; }
+Edge::Edge(const Vector2f& p) { point = p; }
 
 void Edge::setNext(Edge* n) {
   next = n;
   next->prev = this;
   dire = next->point - point;
-  norm = M::timesI(M::norm(dire));
+  direN = dire.norm();
+  norm = direN.i();
 }
 
 float Edge::getLength() const {
@@ -128,10 +130,17 @@ float Edge::getLength() const {
 Edge::Edge(const Edge& edge) {
   point = edge.point;
 }
+Vector2f Edge::chop(float r) const {
+  return next->point + next->dire * (r * ((dire.x*(next->norm.y - norm.y) - dire.y*(next->norm.x - norm.x)) /(next->dire.x * dire.y - next->dire.y * dire.x))) + next->norm * r;
+}
 
-Collision::Collision(const sf::Vector2f& p, const sf::Vector2f& n, Edge* e, bool r) {
+Collision::Collision(const Vector2f& p, const Vector2f& n, Edge* e, bool r) {
   point = p;
   normal = n;
   edge = e;
   inRange = r;
+}
+
+float Collision::elasticity(float e) const {
+  return fmaxf((edge == nullptr) ? e : (e + edge->elasticity) / 2, 0.0f);
 }

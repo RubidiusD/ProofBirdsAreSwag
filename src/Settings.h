@@ -1,8 +1,8 @@
 #ifndef BIRDSARESWAG_SETTINGS_H
 #define BIRDSARESWAG_SETTINGS_H
 
+#include "Vector2f.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <memory>
 
 class S {
 public:
@@ -10,9 +10,10 @@ public:
   static bool CursorDown;
 
   static sf::RenderWindow Window;
-  static sf::Vector2f Res;
-  static sf::Vector2f ScreenSize;
+  static Vector2f Res;
+  static Vector2f ScreenSize;
   static sf::View UI_View;
+  static const float stick_tolerance;
 };
 
 #endif // BIRDSARESWAG_SETTINGS_H

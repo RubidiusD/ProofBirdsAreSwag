@@ -12,10 +12,10 @@ private:
   const float lift_coefficient = 10.0f;
 protected:
   sf::Sprite wing;
-  sf::Vector2f wing_direction;
+  Vector2f wing_direction;
 
-  sf::Vector2f target;
-  sf::Vector2f target_r;
+  Vector2f target;
+  Vector2f target_r;
 
   void fly(float dt);
 
@@ -24,7 +24,7 @@ public:
   void update(float dt) override;
   void render() override;
   void Point(const std::shared_ptr<AbstractCircle>& t);
-  void moveTo(const sf::Vector2f &pos) override;
+  void moveTo(const Vector2f &pos) override;
 };
 
 #endif // BIRDSARESWAG_BIRD1_H

@@ -1,5 +1,7 @@
 #include "Bird1.h"
+#include "../../MathLib.h"
 #include "../../managers/AssetManager.h"
+#include <cmath>
 
 void Bird1::initialise() {
   AssetManager::RegisterTexture("Data/images/Bird1.png", 111);
@@ -19,20 +21,20 @@ void Bird1::update(float dt) {
 }
 
 void Bird1::fly(float dt) {
-  sf::Vector2f wing_normal = M::timesI(wing_direction);
+  Vector2f wing_normal = wing_direction.i();
 
-  sf::Vector2f wind = air_current / speed - velocity;
-  sf::Vector2f r_wind = M::times(wind, M::conjugate(wing_direction));
-  sf::Vector2f P = wing_direction * para_resistance * r_wind.x;
-  sf::Vector2f Q = wing_normal * perp_resistance * r_wind.y;
-  sf::Vector2f L = wing_normal * -1.0f * lift_coefficient * para_resistance * atanf(r_wind.y / r_wind.x) * sqrtf(M::lengthSQ(wind));
-  sf::Vector2f G = {0, gravity};
+  Vector2f wind = air_current - velocity;
+  Vector2f r_wind = wind * wing_direction.conj();
+  Vector2f P = wing_direction * para_resistance * r_wind.x;
+  Vector2f Q = wing_normal * perp_resistance * r_wind.y;
+  Vector2f L = wing_normal * -1.0f * lift_coefficient * para_resistance * atanf(r_wind.y / r_wind.x) * sqrtf(M::lengthSQ(wind));
+  Vector2f G = {0, gravity};
 
   if (r_wind.x < 0) {
     velocity += (P + Q + L + G) * dt;
   }
   else {
-    sf::Vector2f W = wind * (perp_resistance + para_resistance);
+    Vector2f W = wind * (perp_resistance + para_resistance);
     velocity += (W + G) * dt;
   }
   sprite.setRotation(atan2f(velocity.y, velocity.x));
@@ -45,10 +47,10 @@ void Bird1::render() {
 
 void Bird1::Point(const std::shared_ptr<AbstractCircle> &t) {
   target = t->getPosition();
-  target_r = M::norm(target - getPosition());
+  target_r = (target - getPosition()).norm();
 }
 
-void Bird1::moveTo(const sf::Vector2f &pos) {
+void Bird1::moveTo(const Vector2f &pos) {
   sprite.setPosition(pos);
   wing.setPosition(pos);
 }

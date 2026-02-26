@@ -5,11 +5,13 @@
 #include "FlyingLevel.h"
 #include "LevelLibrary.h"
 #include "TestLevel.h"
+#include "TrackingLevel.h"
 
 namespace LevelLoader {
   void LoadLevels() {
     LevelLibrary::loadLevel(new TestLevel());
     LevelLibrary::loadLevel(new FlyingLevel());
+    LevelLibrary::loadLevel(new TrackingLevel());
   }
 }
 

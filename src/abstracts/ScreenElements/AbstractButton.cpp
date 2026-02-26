@@ -1,5 +1,5 @@
 #include "AbstractButton.h"
-#include "../../MathLib.h"
+#include "../../../../QuacksOfQuedlinburg/src/MathLib.h"
 #include "../../Settings.h"
 
 void AbstractButton::Press() {}
@@ -10,12 +10,12 @@ void AbstractButton::Select() {
 void AbstractButton::Deselect() {
   selected = false;
 }
-void AbstractButton::Drag(const sf::Vector2f& vector) {}
+void AbstractButton::Drag(const Vector2f& vector) {}
 void AbstractButton::Update(float dt) {}
 void AbstractButton::Render() {
   S::Window.draw(sprite);
 }
-bool AbstractButton::isInside(const sf::Vector2f& vector) {
+bool AbstractButton::isInside(const Vector2f& vector) {
   sf::Rect<float> rect = sprite.getGlobalBounds();
   return (
       vector.x < rect.left + rect.width &&
@@ -30,7 +30,7 @@ AbstractButton::AbstractButton(const Neighbours& n, const sf::Texture& texture) 
   sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 }
 
-AbstractButton::AbstractButton(const Neighbours& n, const sf::Texture& texture, const sf::Vector2f& ratio_) : AbstractButton(n, texture) {
+AbstractButton::AbstractButton(const Neighbours& n, const sf::Texture& texture, const Vector2f& ratio_) : AbstractButton(n, texture) {
   ratio = ratio_;
-  sprite.setPosition(M::scale(S::Res, ratio));
+  sprite.setPosition(S::Res * ratio);
 }

@@ -15,14 +15,14 @@ public:
 
   class CloseGameButton : public TextButton {
   public:
-    CloseGameButton(const Neighbours& n, const sf::Vector2f& ratio_) : TextButton(0, "Close", n, ratio_) {}
+    CloseGameButton(const Neighbours& n, const Vector2f& ratio_) : TextButton(0, "Close", n, ratio_) {}
     void Press() override {S::Window.close();}
   };
 
   class LoadLevelButton : public TextButton {
     unsigned index;
   public:
-    LoadLevelButton(const sf::String& text_, const Neighbours& n, const sf::Vector2f& ratio_, unsigned index_) : TextButton(0, text_, n, ratio_) {index = index_;}
+    LoadLevelButton(const sf::String& text_, const Neighbours& n, const Vector2f& ratio_, unsigned index_) : TextButton(0, text_, n, ratio_) {index = index_;}
     void Press() override {
       MenuManager::closeMenu();
       LevelLibrary::setLevel(index);

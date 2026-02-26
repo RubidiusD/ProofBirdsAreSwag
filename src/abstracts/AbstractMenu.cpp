@@ -104,8 +104,8 @@ void AbstractMenu::Right(bool down) {
   }
 }
 
-void AbstractMenu::Point(const sf::Vector2f& vector) {
-  sf::Vector2f v = S::Window.mapPixelToCoords(sf::Vector2i(vector), S::UI_View);
+void AbstractMenu::Point(const Vector2f& vector) {
+  Vector2f v = S::Window.mapPixelToCoords(sf::Vector2i(vector), S::UI_View);
   if (current_button != nullptr) {
     if (S::CursorDown) {
       current_button->Drag(v);

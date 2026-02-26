@@ -1,8 +1,8 @@
 #ifndef BIRDSARESWAG_INPUT_SUBSCRIBER_H
 #define BIRDSARESWAG_INPUT_SUBSCRIBER_H
 
-#include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
+#include "../Vector2f.hpp"
 
 enum InputActions {
   UP,
@@ -24,9 +24,9 @@ public:
   virtual void Right(bool down) {}
   virtual void Select(bool down) {}
   virtual void Pause(bool down) {}
-  virtual void Move(const sf::Vector2f& vector) {} // relative to the player, made of the left joystick or wasd
-  virtual void Look(const sf::Vector2f& vector) {} // relative to the player, made of mouse or right joystick
-  virtual void Point(const sf::Vector2f& vector) {} // position on the screen
+  virtual void Move(const Vector2f& vector) {} // relative to the player, made of the left joystick or wasd
+  virtual void Look(const Vector2f& vector) {} // relative to the player, made of mouse or right joystick
+  virtual void Point(const Vector2f& vector) {} // position on the screen
   virtual void KeyPressed(sf::Keyboard::Key key, bool down) {}
   virtual void ManageInputs(sf::Event event) {}
   virtual void Resize() {}

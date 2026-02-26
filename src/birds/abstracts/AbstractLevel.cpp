@@ -1,7 +1,9 @@
 #include "AbstractLevel.h"
+#include "../../MathLib.h"
 #include "../../managers/AssetManager.h"
 #include "../../managers/InputManager.h"
 #include "../../managers/MenuManager.h"
+#include "../LevelElements/Particle.h"
 
 void AbstractLevel::update(float dt) {
   // update wind
@@ -16,6 +18,10 @@ void AbstractLevel::update(float dt) {
     if (player->SurfaceCollide(surface)) {
       break;
     }
+  }
+
+  for (std::shared_ptr<PlayerListener>& listener : listeners) {
+    listener->QuarryIs(player->getPosition(), dt);
   }
 
   // update elements
@@ -53,7 +59,6 @@ void AbstractLevel::load() {
   AssetManager::RegisterTexture("Data/images/FloorTiles.png", 100);
   AssetManager::RegisterTexture("Data/images/Particles.png", 101);
   for (Surface& surface : surfaces) {
-    printf("make that texturonie \n");
     surface.initialiseTextures();
   }
   view.setSize(960, 540);
@@ -74,7 +79,7 @@ void AbstractLevel::unload() {
   player = nullptr;
 }
 
-void AbstractLevel::Move(const sf::Vector2f& vector) {
+void AbstractLevel::Move(const Vector2f& vector) {
   if (player != nullptr) {
     player->Move(vector);
   }
@@ -111,6 +116,25 @@ void AbstractLevel::addElement(AbstractLevelElement *element) {
   elements.emplace_back(element);
   element->initialise();
 }
-void AbstractLevel::Look(const sf::Vector2f &vector) {
+
+void AbstractLevel::addListener(PlayerListener *element) {
+  listeners.emplace_back(element);
+  elements.emplace_back(listeners.back());
+  element->initialise();
+}
+
+void AbstractLevel::Look(const Vector2f &vector) {
   player->Look(vector);
+}
+
+void AbstractLevel::spawnParticle(const Vector2f& position, const Vector2f& velocity) {
+  addElement(new Particle(position, velocity, 0.3f));
+}
+
+void AbstractLevel::spawnParticle(unsigned int number, const Vector2f& position, const Vector2f& direction) {
+  if (M::lengthSQ(direction) > 100) {
+    for (unsigned index = 0; index != number; index ++) {
+      spawnParticle(position, direction * Vector2f(1, M::Randf(-2, 2)).norm());
+    }
+  }
 }

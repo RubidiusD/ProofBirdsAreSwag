@@ -10,18 +10,20 @@
 
 class AbstractPlayer : public AbstractCircle, public InputSubscriber {
 private:
-  const float gravity = 2.5f;
-  const float speed = 480.0f;
-  const float acceleration_speed = 2.0f;
-  const float air_acceleration_speed = 1.0f;
+  static const float GRAVITY;
+  static const float ACCELERATION;
+  static const float AIR_ACCELERATION;
+  static const float JUMP;
+  static const float DRAG;
+  static const float ELASTIC;
 protected:
-  sf::Vector2f intent;
+  Vector2f intent;
   bool jumping = false;
 public:
   void update(float dt) override;
   void initialise() override;
 
-  void Move(const sf::Vector2f& vector) override;
+  void Move(const Vector2f& vector) override;
 
   void Jump(bool down);
 };

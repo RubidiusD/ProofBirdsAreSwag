@@ -14,7 +14,7 @@ find_package(SFML 2.5.1 COMPONENTS system window graphics network audio)
 set(SOURCE_FILES
     src/main.cpp
     src/MathLib.h src/MathLib.cpp
-    src/birds/Game.h src/birds/Game.cpp
+    src/Vector2f.hpp
 
     src/managers/ActionManager.h src/managers/ActionManager.cpp
     src/managers/MenuManager.h src/managers/MenuManager.cpp
@@ -29,6 +29,7 @@ set(SOURCE_FILES
     src/abstracts/ScreenElements/AbstractButton.h src/abstracts/ScreenElements/AbstractButton.cpp
     src/abstracts/ScreenElements/TextButton.h src/abstracts/ScreenElements/TextButton.cpp
 
+    src/birds/Game.h src/birds/Game.cpp
     src/birds/menus/SplashScreen.h src/birds/menus/SplashScreen.cpp
     src/birds/menus/MainMenu.h src/birds/menus/MainMenu.cpp
     src/birds/menus/PauseMenu.h src/birds/menus/PauseMenu.cpp
@@ -42,14 +43,19 @@ set(SOURCE_FILES
     src/birds/LevelElements/Surface.h src/birds/LevelElements/Surface.cpp
     src/birds/LevelElements/Particle.h src/birds/LevelElements/Particle.cpp
     src/birds/LevelElements/Bird1.h src/birds/LevelElements/Bird1.cpp
+    src/birds/LevelElements/Bird2.h src/birds/LevelElements/Bird2.cpp
     src/birds/LevelElements/BirdPlayer.h src/birds/LevelElements/BirdPlayer.cpp
+    src/birds/LevelElements/PlayerListener.h src/birds/LevelElements/PlayerListener.cpp
 
     src/birds/levels/LevelLoader.hpp
     src/birds/levels/LevelLibrary.h src/birds/levels/LevelLibrary.cpp
 
     src/birds/levels/FlyingLevel.h src/birds/levels/FlyingLevel.cpp
     src/birds/levels/TestLevel.h src/birds/levels/TestLevel.cpp
-
+    src/birds/LevelElements/CursorPlayer.cpp
+    src/birds/LevelElements/CursorPlayer.h
+    src/birds/levels/TrackingLevel.cpp
+    src/birds/levels/TrackingLevel.h
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 

@@ -7,7 +7,7 @@ class Particle : public AbstractLevelElement {
 protected:
   float duration;
 public:
-  Particle(const sf::Vector2f& pos, const sf::Vector2f& vel, float dur);
+  Particle(const Vector2f& pos, const Vector2f& vel, float dur);
   void update(float dt) override;
 };
 

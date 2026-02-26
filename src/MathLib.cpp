@@ -1,27 +1,7 @@
 #include "MathLib.h"
 #include <chrono>
 
-sf::Vector2f M::norm(const sf::Vector2f& v) {
-  return v / sqrtf(lengthSQ(v));
-}
-
-sf::Vector2f M::timesI(const sf::Vector2f& v) {
-  return {-v.y, v.x};
-}
-
-sf::Vector2f M::scale(const sf::Vector2f& a, const sf::Vector2f& b) {
-  return {a.x * b.x, a.y * b.y};
-}
-
-sf::Vector2f M::scale(const sf::Vector2f& a, float b) {
-  return {a.x * b, a.y * b};
-}
-
-sf::Vector2f M::avg(const sf::Vector2f& a, const sf::Vector2f& b) {
-  return {(a.x + b.x) / 2, (a.y + b.y) / 2};
-}
-
-bool M::limit(sf::Vector2f& v) {
+bool M::limit(Vector2f& v) {
   float mag = v.x * v.x + v.y * v.y;
   if (mag > 1.0f) {
     v = v / sqrtf(mag);
@@ -30,7 +10,27 @@ bool M::limit(sf::Vector2f& v) {
   return false;
 }
 
-float M::distanceSQ(const sf::Vector2f& a, const sf::Vector2f& b) {
+bool M::limit(Vector2f &v, float m) {
+  float mag = v.x * v.x + v.y * v.y;
+  if (mag < m * m) {
+    return false;
+  }
+
+  v = v * m / sqrtf(mag);
+  return true;
+}
+
+bool M::limit(Vector2f &v, float m, float dt) {
+  float mag = v.x * v.x + v.y * v.y;
+  if (mag < m * m) {
+    return false;
+  }
+
+  v = v * (1.0f - 3.0f * dt);
+  return true;
+}
+
+float M::distanceSQ(const Vector2f& a, const Vector2f& b) {
   return (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y);
 }
 
@@ -56,58 +56,35 @@ unsigned M::Rand(unsigned min, unsigned max) {
 }
 
 float M::Randf(float lower_bound, float upper_bound) {
-  return lower_bound + ((float) (Rand() % ((unsigned)(ceilf(upper_bound) - floorf(lower_bound)) * 100))) / 100.0f;
+  return lower_bound + ((float) (Rand() % ((unsigned)(ceilf(upper_bound * 100.0f) - floorf(lower_bound * 100.0f))))) / 100.0f;
 }
 
-unsigned M::MaxU(unsigned a, unsigned b) {
-  if (a > b) {
-    return a;
-  } else {
-    return b;
-  }
+template <typename T> T M::Min(T a, T b) {
+  return (a < b) ? a : b;
 }
 
-unsigned M::MinU(unsigned a, unsigned b) {
-  if (a < b) {
-    return a;
-  } else {
-    return b;
-  }
+template <typename T> T M::Max(T a, T b) {
+  return (a < b) ? b : a;
 }
 
-sf::Vector2f M::splat(const sf::Vector2f& v, const sf::Vector2f& n) {
-  sf::Vector2f v2 = {fmaxf(0.0f, v.x*n.x + v.y*n.y), v.y*n.x - v.x*n.y};
+Vector2f M::splat(const Vector2f& v, const Vector2f& n) {
+  Vector2f v2 = {fmaxf(0.0f, v.x*n.x + v.y*n.y), v.y*n.x - v.x*n.y};
   return {v2.x*n.x - v2.y*n.y, v2.y*n.x + v2.x*n.y};
 }
 
-float M::dot(const sf::Vector2f& a, const sf::Vector2f& b) {
-  return a.x*b.x + a.y*b.y;
-}
-
-float M::lengthSQ(const sf::Vector2f& v) {
+float M::lengthSQ(const Vector2f& v) {
   return v.x*v.x + v.y*v.y;
 }
 
-float M::parallelMag(const sf::Vector2f& v, const sf::Vector2f& n) {
+float M::parallelMag(const Vector2f& v, const Vector2f& n) {
   return (v.x*n.x + v.y*n.y) / sqrtf(lengthSQ(n));
 
 }
 
-float M::parallelMag(const sf::Vector2f& v, const sf::Vector2f& n, bool normalised) {
+float M::parallelMag(const Vector2f& v, const Vector2f& n, bool normalised) {
   return normalised ? v.x*n.x + v.y*n.y : parallelMag(v, n);
 }
 
-sf::Vector2f M::times(const sf::Vector2f &a, const sf::Vector2f &b) {
-  return {a.x * b.x - a.y * b.y, a.y * b.x + a.x * b.y};
-}
-
-sf::Vector2f M::divide(const sf::Vector2f &a, const sf::Vector2f &b) {
-  return sf::Vector2f(a.x * b.x + a.y * b.y, a.y * b.x - a.x + b.y) / lengthSQ(b);
-}
-
-sf::Vector2f M::conjugate(const sf::Vector2f &v) {
-  return {v.x, -v.y};
-}
-sf::Vector2f M::cross(const sf::Vector2f &a, const sf::Vector2f &b) {
+Vector2f M::cross(const Vector2f &a, const Vector2f &b) {
   return {a.x * b.x + a.y * b.y, a.y * b.x - a.x + b.y};
 }

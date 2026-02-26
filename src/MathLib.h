@@ -1,31 +1,23 @@
 #ifndef BIRDSARESWAG_MATH_LIB_H
 #define BIRDSARESWAG_MATH_LIB_H
 
-#include <SFML/System/Vector2.hpp>
-#include <cmath>
+#include "Vector2f.hpp"
 #include <random>
 
 class M {
 public:
-  static sf::Vector2f norm(const sf::Vector2f& v);
-  static sf::Vector2f timesI(const sf::Vector2f& v);
-  static sf::Vector2f scale(const sf::Vector2f& a, const sf::Vector2f& b);
-  static sf::Vector2f scale(const sf::Vector2f& a, float b);
-  static sf::Vector2f avg(const sf::Vector2f& a, const sf::Vector2f& b);
-  static sf::Vector2f times(const sf::Vector2f& a, const sf::Vector2f& b);
-  static sf::Vector2f divide(const sf::Vector2f& a, const sf::Vector2f& b);
-  static sf::Vector2f cross(const sf::Vector2f& a, const sf::Vector2f& b);
-  static bool limit(sf::Vector2f& v);
-  static sf::Vector2f conjugate(const sf::Vector2f& v);
-  static sf::Vector2f splat(const sf::Vector2f& v, const sf::Vector2f& n);
-  static float dot(const sf::Vector2f& a, const sf::Vector2f& b);
-  static float distanceSQ(const sf::Vector2f& a, const sf::Vector2f& b);
-  static float lengthSQ(const sf::Vector2f& v);
-  static float parallelMag(const sf::Vector2f& v, const sf::Vector2f& n);
-  static float parallelMag(const sf::Vector2f& v, const sf::Vector2f& n, bool normalised);
+  static Vector2f cross(const Vector2f& a, const Vector2f& b);
+  static bool limit(Vector2f& v);
+  static bool limit(Vector2f& v, float m);
+  static bool limit(Vector2f& v, float m, float dt);
+  static Vector2f splat(const Vector2f& v, const Vector2f& n);
+  static float distanceSQ(const Vector2f& a, const Vector2f& b);
+  static float lengthSQ(const Vector2f& v);
+  static float parallelMag(const Vector2f& v, const Vector2f& n);
+  static float parallelMag(const Vector2f& v, const Vector2f& n, bool normalised);
 
-  static unsigned MaxU(unsigned a, unsigned b);
-  static unsigned MinU(unsigned a, unsigned b);
+  template<typename T> static T Max(T a, T b);
+  template<typename T> static T Min(T a, T b);
 
   static bool Rand2();
   static unsigned short Rand4();
