@@ -38,7 +38,7 @@ void TrackingLevel::load() {
   addElement(new Bird2());
   elements.back()->moveTo(-150.0f, -30.0f);
   view.setCenter(0, 0);
-  winds.emplace_back(new AbstractWind({-50.0f, 30.0f}));
+  winds.emplace_back(new AbstractWind({-50.0f, 30.0f}, 0.5f));
 
   AbstractLevel::load();
 }

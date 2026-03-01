@@ -123,8 +123,8 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& c1, const std::sha
   float change = M::distanceSQ(old_vel, velocity);
   if (change > 1000.0f) {
     for (unsigned index = 0; index != 2; index ++) {
-      LevelLibrary::current_level->addElement(new Particle(c1->point, c1->normal * Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm() * (1.0f + (float)M::Rand(0, 80) / 100.0f) * change, 0.3f));
-      LevelLibrary::current_level->addElement(new Particle(c2->point, c2->normal * Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm() * (1.0f + (float)M::Rand(0, 80) / 100.0f) * change, 0.3f));
+      LevelLibrary::current_level->addElement(new Particle(c1->point, c1->normal.rotate(Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm()) * (1.0f + (float)M::Rand(0, 80) / 100.0f) * change));
+      LevelLibrary::current_level->addElement(new Particle(c2->point, c2->normal.rotate(Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm()) * (1.0f + (float)M::Rand(0, 80) / 100.0f) * change));
     }
   }
 

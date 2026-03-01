@@ -14,10 +14,12 @@ Surface::Surface(const std::vector<Vector2f>& points) {
   edges.back().setNext(&edges[0]);
 }
 
-void Surface::initialiseTextures() {
+void Surface::initialiseTextures(float particle_rate) {
   pen.setTexture(AssetManager::getTexture(100));
 
   for (Edge& edge : edges) {
+    edge.wind_cooldown = M::Randf(0.0f, particle_rate);
+
     bool right_convex = (M::cross(edge.prev->dire, edge.dire).y >= 0.0f);
     bool left_convex =  (M::cross(edge.dire, edge.next->dire).y >= 0.0f);
 
@@ -98,6 +100,15 @@ std::shared_ptr<Collision> Surface::CollideCircle(const Vector2f& c, float r) {
   }
 }
 
+bool Surface::CollidePath(const Vector2f& next, const Vector2f& prev) const {
+  for (const Edge& edge : edges) {
+    if (edge.CollidePath(next, prev)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 void Surface::render() {
   for (Edge& edge : edges) {
     S::Window.draw(edge.sprite);
@@ -111,6 +122,13 @@ std::shared_ptr<Collision> Edge::CollideCircle(const Vector2f& c, float r) {
   }
   Vector2f p = point + dire * t3;
   return std::make_shared<Collision>(p, norm, this, M::distanceSQ(c, p) <= r * r);
+}
+
+bool Edge::CollidePath(const Vector2f& n, const Vector2f& p) const {
+  float t2 = ((p.y - point.y) * dire.x - (p.x - point.x) * dire.y) / ((n.x - p.x) * dire.y - (n.y - p.y) * dire.x);
+  float t1 = (p.x + t2 * (n.x - p.x) - point.x) / (dire.x);
+
+  return (t2 >= 0.0f && t2 <= 1.0f && t1 >= 0.0f && t1 <= 1.0f);
 }
 
 Edge::Edge(const Vector2f& p) { point = p; }
@@ -130,6 +148,7 @@ float Edge::getLength() const {
 Edge::Edge(const Edge& edge) {
   point = edge.point;
 }
+
 Vector2f Edge::chop(float r) const {
   return next->point + next->dire * (r * ((dire.x*(next->norm.y - norm.y) - dire.y*(next->norm.x - norm.x)) /(next->dire.x * dire.y - next->dire.y * dire.x))) + next->norm * r;
 }

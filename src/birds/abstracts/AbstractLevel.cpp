@@ -10,7 +10,7 @@ void AbstractLevel::update(float dt) {
   for (std::shared_ptr<AbstractWind>& wind : winds) {
     wind->update(dt);
   }
-  windParticles();
+  windParticles(dt);
 
   // update player
   player->applyWind(winds);
@@ -70,7 +70,7 @@ void AbstractLevel::load() {
   AssetManager::RegisterTexture("Data/images/FloorTiles.png", 100);
   AssetManager::RegisterTexture("Data/images/Particles3.png", 101);
   for (Surface& surface : surfaces) {
-    surface.initialiseTextures();
+    surface.initialiseTextures(particle_rate);
   }
   view.setSize(960, 540);
 }
@@ -143,17 +143,13 @@ void AbstractLevel::Look(const Vector2f &vector) {
 }
 
 void AbstractLevel::spawnParticle(const Vector2f& position, const Vector2f& velocity) {
-  addElement(new Particle(position, velocity, 0.3f));
-}
-
-void AbstractLevel::spawnParticle(const Vector2f& position, const Vector2f& velocity, float duration) {
-  addElement(new Particle(position, velocity, duration));
+  addElement(new Particle(position, velocity));
 }
 
 void AbstractLevel::spawnParticle(unsigned int number, const Vector2f& position, const Vector2f& direction) {
   if (M::lengthSQ(direction) > 100) {
     for (unsigned index = 0; index != number; index ++) {
-      spawnParticle(position, direction * Vector2f(1, M::Randf(-1, 1)).norm());
+      spawnParticle(position, direction.rotate(Vector2f(1, M::Randf(-1, 1)).norm()));
     }
   }
 }
@@ -182,38 +178,20 @@ void AbstractLevel::removeListener(PlayerListener& listener) {
   }
 }
 
-void AbstractLevel::windParticles() {
-  Vector2f TopLeft  = windAt(S::Window.mapPixelToCoords({0, 0}, view));
-  Vector2f TopRight = windAt(S::Window.mapPixelToCoords({(int)S::ScreenSize.x, 0}, view));
-  Vector2f BotLeft  = windAt(S::Window.mapPixelToCoords({0, (int)S::ScreenSize.y}, view));
-  Vector2f BotRight = windAt(S::Window.mapPixelToCoords({(int)S::ScreenSize.x, (int)S::ScreenSize.y}, view));
-  bool inTL = (TopLeft.x > 0.0f && TopLeft.y > 0.0f);
-  bool inTR = (TopRight.x < 0.0f && TopRight.y > 0.0f);
-  bool inBL = (BotLeft.x > 0.0f && BotLeft.y < 0.0f);
-  bool inBR = (BotRight.x < 0.0f && BotRight.y < 0.0f);
+void AbstractLevel::windParticles(float dt) {
+  for (Surface& surface : surfaces) {
+    for (Edge& edge : surface.edges) {
+      edge.wind_cooldown -= dt;
+      if (edge.wind_cooldown <= 0.0f) {
+        edge.wind_cooldown = particle_rate;
+        Vector2f wind1 = windAt(edge.point);
+        Vector2f wind2 = windAt(edge.next->point);
 
-  // top edge
-  if (inTL || inTR) {
-    Vector2f point = S::Window.mapPixelToCoords({(int)M::Rand(0, (unsigned)S::ScreenSize.x), 0}, view);
-    spawnParticle(point, windAt(point), 10.0f);
-  }
-
-  // left edge
-  if (inTL || inBL) {
-    Vector2f point = S::Window.mapPixelToCoords({0, (int)M::Rand(0, (unsigned)S::ScreenSize.y)}, view);
-    spawnParticle(point, windAt(point), 10.0f);
-  }
-
-  // right edge
-  if (inTR || inBR) {
-    Vector2f point = S::Window.mapPixelToCoords({(int)S::ScreenSize.x, (int)M::Rand(0, (unsigned)S::ScreenSize.y)}, view);
-    spawnParticle(point, windAt(point), 10.0f);
-  }
-
-  // bottom edge
-  if (inBL || inBR) {
-    Vector2f point = S::Window.mapPixelToCoords({(int)M::Rand(0, (unsigned)S::ScreenSize.x), (int)S::ScreenSize.y}, view);
-    spawnParticle(point, windAt(point), 10.0f);
+        if (wind1.dot(edge.norm) >= 0 || wind2.dot(edge.norm) >= 0) {
+          spawnParticle(edge.point + edge.dire * M::Randf(0, 1), (wind1 + wind2) * 0.05f);
+        }
+      }
+    }
   }
 }
 

@@ -3,10 +3,10 @@
 #include "../levels/LevelLibrary.h"
 
 const float Bird2::ELASTIC = 0.75f;
-const float Bird2::GRAVITY = 256.0f;
+const float Bird2::GRAVITY = 384.0f;
 const float Bird2::ACCELERATION = 512.0f;
 const float Bird2::AIR_ACCELERATION = 0.0f;
-const float Bird2::JUMP = 128.0f;
+const float Bird2::JUMP = 180.0f;
 const float Bird2::RADIUS = 12.0f;
 const float Bird2::DRAG = 1.0f;
 
@@ -102,7 +102,7 @@ void Bird2::flap() {
   if (change.y != 0.0f) {
     change *= jump_strength;
     flap_cooldown = flap_max_cooldown;
-    LevelLibrary::current_level->spawnParticle(8, cur, change);
+    LevelLibrary::current_level->spawnParticle(8, cur, change * -1.0f);
     velocity += change;
   }
 }

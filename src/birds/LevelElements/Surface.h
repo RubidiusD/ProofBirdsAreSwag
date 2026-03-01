@@ -26,12 +26,14 @@ struct Edge {
   sf::Sprite sprite;
   sf::RenderTexture rt;
   float elasticity = 0.0f;
+  float wind_cooldown = 0.0f;
 
   explicit Edge(const Vector2f& p);
   Edge(const Edge& edge);
   void setNext(Edge* n);
   float getLength() const;
   std::shared_ptr<Collision> CollideCircle(const Vector2f& c, float r);
+  bool CollidePath(const Vector2f& n, const Vector2f& p) const;
   Vector2f chop(float r) const;
 };
 
@@ -40,12 +42,14 @@ struct Edge {
 // the normal of a surface is i* the vector
 class Surface {
 private:
-  std::vector<Edge> edges;
   sf::Sprite pen;
 public:
   std::shared_ptr<Collision> CollideCircle(const Vector2f& center, float radius);
+  bool CollidePath(const Vector2f& next, const Vector2f& prev) const;
   void render();
-  void initialiseTextures();
+  void initialiseTextures(float particle_rate);
+
+  std::vector<Edge> edges;
 
   explicit Surface(const std::vector<Vector2f>& points);
 };

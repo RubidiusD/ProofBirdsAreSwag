@@ -40,7 +40,7 @@ void BirdPlayer::update(float dt) {
     flap_cooldown = max_flap;
     stamina -= 1.0f;
     for (unsigned index = 0; index != 8; index ++) {
-      LevelLibrary::current_level->addElement(new Particle(getPosition(), Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm().i() * (100.0f + (float)M::Rand(0, 80)), 0.3f));
+      LevelLibrary::current_level->addElement(new Particle(getPosition(), Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm().i() * (100.0f + (float)M::Rand(0, 80))));
     }
   }
   else if (floor != nullptr) { // if on ground and not jumping

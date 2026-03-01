@@ -16,8 +16,9 @@ protected:
   std::vector<std::shared_ptr<AbstractWind>> winds;
   std::vector<PlayerListener*> listeners;
 
+  float particle_rate = 0.1f;
   void clearOut();
-  void windParticles();
+  void windParticles(float dt);
 
 public:
   void update(float dt);
@@ -36,7 +37,6 @@ public:
   void addListener(PlayerListener* element);
   void addEgg(const Vector2f& pos, const Vector2f& vel);
   void spawnParticle(const Vector2f& position, const Vector2f& velocity);
-  void spawnParticle(const Vector2f& position, const Vector2f& velocity, float duration);
   void spawnParticle(unsigned number, const Vector2f& position, const Vector2f& direction);
   void removeListener(PlayerListener& listener);
 

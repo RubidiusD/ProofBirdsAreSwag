@@ -21,7 +21,7 @@ protected:
   float egg_cooldown = 0.0f;
   float egg_max_cooldown = 1.0f;
   float flap_cooldown = 0.0f;
-  float flap_max_cooldown = 0.32f;
+  float flap_max_cooldown = 0.25f;
 
   void flap();
   void cooldowns(float dt);

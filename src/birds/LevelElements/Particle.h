@@ -6,8 +6,10 @@
 class Particle : public AbstractLevelElement {
 protected:
   float duration;
+  Vector2f prev_position;
 public:
-  Particle(const Vector2f& pos, const Vector2f& vel, float dur);
+  Particle(const Vector2f& pos, const Vector2f& vel);
+  bool surfaceCollide(Surface &surface) override;
   void update(float dt) override;
 };
 
