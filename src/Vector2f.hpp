@@ -10,12 +10,14 @@ struct Vector2f {
   float y = 0.0f;
 
   Vector2f() = default;
+  Vector2f(const Vector2f& rhs) = default;
   Vector2f(float x_, float y_) { x = x_; y = y_; }
   template<typename T> Vector2f(T x_, T y_) { x = (float)x_; y = (float)y_; }
-  Vector2f(const Vector2f& rhs) { x = rhs.x; y = rhs.y; }
+  Vector2f(const sf::Vector2f& rhs) { x = rhs.x; y = rhs.y; }
   template<typename T> Vector2f(const sf::Vector2<T>& rhs) { x = (float)rhs.x; y = (float)rhs.y; }
+
   operator sf::Vector2f() const { return {x, y}; }
-  operator sf::Vector2i() const { return {(int)x, (int)y}; }
+  template<typename T> operator sf::Vector2<T>() const { return {(T)x, (T)y}; }
 
   Vector2f& set(float x_, float y_) { x = x_; y = y_; return *this; }
   Vector2f& set(const Vector2f& rhs) { x = rhs.x; y = rhs.y; return *this; }
@@ -40,6 +42,7 @@ struct Vector2f {
 
   Vector2f operator()(const Vector2f& rhs) const { return {x * rhs.x, y * rhs.y}; }
   Vector2f operator()(float rhs) const { return {x * rhs, y * rhs}; }
+  float operator[](unsigned long long index) const { return (index == 1) ? y : x; }
 
   Vector2f conj() const { return {x, -y}; }
   Vector2f   rotate(const Vector2f& rhs) const { return {x*rhs.x - y*rhs.y, y*rhs.x + x*rhs.y}; }

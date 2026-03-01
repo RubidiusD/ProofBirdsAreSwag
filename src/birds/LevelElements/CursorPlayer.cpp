@@ -11,8 +11,8 @@ void CursorPlayer::initialise() {
   sprite.setTextureRect({0, 0, 16, 16});
 }
 
-bool CursorPlayer::SurfaceCollide(Surface &surface) {
-  return false;
+bool CursorPlayer::surfaceCollide(Surface &surface) {
+  return true;
 }
 
 void CursorPlayer::Point(const Vector2f &vector) {

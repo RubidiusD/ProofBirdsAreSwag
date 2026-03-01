@@ -13,10 +13,10 @@ protected:
   Vector2f ratio;
 public:
   virtual void Press();
-  void Depress();
-  void Select();
-  void Deselect();
-  void Drag(const Vector2f& vector);
+  virtual void Depress();
+  virtual void Select();
+  virtual void Deselect();
+  virtual void Drag(const Vector2f& vector);
 
   bool isInside(const Vector2f& vector);
   virtual void Render();

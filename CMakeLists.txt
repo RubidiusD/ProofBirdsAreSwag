@@ -46,16 +46,15 @@ set(SOURCE_FILES
     src/birds/LevelElements/Bird2.h src/birds/LevelElements/Bird2.cpp
     src/birds/LevelElements/BirdPlayer.h src/birds/LevelElements/BirdPlayer.cpp
     src/birds/LevelElements/PlayerListener.h src/birds/LevelElements/PlayerListener.cpp
+    src/birds/LevelElements/CursorPlayer.h src/birds/LevelElements/CursorPlayer.cpp
+    src/birds/LevelElements/Egg.h src/birds/LevelElements/Egg.cpp
 
     src/birds/levels/LevelLoader.hpp
     src/birds/levels/LevelLibrary.h src/birds/levels/LevelLibrary.cpp
 
     src/birds/levels/FlyingLevel.h src/birds/levels/FlyingLevel.cpp
     src/birds/levels/TestLevel.h src/birds/levels/TestLevel.cpp
-    src/birds/LevelElements/CursorPlayer.cpp
-    src/birds/LevelElements/CursorPlayer.h
-    src/birds/levels/TrackingLevel.cpp
-    src/birds/levels/TrackingLevel.h
+    src/birds/levels/TrackingLevel.h src/birds/levels/TrackingLevel.cpp
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 

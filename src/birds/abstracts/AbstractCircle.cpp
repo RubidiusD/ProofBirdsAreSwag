@@ -3,7 +3,7 @@
 #include "../LevelElements/Particle.h"
 #include "../levels/LevelLibrary.h"
 
-bool AbstractCircle::SurfaceCollide(Surface& surface) {
+bool AbstractCircle::surfaceCollide(Surface& surface) {
   std::shared_ptr<Collision> collision = surface.CollideCircle(getPosition(), radius);
   if (collision != nullptr && collision->edge != floor && collision->edge != floor2) {
     snapTo(collision);
@@ -94,9 +94,8 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   setPosition(collision->point + collision->normal * radius);
   float change = M::distanceSQ(old_vel, velocity);
   if (change > 1000.0f) {
-    for (unsigned index = 0; index != 4; index ++) {
-      LevelLibrary::current_level->addElement(new Particle(collision->point, collision->normal * Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm() * (1.0f + (float)M::Rand(0, 80) / 100.0f) * change, 0.3f));
-    }
+    LevelLibrary::current_level->spawnParticle(4, collision->point, velocity - old_vel);
+    LevelLibrary::current_level->spawnParticle(4, collision->point, collision->normal * change);
   }
   return true;
 }

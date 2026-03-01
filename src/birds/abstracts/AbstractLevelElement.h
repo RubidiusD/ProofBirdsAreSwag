@@ -3,6 +3,7 @@
 
 #include "../../Settings.h"
 #include "../../Vector2f.hpp"
+#include "../LevelElements/Surface.h"
 #include "AbstractWind.h"
 #include <SFML/Graphics/Sprite.hpp>
 #include <memory>
@@ -29,6 +30,8 @@ public:
       }
     }
   }
+  virtual void remove() {}
+  virtual bool surfaceCollide(Surface& surface) { return true; }
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_LEVEL_ELEMENT_H

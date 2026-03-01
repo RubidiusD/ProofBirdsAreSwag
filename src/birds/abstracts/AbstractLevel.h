@@ -1,6 +1,7 @@
 #ifndef BIRDSARESWAG_ABSTRACT_LEVEL_H
 #define BIRDSARESWAG_ABSTRACT_LEVEL_H
 
+#include "../LevelElements/Egg.h"
 #include "../LevelElements/PlayerListener.h"
 #include "AbstractPlayer.h"
 
@@ -9,10 +10,14 @@ protected:
   std::vector<Surface> surfaces;
   std::shared_ptr<AbstractPlayer> player;
   std::vector<std::shared_ptr<AbstractLevelElement>> elements;
+  std::vector<std::shared_ptr<Egg>> eggs;
   Vector2f player_spawn;
   sf::View view;
   std::vector<std::shared_ptr<AbstractWind>> winds;
-  std::vector<std::shared_ptr<PlayerListener>> listeners;
+  std::vector<PlayerListener*> listeners;
+
+  void clearOut();
+  void windParticles();
 
 public:
   void update(float dt);
@@ -29,8 +34,13 @@ public:
   void Resize() override;
   void addElement(AbstractLevelElement* element);
   void addListener(PlayerListener* element);
+  void addEgg(const Vector2f& pos, const Vector2f& vel);
   void spawnParticle(const Vector2f& position, const Vector2f& velocity);
+  void spawnParticle(const Vector2f& position, const Vector2f& velocity, float duration);
   void spawnParticle(unsigned number, const Vector2f& position, const Vector2f& direction);
+  void removeListener(PlayerListener& listener);
+
+  Vector2f windAt(const Vector2f& point) const;
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_LEVEL_H

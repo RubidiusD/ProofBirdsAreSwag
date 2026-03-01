@@ -1,5 +1,5 @@
 #include "Particle.h"
-#include "../../../../QuacksOfQuedlinburg/src/MathLib.h"
+#include "../../MathLib.h"
 #include "../../managers/AssetManager.h"
 
 void Particle::update(float dt) {
@@ -9,14 +9,14 @@ void Particle::update(float dt) {
     return;
   }
 
-  velocity += air_current * dt;
+  velocity += (air_current - velocity) * dt;
   sprite.move(velocity * dt);
 }
 
 Particle::Particle(const Vector2f& pos, const Vector2f& vel, float dur) : AbstractLevelElement() {
   sprite.setTexture(AssetManager::getTexture(101));
-  sprite.setTextureRect({0, M::Rand4() * 2, 2, 2});
-  sprite.setOrigin(1, 1);
+  sprite.setTextureRect({M::Rand4() * 3, M::Rand8() * 3, 3, 3});
+  sprite.setOrigin(1, 2);
   sprite.setPosition(pos);
   sprite.setRotation((float)M::Rand(0, 359));
   velocity = vel;

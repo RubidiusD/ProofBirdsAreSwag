@@ -16,6 +16,14 @@ TextButton::TextButton(unsigned font, const sf::String& text_, const Neighbours&
 
 }
 
+void TextButton::Select() {
+  text.setFillColor(sf::Color::Yellow);
+}
+
+void TextButton::Deselect() {
+  text.setFillColor(sf::Color::White);
+}
+
 void TextButton::Render() {
   AbstractButton::Render();
   S::Window.draw(text);

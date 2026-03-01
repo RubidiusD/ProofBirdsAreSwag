@@ -24,8 +24,8 @@ enum ChaseState {
   Guessing
 };
 
-class PlayerListener : public AbstractLevelElement {
-protected:
+struct PlayerListener {
+private:
   std::vector<Sighting> s;
   std::vector<Vector2f> c;
   int m = 4;
@@ -35,6 +35,7 @@ public:
   void QuarryIs(const Vector2f& pos, float dt);
   void QuarryIsNot(float dt);
   Vector2f f(float t);
+  Vector2f current_position();
   void setCoefficients(const Vector2f*& coefficients, int number);
   void setCoefficient(int index, const Vector2f& value);
 };

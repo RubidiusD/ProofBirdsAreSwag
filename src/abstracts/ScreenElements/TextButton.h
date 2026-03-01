@@ -12,6 +12,8 @@ public:
   TextButton(unsigned font, const sf::String& text_, const Neighbours& n, const Vector2f& ratio_);
 
   void Render() override;
+  void Select() override;
+  void Deselect() override;
 };
 
 #endif // BIRDSARESWAG_TEXT_BUTTON_H

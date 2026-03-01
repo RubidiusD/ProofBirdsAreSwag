@@ -7,6 +7,7 @@
 100: Floor Tiles
 101: Particles
 
+110: Egg
 111: Bird1
 112: Bird1's wing
 

@@ -36,6 +36,7 @@ float M::distanceSQ(const Vector2f& a, const Vector2f& b) {
 
 std::uniform_int_distribution<uint32_t> M::rand2(0,1);
 std::uniform_int_distribution<uint32_t> M::rand4(0,3);
+std::uniform_int_distribution<uint32_t> M::rand8(0,7);
 std::uniform_int_distribution<uint32_t> M::rand;
 M::MyRNG M::rng(_abs64(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())));
 
@@ -45,6 +46,10 @@ bool M::Rand2() {
 
 unsigned short M::Rand4() {
   return rand4(rng);
+}
+
+unsigned short M::Rand8() {
+  return rand8(rng);
 }
 
 unsigned M::Rand() {

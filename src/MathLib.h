@@ -21,6 +21,7 @@ public:
 
   static bool Rand2();
   static unsigned short Rand4();
+  static unsigned short Rand8();
   static unsigned Rand();
   static unsigned Rand(unsigned lower_bound, unsigned upper_bound);
   static float Randf(float lower_bound, float upper_bound);
@@ -30,6 +31,7 @@ private:
   static MyRNG rng;
   static std::uniform_int_distribution<uint32_t> rand2;
   static std::uniform_int_distribution<uint32_t> rand4;
+  static std::uniform_int_distribution<uint32_t> rand8;
   static std::uniform_int_distribution<uint32_t> rand;
 };
 

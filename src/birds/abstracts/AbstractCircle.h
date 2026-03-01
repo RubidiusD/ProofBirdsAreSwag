@@ -5,6 +5,7 @@
 #include "../LevelElements/Surface.h"
 #include "AbstractWind.h"
 #include <SFML/Graphics/Sprite.hpp>
+
 class AbstractCircle : public AbstractLevelElement {
 protected:
   const float max_steepness = -0.0f;
@@ -27,7 +28,7 @@ public:
 
   bool snapTo(const std::shared_ptr<Collision>& collision);
   bool snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2);
-  virtual bool SurfaceCollide(Surface& surface);
+  bool surfaceCollide(Surface& surface) override;
   void setPosition(const Vector2f& pos);
   void setPosition(const Vector2f& pos, bool override);
   Vector2f getPosition() const;

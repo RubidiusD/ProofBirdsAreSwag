@@ -35,9 +35,10 @@ void TrackingLevel::load() {
   }));
   player = std::make_shared<AbstractPlayer>();
   player_spawn.set(150.0f, -30.0f);
-  addListener(new Bird2());
+  addElement(new Bird2());
   elements.back()->moveTo(-150.0f, -30.0f);
   view.setCenter(0, 0);
+  winds.emplace_back(new AbstractWind({-50.0f, 30.0f}));
 
   AbstractLevel::load();
 }
@@ -58,18 +59,6 @@ void TrackingLevel::close() {
   S::Window.setMouseCursorVisible(true);
   AbstractLevel::close();
 }
-
-//void TrackingLevel::render() {
-//  S::Window.clear(sf::Color::White);
-//  S::Window.setView(view);
-//  player->render();
-//  for (Surface& surface : surfaces) {
-//    surface.render();
-//  }
-//  for (std::shared_ptr<AbstractLevelElement>& element : elements) {
-//    element->render();
-//  }
-//}
 
 void TrackingLevel::Point(const Vector2f &vector) {
   player->Point(S::Window.mapPixelToCoords(sf::Vector2i(vector), view));

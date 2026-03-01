@@ -87,3 +87,15 @@ void PlayerListener::setCoefficient(int index, const Vector2f& value) {
   }
   c[index] = value;
 }
+
+Vector2f PlayerListener::current_position() {
+  if (!s.empty() || s.back().t == 0.0f) {
+    return s.back().p;
+  }
+  else if (s.empty()) {
+    return {};
+  }
+  else {
+    return c[0];
+  }
+}

@@ -10,7 +10,7 @@ public:
 public:
   void update(float dt) override;
   void Point(const Vector2f &vector) override;
-  bool SurfaceCollide(Surface &surface) override;
+  bool surfaceCollide(Surface &surface) override;
 };
 
 #endif // BIRDSARESWAG_CURSOR_PLAYER_H
