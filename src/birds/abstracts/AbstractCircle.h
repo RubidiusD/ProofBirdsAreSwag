@@ -24,15 +24,18 @@ protected:
   float elasticity = 0.0f;
 
 public:
+  AbstractCircle(const Vector2f& spawn) : AbstractLevelElement(spawn) {}
+
   float radius = 16.0f;
 
   virtual bool snapTo(const std::shared_ptr<Collision>& collision);
   virtual bool snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2);
   bool surfaceCollide(Surface& surface) override;
-  void setPosition(const Vector2f& pos);
-  void setPosition(const Vector2f& pos, bool override);
+  void setPosition(const Vector2f& pos) override;
+  void setPosition(const Vector2f& pos, bool override) override;
   bool circleCollide(const Vector2f& c, float r) const override;
   void applyWind(const std::vector<std::shared_ptr<AbstractWind>>& winds) override;
+  void spawn() override;
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_CIRCLE_H

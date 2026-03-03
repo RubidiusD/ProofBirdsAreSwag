@@ -11,7 +11,6 @@ protected:
   std::shared_ptr<AbstractPlayer> player;
   std::vector<std::shared_ptr<AbstractLevelElement>> elements;
   std::vector<std::shared_ptr<Egg>> eggs;
-  Vector2f player_spawn;
   sf::View view;
   std::vector<std::shared_ptr<AbstractWind>> winds;
   std::vector<PlayerListener*> listeners;

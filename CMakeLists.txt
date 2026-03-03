@@ -55,6 +55,7 @@ set(SOURCE_FILES
     src/birds/levels/FlyingLevel.h src/birds/levels/FlyingLevel.cpp
     src/birds/levels/TestLevel.h src/birds/levels/TestLevel.cpp
     src/birds/levels/TrackingLevel.h src/birds/levels/TrackingLevel.cpp
+    src/birds/LevelElements/EggParticle.h
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 

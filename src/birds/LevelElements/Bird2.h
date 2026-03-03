@@ -29,6 +29,8 @@ protected:
   void flap();
   void cooldowns(float dt);
 public:
+  Bird2(const Vector2f& pos) : AbstractCircle(pos) {}
+
   void render() override;
   void initialise() override;
   void update(float dt) override;

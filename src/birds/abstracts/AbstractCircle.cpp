@@ -155,6 +155,12 @@ void AbstractCircle::applyWind(const std::vector<std::shared_ptr<AbstractWind>>&
     }
   }
 }
+
 bool AbstractCircle::circleCollide(const Vector2f& c, float r) const {
   return (c.disSqr(getPosition()) <= (r+radius)*(r+radius));
+}
+
+void AbstractCircle::spawn() {
+  setPosition(spawn_location, true);
+  velocity.set(0.0f, 0.0f);
 }

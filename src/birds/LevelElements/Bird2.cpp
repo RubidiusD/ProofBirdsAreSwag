@@ -21,6 +21,7 @@ void Bird2::initialise() {
   AbstractCircle::initialise();
 
   AssetManager::RegisterTexture("Data/images/Particles3.png", 101);
+  AssetManager::RegisterTexture("Data/images/EggParticles.png", 102);
   AssetManager::RegisterTexture("Data/images/Egg.png", 110);
   for (auto&  prediction : predictions) {
     prediction.setTexture(AssetManager::getTexture(101));
@@ -86,7 +87,7 @@ void Bird2::update(float dt) {
 bool Bird2::isAimGood(const Vector2f& v) {
   eggPredictor.setCoefficient(0, getPosition());
   eggPredictor.setCoefficient(1, v);
-  eggPredictor.setCoefficient(2, (air_current + Vector2f{0, 640.0f}) / 2);
+  eggPredictor.setCoefficient(2, (air_current / 2 + Vector2f{0, 640.0f}) / 2);
 
   return eggPredictor.nearest(playerPredictor, 0.2f) < 256.0f;
 }

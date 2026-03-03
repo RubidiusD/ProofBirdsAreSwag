@@ -5,7 +5,7 @@ const float AbstractPlayer::GRAVITY = 1200.0f;
 const float AbstractPlayer::ACCELERATION = 960.0f;
 const float AbstractPlayer::AIR_ACCELERATION = 480.0f;
 const float AbstractPlayer::JUMP = 360.0f;
-const float AbstractPlayer::DRAG = 2.0f;
+const float AbstractPlayer::DRAG = 1.75f;
 const float AbstractPlayer::ELASTIC = 0.5f;
 
 void AbstractPlayer::update(float dt) {
@@ -27,6 +27,13 @@ void AbstractPlayer::update(float dt) {
   }
 
   sprite.move(velocity * dt);
+
+  if (i_timer != 0.0f) {
+    i_timer -= dt;
+    if (i_timer < 0.0f) {
+      i_timer = 0.0f;
+    }
+  }
 
   stickToFloor();
 }
@@ -58,7 +65,12 @@ void AbstractPlayer::initialise() {
   lives_sprite.setPosition(16, S::Res.y - 64);
 }
 
-bool AbstractPlayer::hurt() {
+bool AbstractPlayer::hurt(const Vector2f& source) {
+  velocity += (getPosition() - source).norm() * 360.0f;
+  if (i_timer != 0.0f) {
+    return false;
+  }
+  i_timer = max_i_timer;
   lives --;
   lives_sprite.setTextureRect({0, 0, lives * 48, 48});
   return !(alive = (lives > 0));
@@ -68,7 +80,9 @@ void AbstractPlayer::renderUI() {
   S::Window.draw(lives_sprite);
 }
 
-void AbstractPlayer::respawn() {
+void AbstractPlayer::spawn() {
   lives = max_lives;
+  lives_sprite.setTextureRect({0, 0, lives * 48, 48});
   velocity.set(0, 0);
+  setPosition(spawn_location, true);
 }

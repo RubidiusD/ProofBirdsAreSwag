@@ -31,8 +31,7 @@ void TestLevel::load() {
       { 57, -20},
       {-23,   0},
   }));
-  player_spawn = {200, 50};
-  player = std::make_shared<AbstractPlayer>();
+  player = std::make_shared<AbstractPlayer>(Vector2f{200, 50});
   winds.emplace_back(std::make_shared<AbstractWind>(Vector2f(-9/6.0f, 12.0f)));
 
   AbstractLevel::load();

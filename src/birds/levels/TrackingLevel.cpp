@@ -49,10 +49,8 @@ void TrackingLevel::load() {
       {-118,   95},
       {-159,   19},
   }));
-  player = std::make_shared<AbstractPlayer>();
-  player_spawn.set(150.0f, -30.0f);
-  addElement(new Bird2());
-  elements.back()->moveTo(-150.0f, -30.0f);
+  player = std::make_shared<AbstractPlayer>(Vector2f{150.0f, -30.0f});
+  addElement(new Bird2({-150.0f, -30.0f}));
   winds.emplace_back(new AbstractWind({-60.0f, -10.0f}, 0.5f));
 
   AbstractLevel::load();

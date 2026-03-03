@@ -19,9 +19,14 @@ private:
 protected:
   Vector2f intent;
   bool jumping = false;
-  int lives, max_lives = 3;
+  int max_lives = 3;
+  int lives = 3;
   sf::Sprite lives_sprite;
+  float i_timer = 0.25f;
+  float max_i_timer = 0.25f;
 public:
+  AbstractPlayer(const Vector2f& spawn) : AbstractCircle(spawn) {}
+
   void update(float dt) override;
   void initialise() override;
 
@@ -30,8 +35,8 @@ public:
   virtual void renderUI();
 
   void Jump(bool down);
-  bool hurt();
-  void respawn();
+  bool hurt(const Vector2f& source);
+  void spawn() override;
 };
 
 #endif // BIRDSARESWAG_ABSTRACTPLAYER_H

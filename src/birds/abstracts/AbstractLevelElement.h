@@ -13,13 +13,18 @@ protected:
   sf::Sprite sprite;
   Vector2f velocity;
   Vector2f air_current;
+  Vector2f spawn_location;
 
 public:
+  AbstractLevelElement(const Vector2f& spawn) {
+    spawn_location = spawn;
+  }
+
   bool alive = true;
 
   virtual void update(float dt) { sprite.move(velocity * dt); }
   virtual void render() { S::Window.draw(sprite); }
-  virtual void initialise() {}
+  virtual void initialise() { setPosition(spawn_location); }
   virtual void moveTo(const Vector2f& pos) {sprite.setPosition(pos);}
   virtual void moveTo(float x, float y) {sprite.setPosition(x, y);}
   virtual void applyWind(const std::vector<std::shared_ptr<AbstractWind>>& winds) {
@@ -34,6 +39,9 @@ public:
   virtual bool surfaceCollide(Surface& surface) { return true; }
   virtual bool circleCollide(const Vector2f& c, float r) const { return (c.disSqr(getPosition()) <= r * r); }
   virtual Vector2f getPosition() const { return sprite.getPosition(); }
+  virtual void setPosition(const Vector2f& p) { sprite.setPosition(p); }
+  virtual void setPosition(const Vector2f& p, bool force) { sprite.setPosition(p); }
+  virtual void spawn() { setPosition(spawn_location, true); }
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_LEVEL_ELEMENT_H

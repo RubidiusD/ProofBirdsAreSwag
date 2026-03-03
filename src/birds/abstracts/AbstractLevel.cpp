@@ -48,9 +48,8 @@ void AbstractLevel::update(float dt) {
 
   for (std::shared_ptr<Egg>& egg : eggs) {
     if (egg->circleCollide(player->getPosition(), player->radius)) {
-      egg->destroy();
-      if (player->hurt()) {
-
+      if (player->hurt(egg->getPosition())) {
+        open();
       }
     }
   }
@@ -89,8 +88,10 @@ void AbstractLevel::load() {
 void AbstractLevel::open() {
   listening_to_inputs = true;
   Resize();
-  player->setPosition(player_spawn, true);
-  player->respawn();
+  player->spawn();
+  for (std::shared_ptr<AbstractLevelElement>& element : elements) {
+    element->spawn();
+  }
 }
 
 void AbstractLevel::close() {
