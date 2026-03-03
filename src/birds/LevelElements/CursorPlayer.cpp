@@ -11,10 +11,10 @@ void CursorPlayer::initialise() {
   sprite.setTextureRect({0, 0, 16, 16});
 }
 
-bool CursorPlayer::surfaceCollide(Surface &surface) {
+bool CursorPlayer::surfaceCollide(Surface& surface) {
   return true;
 }
 
-void CursorPlayer::Point(const Vector2f &vector) {
+void CursorPlayer::Point(const Vector2f& vector) {
   setPosition(vector, true);
 }

@@ -90,7 +90,7 @@ void BirdPlayer::fly(float dt) {
   }
 }
 
-void BirdPlayer::Look(const Vector2f &vector) {
+void BirdPlayer::Look(const Vector2f& vector) {
   wing_direction = vector.norm();
   wing.setRotation(atan2f(vector.y, vector.x) * 180.0f / 3.1415926535f);
 }
@@ -100,7 +100,7 @@ void BirdPlayer::render() {
   S::Window.draw(wing);
 }
 
-void BirdPlayer::moveTo(const Vector2f &pos) {
+void BirdPlayer::moveTo(const Vector2f& pos) {
   sprite.setPosition(pos);
   wing.setPosition(pos);
 }

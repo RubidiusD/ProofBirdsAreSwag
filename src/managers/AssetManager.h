@@ -38,6 +38,7 @@ public:
   static const sf::Texture& getTexture(unsigned ID);
   static const sf::Font& getFont(unsigned ID);
   static const sf::SoundBuffer& getSound(unsigned ID);
+  static void makeRepeating(unsigned ID);
 };
 
 #endif // BIRDSARESWAG_ASSET_MANAGER_H

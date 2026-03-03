@@ -37,7 +37,6 @@ void PlayerListener::QuarryIs(const Vector2f& pos, float dt) {
     c[0] = s[0].p - c[1] * s[0].t - c[2] * s[0].t * s[0].t;
     break;
   case (4):
-//    printf("Quality max: ");
     Vector2f a = (s[0].p-s[1].p)/(s[0].t-s[1].t);
     Vector2f b = (a - (s[0].p-s[2].p)/(s[0].t-s[2].t)) / (s[1].t - s[2].t);
     c[3] = (b - (a - (s[0].p-s[3].p)/(s[0].t-s[3].t)) / (s[1].t - s[3].t)) / (s[2].t - s[3].t);
@@ -46,11 +45,6 @@ void PlayerListener::QuarryIs(const Vector2f& pos, float dt) {
     c[0] = s[0].p - c[1]*(s[0].t) - c[2]*(s[0].t*s[0].t) - c[3]*(s[0].t*s[0].t*s[0].t);
     break;
   }
-
-//  for (const Vector2f& v : c) {
-//    v.print();
-//  }
-//  printf("\n");
 }
 
 void PlayerListener::QuarryIsNot(float dt) {
@@ -61,16 +55,13 @@ void PlayerListener::QuarryIsNot(float dt) {
   }
 }
 
-Vector2f PlayerListener::f(float t) {
+Vector2f PlayerListener::f(float t) const {
   float time = 1;
   Vector2f total;
-  for (Vector2f& coefficient : c) {
+  for (const Vector2f& coefficient : c) {
     total += coefficient * time;
     time *= t;
   }
-//  printf("F(%f) = ", t);
-//  total.print();
-//  printf("\n");
   return total;
 }
 
@@ -88,7 +79,7 @@ void PlayerListener::setCoefficient(int index, const Vector2f& value) {
   c[index] = value;
 }
 
-Vector2f PlayerListener::current_position() {
+Vector2f PlayerListener::current_position() const {
   if (!s.empty() || s.back().t == 0.0f) {
     return s.back().p;
   }
@@ -98,4 +89,44 @@ Vector2f PlayerListener::current_position() {
   else {
     return c[0];
   }
+}
+
+float PlayerListener::nearest(const PlayerListener& rhs, float step) const {
+  float best_distance, second_best_distance = 999999999999999999999999999.0f;
+  float best_time, second_best_time = 0.0f;
+  for (int index = 1; index != 9; index ++) {
+    float time = step * (float)index;
+    float dis = f(time).disSqr(rhs.f(time));
+    if (dis < best_distance) {
+      second_best_distance = best_distance;
+      second_best_time = best_time;
+      best_distance = dis;
+      best_time = time;
+    }
+    else if (dis < second_best_distance) {
+      second_best_distance = dis;
+      second_best_time = time;
+    }
+  }
+
+  if (fabsf(best_time - second_best_time) == step) {
+    for (int index = 0; index != 5; index ++) {
+//      float checking_time = (lower_time * upper_dis + upper_time * lower_dis) / (upper_dis + lower_dis);
+      float checking_time = (best_time + second_best_time) / 2;
+      float checking_dis = f(checking_time).disSqr(rhs.f(checking_time));
+
+      if (checking_dis < best_distance) {
+        second_best_distance = best_distance;
+        second_best_time = best_time;
+        best_distance = checking_dis;
+        best_time = checking_time;
+      }
+      else if (checking_dis < second_best_distance) {
+        second_best_distance = checking_dis;
+        second_best_time = checking_time;
+      }
+    }
+  }
+
+  return best_distance;
 }

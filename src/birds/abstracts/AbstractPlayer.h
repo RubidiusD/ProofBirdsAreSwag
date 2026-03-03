@@ -19,13 +19,19 @@ private:
 protected:
   Vector2f intent;
   bool jumping = false;
+  int lives, max_lives = 3;
+  sf::Sprite lives_sprite;
 public:
   void update(float dt) override;
   void initialise() override;
 
   void Move(const Vector2f& vector) override;
 
+  virtual void renderUI();
+
   void Jump(bool down);
+  bool hurt();
+  void respawn();
 };
 
 #endif // BIRDSARESWAG_ABSTRACTPLAYER_H

@@ -8,7 +8,7 @@ public:
   void load() override;
 
 private:
-  void Point(const Vector2f &vector) override;
+  void Point(const Vector2f& vector) override;
 
 public:
   void open() override;

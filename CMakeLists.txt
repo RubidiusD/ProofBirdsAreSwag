@@ -8,7 +8,7 @@ if(WIN32)
   set(CMAKE_EXE_LINKER_FLAGS "-static")
 endif()
 
-#---- File management & .exe creation ----#
+#---- File management&  .exe creation ----#
 
 find_package(SFML 2.5.1 COMPONENTS system window graphics network audio)
 set(SOURCE_FILES

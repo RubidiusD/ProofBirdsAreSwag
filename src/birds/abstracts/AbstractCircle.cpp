@@ -77,10 +77,6 @@ void AbstractCircle::stickToFloor() {
   }
 }
 
-Vector2f AbstractCircle::getPosition() const {
-  return sprite.getPosition();
-}
-
 bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   if (collision == nullptr) {
     return false;
@@ -158,4 +154,7 @@ void AbstractCircle::applyWind(const std::vector<std::shared_ptr<AbstractWind>>&
       air_current += wind->velocity;
     }
   }
+}
+bool AbstractCircle::circleCollide(const Vector2f& c, float r) const {
+  return (c.disSqr(getPosition()) <= (r+radius)*(r+radius));
 }

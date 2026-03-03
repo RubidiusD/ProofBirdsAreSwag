@@ -30,7 +30,7 @@ public:
   bool isLoaded = false;
   void Move(const Vector2f& vector) override;
   void Select(bool down) override;
-  void Look(const Vector2f &vector) override;
+  void Look(const Vector2f& vector) override;
   void Pause(bool down) override;
   void Resize() override;
   void addElement(AbstractLevelElement* element);

@@ -10,7 +10,7 @@ bool M::limit(Vector2f& v) {
   return false;
 }
 
-bool M::limit(Vector2f &v, float m) {
+bool M::limit(Vector2f& v, float m) {
   float mag = v.x * v.x + v.y * v.y;
   if (mag < m * m) {
     return false;
@@ -20,7 +20,7 @@ bool M::limit(Vector2f &v, float m) {
   return true;
 }
 
-bool M::limit(Vector2f &v, float m, float dt) {
+bool M::limit(Vector2f& v, float m, float dt) {
   float mag = v.x * v.x + v.y * v.y;
   if (mag < m * m) {
     return false;
@@ -90,6 +90,6 @@ float M::parallelMag(const Vector2f& v, const Vector2f& n, bool normalised) {
   return normalised ? v.x*n.x + v.y*n.y : parallelMag(v, n);
 }
 
-Vector2f M::cross(const Vector2f &a, const Vector2f &b) {
+Vector2f M::cross(const Vector2f& a, const Vector2f& b) {
   return {a.x * b.x + a.y * b.y, a.y * b.x - a.x + b.y};
 }

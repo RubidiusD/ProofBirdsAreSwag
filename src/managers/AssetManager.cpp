@@ -47,15 +47,22 @@ bool AssetManager::RegisterSound(const sf::String& path, unsigned ID) {
 }
 
 const sf::Texture& AssetManager::getTexture(unsigned ID) {
-  return (BinarySearch<TextureAsset>(Textures, ID)->texture);
+  return (BinarySearch(Textures, ID)->texture);
 }
 
 const sf::Font& AssetManager::getFont(unsigned ID) {
-  return (BinarySearch<FontAsset>(Fonts, ID)->font);
+  return (BinarySearch(Fonts, ID)->font);
 }
 
 const sf::SoundBuffer& AssetManager::getSound(unsigned ID) {
-  return (BinarySearch<SoundAsset>(Sounds, ID)->sound);
+  return (BinarySearch(Sounds, ID)->sound);
+}
+
+void AssetManager::makeRepeating(unsigned int ID) {
+  TextureAsset* texture = BinarySearch(Textures, ID);
+  if (texture != nullptr) {
+    texture->texture.setRepeated(true);
+  }
 }
 
 template <typename type>

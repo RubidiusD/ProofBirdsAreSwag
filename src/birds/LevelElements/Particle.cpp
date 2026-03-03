@@ -24,7 +24,7 @@ Particle::Particle(const Vector2f& pos, const Vector2f& vel) : AbstractLevelElem
   duration = 20.0f;
 }
 
-bool Particle::surfaceCollide(Surface &surface) {
+bool Particle::surfaceCollide(Surface& surface) {
   if (surface.CollidePath(sprite.getPosition(), prev_position)) {
     alive = false;
   }

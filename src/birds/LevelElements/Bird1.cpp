@@ -45,12 +45,12 @@ void Bird1::render() {
   S::Window.draw(wing);
 }
 
-void Bird1::Point(const std::shared_ptr<AbstractCircle> &t) {
+void Bird1::Point(const std::shared_ptr<AbstractCircle>& t) {
   target = t->getPosition();
   target_r = (target - getPosition()).norm();
 }
 
-void Bird1::moveTo(const Vector2f &pos) {
+void Bird1::moveTo(const Vector2f& pos) {
   sprite.setPosition(pos);
   wing.setPosition(pos);
 }

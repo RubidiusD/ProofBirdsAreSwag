@@ -46,6 +46,15 @@ void AbstractLevel::update(float dt) {
     }
   }
 
+  for (std::shared_ptr<Egg>& egg : eggs) {
+    if (egg->circleCollide(player->getPosition(), player->radius)) {
+      egg->destroy();
+      if (player->hurt()) {
+
+      }
+    }
+  }
+
   clearOut();
 }
 
@@ -60,6 +69,8 @@ void AbstractLevel::render() {
   for (std::shared_ptr<AbstractLevelElement>& element : elements) {
     element->render();
   }
+  S::Window.setView(S::UI_View);
+  player->renderUI();
 }
 
 void AbstractLevel::load() {
@@ -79,6 +90,7 @@ void AbstractLevel::open() {
   listening_to_inputs = true;
   Resize();
   player->setPosition(player_spawn, true);
+  player->respawn();
 }
 
 void AbstractLevel::close() {
@@ -138,7 +150,7 @@ void AbstractLevel::addEgg(const Vector2f& pos, const Vector2f& vel) {
   eggs.back()->initialise();
 }
 
-void AbstractLevel::Look(const Vector2f &vector) {
+void AbstractLevel::Look(const Vector2f& vector) {
   player->Look(vector);
 }
 
@@ -168,7 +180,7 @@ void AbstractLevel::clearOut() {
 
 void AbstractLevel::removeListener(PlayerListener& listener) {
   for (int index = 0; index != listeners.size(); index ++) {
-    if (listeners[index] == &listener) {
+    if (listeners[index] ==& listener) {
       for (int i = index + 1; i != listeners.size(); i ++) {
         listeners[i - 1] = listeners[i];
       }
@@ -195,7 +207,7 @@ void AbstractLevel::windParticles(float dt) {
   }
 }
 
-Vector2f AbstractLevel::windAt(const Vector2f &point) const {
+Vector2f AbstractLevel::windAt(const Vector2f& point) const {
   Vector2f total;
   for (const std::shared_ptr<AbstractWind>& wind : winds) {
     if (wind->isInside(point, 0)) {

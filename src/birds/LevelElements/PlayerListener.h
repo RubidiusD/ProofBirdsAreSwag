@@ -34,10 +34,11 @@ private:
 public:
   void QuarryIs(const Vector2f& pos, float dt);
   void QuarryIsNot(float dt);
-  Vector2f f(float t);
-  Vector2f current_position();
+  Vector2f f(float t) const;
+  Vector2f current_position() const;
   void setCoefficients(const Vector2f*& coefficients, int number);
   void setCoefficient(int index, const Vector2f& value);
+  float nearest(const PlayerListener& rhs, float step) const;
 };
 
 #endif // BIRDSARESWAG_PLAYER_LISTENER_H

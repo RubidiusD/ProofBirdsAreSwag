@@ -5,7 +5,7 @@ const float AbstractPlayer::GRAVITY = 1200.0f;
 const float AbstractPlayer::ACCELERATION = 960.0f;
 const float AbstractPlayer::AIR_ACCELERATION = 480.0f;
 const float AbstractPlayer::JUMP = 360.0f;
-const float AbstractPlayer::DRAG = 1.0f;
+const float AbstractPlayer::DRAG = 2.0f;
 const float AbstractPlayer::ELASTIC = 0.5f;
 
 void AbstractPlayer::update(float dt) {
@@ -50,4 +50,25 @@ void AbstractPlayer::initialise() {
   AssetManager::RegisterTexture("Data/images/Player.png", 99);
   sprite.setTexture(AssetManager::getTexture(99));
   sprite.setOrigin(16, 16);
+
+  AssetManager::RegisterTexture("Data/images/Heart.png", 98);
+  AssetManager::makeRepeating(98);
+  lives_sprite.setTexture(AssetManager::getTexture(98));
+  lives_sprite.setTextureRect(sf::IntRect(0, 0, max_lives * 48, 48));
+  lives_sprite.setPosition(16, S::Res.y - 64);
+}
+
+bool AbstractPlayer::hurt() {
+  lives --;
+  lives_sprite.setTextureRect({0, 0, lives * 48, 48});
+  return !(alive = (lives > 0));
+}
+
+void AbstractPlayer::renderUI() {
+  S::Window.draw(lives_sprite);
+}
+
+void AbstractPlayer::respawn() {
+  lives = max_lives;
+  velocity.set(0, 0);
 }

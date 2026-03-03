@@ -3,6 +3,7 @@
 001: Text Box
 002: Cursor
 
+098: Hearts
 099: Player
 100: Floor Tiles
 101: Particles

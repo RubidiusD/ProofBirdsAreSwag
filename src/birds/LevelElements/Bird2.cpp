@@ -6,7 +6,7 @@ const float Bird2::ELASTIC = 0.75f;
 const float Bird2::GRAVITY = 384.0f;
 const float Bird2::ACCELERATION = 512.0f;
 const float Bird2::AIR_ACCELERATION = 0.0f;
-const float Bird2::JUMP = 180.0f;
+const float Bird2::JUMP = 256.0f;
 const float Bird2::RADIUS = 12.0f;
 const float Bird2::DRAG = 1.0f;
 
@@ -22,7 +22,7 @@ void Bird2::initialise() {
 
   AssetManager::RegisterTexture("Data/images/Particles3.png", 101);
   AssetManager::RegisterTexture("Data/images/Egg.png", 110);
-  for (auto & prediction : predictions) {
+  for (auto&  prediction : predictions) {
     prediction.setTexture(AssetManager::getTexture(101));
     prediction.setTextureRect({0, 0, 2, 2});
   }
@@ -58,20 +58,37 @@ void Bird2::update(float dt) {
 
   cooldowns(dt);
 
-  if (flap_cooldown == 0.0f) {
+  if (spray == 0 && flap_cooldown == 0.0f) {
     flap();
   }
 
   moveTo(velocity * dt + sprite.getPosition());
 
-  if (egg_cooldown == 0.0f && isAimGood()) {
-    LevelLibrary::current_level->addEgg(getPosition(), velocity);
-    egg_cooldown = egg_max_cooldown;
+  Vector2f firing_velocity = velocity;
+  firing_velocity.y += jump_strength;
+  if (egg_cooldown == 0.0f && (spray != 0 || isAimGood(firing_velocity))) {
+    LevelLibrary::current_level->addEgg(getPosition(), firing_velocity);
+    if (spray == 1) {
+      egg_cooldown = egg_max_cooldown;
+      spray = 0;
+    }
+    else if (spray == 0) {
+      egg_cooldown = egg_between_cooldown;
+      spray = max_spray - 1;
+    }
+    else {
+      egg_cooldown = egg_between_cooldown;
+      spray --;
+    }
   }
 }
 
-bool Bird2::isAimGood() {
-  return false;
+bool Bird2::isAimGood(const Vector2f& v) {
+  eggPredictor.setCoefficient(0, getPosition());
+  eggPredictor.setCoefficient(1, v);
+  eggPredictor.setCoefficient(2, (air_current + Vector2f{0, 640.0f}) / 2);
+
+  return eggPredictor.nearest(playerPredictor, 0.2f) < 256.0f;
 }
 
 void Bird2::cooldowns(float dt) {

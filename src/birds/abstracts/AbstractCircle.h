@@ -26,12 +26,12 @@ protected:
 public:
   float radius = 16.0f;
 
-  bool snapTo(const std::shared_ptr<Collision>& collision);
-  bool snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2);
+  virtual bool snapTo(const std::shared_ptr<Collision>& collision);
+  virtual bool snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2);
   bool surfaceCollide(Surface& surface) override;
   void setPosition(const Vector2f& pos);
   void setPosition(const Vector2f& pos, bool override);
-  Vector2f getPosition() const;
+  bool circleCollide(const Vector2f& c, float r) const override;
   void applyWind(const std::vector<std::shared_ptr<AbstractWind>>& winds) override;
 };
 

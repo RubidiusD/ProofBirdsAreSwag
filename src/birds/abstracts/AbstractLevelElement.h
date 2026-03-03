@@ -32,6 +32,8 @@ public:
   }
   virtual void remove() {}
   virtual bool surfaceCollide(Surface& surface) { return true; }
+  virtual bool circleCollide(const Vector2f& c, float r) const { return (c.disSqr(getPosition()) <= r * r); }
+  virtual Vector2f getPosition() const { return sprite.getPosition(); }
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_LEVEL_ELEMENT_H

@@ -7,11 +7,19 @@ void TrackingLevel::load() {
       {  50,  250},
       {-210,  300},
       {-250,  250},
-      {-300,  100},
-      {-283,  027},
-      {-139,  077},
-      {-118,  055},
-      {-159, -021},
+      {-325,  325},
+      {-450,  350},
+      {-543,  286},
+      {-612,  230},
+      {-834,  183},
+      {-852,  100},
+      {-810,  040},
+      {-760, -010},
+      {-700, -050},
+      {-625, -025},
+      {-575,  000},
+      {-550, -075},
+      {-400, -125},
       {-200, -150},
       { 000, -325},
       { 240, -291},
@@ -27,18 +35,25 @@ void TrackingLevel::load() {
       { 120,  260}
   }));
   surfaces.emplace_back(std::vector<Vector2f>({
-      { 27,  50},
-      {135,  74},
-      { 77,   0},
-      { 57, -20},
-      {-23,   0},
+      { 027,  50},
+      { 135,  74},
+      { 077,  00},
+      { 057, -20},
+      {-023,  00},
+  }));
+  surfaces.emplace_back(std::vector<Vector2f>({
+      {-340,  072},
+      {-300,  140},
+      {-283,  101},
+      {-139,  117},
+      {-118,   95},
+      {-159,   19},
   }));
   player = std::make_shared<AbstractPlayer>();
   player_spawn.set(150.0f, -30.0f);
   addElement(new Bird2());
   elements.back()->moveTo(-150.0f, -30.0f);
-  view.setCenter(0, 0);
-  winds.emplace_back(new AbstractWind({-50.0f, 30.0f}, 0.5f));
+  winds.emplace_back(new AbstractWind({-60.0f, -10.0f}, 0.5f));
 
   AbstractLevel::load();
 }
@@ -50,9 +65,7 @@ void TrackingLevel::open() {
 
 void TrackingLevel::Pause(bool down) {
   AbstractLevel::Pause(down);
-  if (down) {
-    S::Window.setMouseCursorVisible(true);
-  }
+  S::Window.setMouseCursorVisible(down);
 }
 
 void TrackingLevel::close() {
@@ -60,6 +73,6 @@ void TrackingLevel::close() {
   AbstractLevel::close();
 }
 
-void TrackingLevel::Point(const Vector2f &vector) {
+void TrackingLevel::Point(const Vector2f& vector) {
   player->Point(S::Window.mapPixelToCoords(sf::Vector2i(vector), view));
 }

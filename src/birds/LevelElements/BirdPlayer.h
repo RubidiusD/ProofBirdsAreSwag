@@ -26,11 +26,11 @@ protected:
   void fly(float dt);
 
 public:
-  void Look(const Vector2f &vector) override;
+  void Look(const Vector2f& vector) override;
   void render() override;
   void update(float dt) override;
   void initialise() override;
-  void moveTo(const Vector2f &pos) override;
+  void moveTo(const Vector2f& pos) override;
 };
 
 #endif // BIRDSARESWAG_BIRD_PLAYER_H
