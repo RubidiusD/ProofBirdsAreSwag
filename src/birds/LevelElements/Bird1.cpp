@@ -50,7 +50,7 @@ void Bird1::Point(const std::shared_ptr<AbstractCircle>& t) {
   target_r = (target - getPosition()).norm();
 }
 
-void Bird1::moveTo(const Vector2f& pos) {
+void Bird1::setPosition(const Vector2f& pos) {
   sprite.setPosition(pos);
   wing.setPosition(pos);
 }

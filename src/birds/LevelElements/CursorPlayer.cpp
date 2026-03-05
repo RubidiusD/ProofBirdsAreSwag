@@ -16,5 +16,5 @@ bool CursorPlayer::surfaceCollide(Surface& surface) {
 }
 
 void CursorPlayer::Point(const Vector2f& vector) {
-  setPosition(vector, true);
+  setPosition(vector);
 }

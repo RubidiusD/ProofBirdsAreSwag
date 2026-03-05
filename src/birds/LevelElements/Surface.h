@@ -2,6 +2,7 @@
 #define BIRDSARESWAG_SURFACE_H
 
 #include "../../Vector2f.hpp"
+#include "../abstracts/CircleCollider.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
 
@@ -32,7 +33,7 @@ struct Edge {
   Edge(const Edge& edge);
   void setNext(Edge* n);
   float getLength() const;
-  std::shared_ptr<Collision> CollideCircle(const Vector2f& c, float r);
+  std::shared_ptr<Collision> CollideCircle(const std::shared_ptr<CircleCollider>& c);
   bool CollidePath(const Vector2f& n, const Vector2f& p) const;
   Vector2f chop(float r) const;
 };
@@ -44,7 +45,7 @@ class Surface {
 private:
   sf::Sprite pen;
 public:
-  std::shared_ptr<Collision> CollideCircle(const Vector2f& center, float radius);
+  std::shared_ptr<Collision> CollideCircle(const std::shared_ptr<CircleCollider>& c);
   bool CollidePath(const Vector2f& next, const Vector2f& prev) const;
   void render();
   void initialiseTextures(float particle_rate);

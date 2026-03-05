@@ -4,7 +4,7 @@
 #include "../levels/LevelLibrary.h"
 
 bool AbstractCircle::surfaceCollide(Surface& surface) {
-  std::shared_ptr<Collision> collision = surface.CollideCircle(getPosition(), radius);
+  std::shared_ptr<Collision> collision = surface.CollideCircle(hB);
   if (collision != nullptr && collision->edge != floor && collision->edge != floor2) {
     snapTo(collision);
 
@@ -14,21 +14,16 @@ bool AbstractCircle::surfaceCollide(Surface& surface) {
 }
 
 void AbstractCircle::setPosition(const Vector2f& pos) {
-  setPosition(pos, false);
-}
-
-void AbstractCircle::setPosition(const Vector2f& pos, bool override) {
-  if (override || M::distanceSQ(getPosition(), pos) < 400) {
-    moveTo(pos);
-  }
+  AbstractLevelElement::setPosition(pos);
+  hB->c = pos;
 }
 
 void AbstractCircle::stickToFloor() {
   if (floor != nullptr) {
     if (floor2 == nullptr) {
-      std::shared_ptr<Collision> cA = floor->prev->CollideCircle(getPosition(), radius);
-      std::shared_ptr<Collision> cB = floor->CollideCircle(getPosition(), radius);
-      std::shared_ptr<Collision> cC = floor->next->CollideCircle(getPosition(), radius);
+      std::shared_ptr<Collision> cA = floor->prev->CollideCircle(hB);
+      std::shared_ptr<Collision> cB = floor->CollideCircle(hB);
+      std::shared_ptr<Collision> cC = floor->next->CollideCircle(hB);
 
       if (cB == nullptr) { // no longer touching or in line with current floor
         if (!snapTo(cA) && !snapTo(cC)) {
@@ -42,8 +37,8 @@ void AbstractCircle::stickToFloor() {
       }
     }
     else {
-      std::shared_ptr<Collision> cA = floor->CollideCircle(getPosition(), radius);
-      std::shared_ptr<Collision> cB = floor2->CollideCircle(getPosition(), radius);
+      std::shared_ptr<Collision> cA = floor->CollideCircle(hB);
+      std::shared_ptr<Collision> cB = floor2->CollideCircle(hB);
 
       if (cA == nullptr && cB == nullptr) {
         unsetFloor(floor);
@@ -77,6 +72,11 @@ void AbstractCircle::stickToFloor() {
   }
 }
 
+void AbstractCircle::initialise() {
+  AbstractLevelElement::initialise();
+  hB = std::make_shared<CircleCollider>();
+}
+
 bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   if (collision == nullptr) {
     return false;
@@ -87,7 +87,7 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
     setFloor(floor, collision->edge);
     unsetFloor(floor2);
   }
-  setPosition(collision->point + collision->normal * radius);
+  setPosition(collision->point + collision->normal * hB->r);
   float change = M::distanceSQ(old_vel, velocity);
   if (change > 1000.0f) {
     LevelLibrary::current_level->spawnParticle(4, collision->point, velocity - old_vel);
@@ -102,7 +102,7 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& c1, const std::sha
   }
   Edge* e1 = c1->edge;
   Edge* e2 = c2->edge;
-  setPosition(e1->chop(radius));
+  setPosition(e1->chop(hB->r));
 
   float E1 = c1->elasticity(elasticity);
   float E2 = c2->elasticity(elasticity);
@@ -150,17 +150,13 @@ void AbstractCircle::unsetFloor(Edge*& receptacle) const {
 void AbstractCircle::applyWind(const std::vector<std::shared_ptr<AbstractWind>>& winds) {
   air_current.x = 0.0f; air_current.y = 0.0f;
   for (const std::shared_ptr<AbstractWind>& wind : winds) {
-    if (wind->isInside(getPosition(), radius)) {
+    if (wind->isInside(hB)) {
       air_current += wind->velocity;
     }
   }
 }
 
-bool AbstractCircle::circleCollide(const Vector2f& c, float r) const {
-  return (c.disSqr(getPosition()) <= (r+radius)*(r+radius));
-}
-
 void AbstractCircle::spawn() {
-  setPosition(spawn_location, true);
+  setPosition(spawn_location);
   velocity.set(0.0f, 0.0f);
 }

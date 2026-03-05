@@ -84,5 +84,5 @@ void AbstractPlayer::spawn() {
   lives = max_lives;
   lives_sprite.setTextureRect({0, 0, lives * 48, 48});
   velocity.set(0, 0);
-  setPosition(spawn_location, true);
+  setPosition(spawn_location);
 }

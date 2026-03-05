@@ -24,12 +24,13 @@ bool Egg::snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Col
 }
 
 void Egg::initialise() {
+  AbstractCircle::initialise();
   sprite.setTexture(AssetManager::getTexture(110));
   sprite.setOrigin(5, 7);
-  radius = 5;
 
-  AbstractCircle::initialise();
-  setPosition(spawn_location, true);
+  hB->r = 5;
+
+  setPosition(spawn_location);
   drag_modifier = 0.5f;
 }
 

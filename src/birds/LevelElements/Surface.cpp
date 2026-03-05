@@ -72,13 +72,13 @@ void Surface::initialiseTextures(float particle_rate) {
   }
 }
 
-std::shared_ptr<Collision> Surface::CollideCircle(const Vector2f& c, float r) {
+std::shared_ptr<Collision> Surface::CollideCircle(const std::shared_ptr<CircleCollider>& c) {
 
   std::shared_ptr<Collision> first = nullptr;
   std::shared_ptr<Collision> second = nullptr;
 
   for (auto& edge : edges) {
-    std::shared_ptr<Collision> collision = edge.CollideCircle(c, r);
+    std::shared_ptr<Collision> collision = edge.CollideCircle(c);
     if (collision == nullptr || !collision->inRange) {
       continue;
     }
@@ -115,13 +115,13 @@ void Surface::render() {
   }
 }
 
-std::shared_ptr<Collision> Edge::CollideCircle(const Vector2f& c, float r) {
-  float t3 = ((norm.x*point.y - c.y*norm.x + c.x*norm.y - point.x*norm.y) / (dire.x*norm.y - dire.y*norm.x));
+std::shared_ptr<Collision> Edge::CollideCircle(const std::shared_ptr<CircleCollider>& c) {
+  float t3 = ((norm.x*point.y - c->c.y*norm.x + c->c.x*norm.y - point.x*norm.y) / (dire.x*norm.y - dire.y*norm.x));
   if (t3 < 0 || t3 > 1) {
     return nullptr;
   }
   Vector2f p = point + dire * t3;
-  return std::make_shared<Collision>(p, norm, this, M::distanceSQ(c, p) <= r * r);
+  return std::make_shared<Collision>(p, norm, this, c->c.disSqr(p) <= c->r * c->r);
 }
 
 bool Edge::CollidePath(const Vector2f& n, const Vector2f& p) const {

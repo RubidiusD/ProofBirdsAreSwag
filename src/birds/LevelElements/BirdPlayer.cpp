@@ -59,7 +59,7 @@ void BirdPlayer::update(float dt) {
   }
 
   sprite.setRotation(atan2f(velocity.y, velocity.x) * 180.0f / 3.1415926535f);
-  moveTo(velocity * dt + sprite.getPosition());
+  setPosition(velocity * dt + sprite.getPosition());
 
   if (stamina < max_stamina) {
     stamina += dt * stamina_refresh;
@@ -100,7 +100,7 @@ void BirdPlayer::render() {
   S::Window.draw(wing);
 }
 
-void BirdPlayer::moveTo(const Vector2f& pos) {
-  sprite.setPosition(pos);
+void BirdPlayer::setPosition(const Vector2f& pos) {
+  AbstractPlayer::setPosition(pos);
   wing.setPosition(pos);
 }

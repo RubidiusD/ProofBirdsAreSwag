@@ -32,7 +32,7 @@ public:
   void render() override;
   void update(float dt) override;
   void initialise() override;
-  void moveTo(const Vector2f& pos) override;
+  void setPosition(const Vector2f& pos) override;
 };
 
 #endif // BIRDSARESWAG_BIRD_PLAYER_H

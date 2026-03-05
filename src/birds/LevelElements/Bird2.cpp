@@ -38,8 +38,8 @@ void Bird2::initialise() {
   acceleration_speed = ACCELERATION;
   air_acceleration_speed = AIR_ACCELERATION;
   jump_strength = JUMP;
-  radius = RADIUS;
   drag_modifier = DRAG;
+  hB->r = RADIUS;
 }
 
 void Bird2::remove() {
@@ -63,7 +63,7 @@ void Bird2::update(float dt) {
     flap();
   }
 
-  moveTo(velocity * dt + sprite.getPosition());
+  setPosition(velocity * dt + sprite.getPosition());
 
   Vector2f firing_velocity = velocity;
   firing_velocity.y += jump_strength;

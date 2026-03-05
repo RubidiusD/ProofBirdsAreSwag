@@ -36,13 +36,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 60,
+				"line" : 61,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 64,
+				"line" : 65,
 				"parent" : 0
 			},
 			{
@@ -435,7 +435,8 @@
 				58,
 				60,
 				62,
-				64
+				64,
+				65
 			]
 		}
 	],
@@ -794,6 +795,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "src/birds/LevelElements/EggParticle.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/birds/abstracts/CircleCollider.h",
 			"sourceGroupIndex" : 1
 		}
 	],

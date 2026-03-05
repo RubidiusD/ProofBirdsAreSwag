@@ -24,7 +24,7 @@ public:
   void update(float dt) override;
   void render() override;
   void Point(const std::shared_ptr<AbstractCircle>& t);
-  void moveTo(const Vector2f& pos) override;
+  void setPosition(const Vector2f& pos) override;
 };
 
 #endif // BIRDSARESWAG_BIRD1_H

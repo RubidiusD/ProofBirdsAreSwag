@@ -20,13 +20,13 @@ public:
     spawn_location = spawn;
   }
 
+  std::shared_ptr<CircleCollider> hB;
+
   bool alive = true;
 
   virtual void update(float dt) { sprite.move(velocity * dt); }
   virtual void render() { S::Window.draw(sprite); }
   virtual void initialise() { setPosition(spawn_location); }
-  virtual void moveTo(const Vector2f& pos) {sprite.setPosition(pos);}
-  virtual void moveTo(float x, float y) {sprite.setPosition(x, y);}
   virtual void applyWind(const std::vector<std::shared_ptr<AbstractWind>>& winds) {
     air_current.x = 0.0f; air_current.y = 0.0f;
     for (const std::shared_ptr<AbstractWind>& wind : winds) {
@@ -40,8 +40,7 @@ public:
   virtual bool circleCollide(const Vector2f& c, float r) const { return (c.disSqr(getPosition()) <= r * r); }
   virtual Vector2f getPosition() const { return sprite.getPosition(); }
   virtual void setPosition(const Vector2f& p) { sprite.setPosition(p); }
-  virtual void setPosition(const Vector2f& p, bool force) { sprite.setPosition(p); }
-  virtual void spawn() { setPosition(spawn_location, true); }
+  virtual void spawn() { setPosition(spawn_location); }
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_LEVEL_ELEMENT_H
