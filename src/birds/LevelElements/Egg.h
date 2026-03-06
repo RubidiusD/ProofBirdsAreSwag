@@ -8,11 +8,11 @@ public:
   Egg(const Vector2f& pos, const Vector2f& vel);
   void initialise() override;
   void update(float dt) override;
-  bool snapTo(const std::shared_ptr<Collision> &collision) override;
-  bool snapTo(const std::shared_ptr<Collision> &c1,
-              const std::shared_ptr<Collision> &c2) override;
   void remove() override;
   void spawn() override;
+  bool collidesPlayer() const override;
+  void onHitSurface(const std::shared_ptr<Collision>& collision) override;
+  void onHitPlayer() override;
 
 private:
 

@@ -15,12 +15,20 @@ void Egg::update(float dt) {
   setPosition(getPosition() + velocity * dt);
 }
 
-bool Egg::snapTo(const std::shared_ptr<Collision> &collision) {
-  return !(alive = !collision->inRange);
+bool Egg::collidesPlayer() const {
+  return true;
 }
 
-bool Egg::snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2) {
-  return !(alive = !(c1->inRange && c2->inRange));
+void Egg::onHitSurface(const std::shared_ptr<Collision> &collision) {
+  alive = false;
+  for (int index = 0; index != 6; index ++) {
+    LevelLibrary::current_level->addElement(new EggParticle(getPosition(), collision->normal.rotate(Vector2f(1.0f, M::Randf(-1.0f, 1.0f))) * 140.0f, index));
+  }
+}
+
+void Egg::onHitPlayer() {
+  alive = false;
+  LevelLibrary::current_level->hurtPlayer(hB->c);
 }
 
 void Egg::initialise() {
@@ -35,7 +43,4 @@ void Egg::initialise() {
 }
 
 void Egg::remove() {
-  for (int index = 0; index != 6; index ++) {
-    LevelLibrary::current_level->addElement(new EggParticle(getPosition(), Vector2f(M::Randf(-1.0f, 1.0f), -1.0f) * 140.0f, index));
-  }
 }

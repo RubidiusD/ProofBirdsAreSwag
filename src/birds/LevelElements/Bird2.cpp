@@ -68,7 +68,7 @@ void Bird2::update(float dt) {
   Vector2f firing_velocity = velocity;
   firing_velocity.y += jump_strength;
   if (egg_cooldown == 0.0f && (spray != 0 || isAimGood(firing_velocity))) {
-    LevelLibrary::current_level->addEgg(getPosition(), firing_velocity);
+    LevelLibrary::current_level->addElement(new Egg(getPosition(), firing_velocity));
     if (spray == 1) {
       egg_cooldown = egg_max_cooldown;
       spray = 0;
@@ -123,4 +123,8 @@ void Bird2::flap() {
     LevelLibrary::current_level->spawnParticle(8, cur, change * -1.0f);
     velocity += change;
   }
+}
+
+bool Bird2::collidesPlayer() const {
+  return true;
 }

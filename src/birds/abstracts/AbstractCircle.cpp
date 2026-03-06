@@ -1,16 +1,19 @@
 #include "AbstractCircle.h"
-#include "../../MathLib.h"
 #include "../LevelElements/Particle.h"
 #include "../levels/LevelLibrary.h"
 
 bool AbstractCircle::surfaceCollide(Surface& surface) {
   std::shared_ptr<Collision> collision = surface.CollideCircle(hB);
   if (collision != nullptr && collision->edge != floor && collision->edge != floor2) {
-    snapTo(collision);
+    onHitSurface(collision);
 
     return true;
   }
   return false;
+}
+
+void AbstractCircle::onHitSurface(const std::shared_ptr<Collision> &collision) {
+  snapTo(collision);
 }
 
 void AbstractCircle::setPosition(const Vector2f& pos) {
@@ -74,7 +77,6 @@ void AbstractCircle::stickToFloor() {
 
 void AbstractCircle::initialise() {
   AbstractLevelElement::initialise();
-  hB = std::make_shared<CircleCollider>();
 }
 
 bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
@@ -159,4 +161,26 @@ void AbstractCircle::applyWind(const std::vector<std::shared_ptr<AbstractWind>>&
 void AbstractCircle::spawn() {
   setPosition(spawn_location);
   velocity.set(0.0f, 0.0f);
+}
+
+void AbstractCircle::onHitPlayer() {
+  std::shared_ptr<AbstractPlayer> player = LevelLibrary::current_level->getPlayer();
+  Vector2f midPoint = player->hB->c.avg(hB->c);
+  Vector2f normal = (player->hB->c - hB->c).norm();
+  setPosition(midPoint - normal * hB->r);
+  player->setPosition(midPoint + normal * player->hB->r);
+  bounceOff(player);
+}
+
+bool AbstractCircle::collidesSurface() const {
+  return true;
+}
+
+void AbstractCircle::bounceOff(const std::shared_ptr<AbstractCircle>& rhs) {
+  Vector2f c3 = (rhs->hB->c-hB->c).conj();
+  Vector2f u3 = velocity.rotate(c3);
+  Vector2f u4 = rhs->velocity.rotate(c3);
+  float r = (elasticity + rhs->elasticity) / 2;
+  velocity = Vector2f{(u3.x+u4.x+r*u4.x-r*u3.x) / (2), u3.y}.unRotate(c3) / c3.magSqr();
+  rhs->velocity = Vector2f{(u4.x+u3.x+r*u3.x-r*u4.x) / (2), u4.y}.unRotate(c3) / c3.magSqr();
 }

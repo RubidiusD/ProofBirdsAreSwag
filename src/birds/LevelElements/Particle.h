@@ -11,6 +11,7 @@ public:
   Particle(const Vector2f& pos, const Vector2f& vel);
   bool surfaceCollide(Surface& surface) override;
   void update(float dt) override;
+  bool collidesSurface() const override;
 };
 
 #endif // BIRDSARESWAG_PARTICLE_H

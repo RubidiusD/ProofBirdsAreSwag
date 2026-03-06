@@ -29,6 +29,14 @@ struct AbstractWind {
     global = true;
   }
 
+  bool isInside(const Vector2f& p) const {
+    return global || (
+        p.x > bounds.left &&
+        p.y > bounds.top &&
+        p.x < bounds.left + bounds.width &&
+        p.y < bounds.top + bounds.height);
+  }
+
   bool isInside(const std::shared_ptr<CircleCollider>& hB) const {
     return global || (
         bounds.left < hB->c.x + hB->r &&

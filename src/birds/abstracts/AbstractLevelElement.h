@@ -16,7 +16,7 @@ protected:
   Vector2f spawn_location;
 
 public:
-  AbstractLevelElement(const Vector2f& spawn) {
+  explicit AbstractLevelElement(const Vector2f& spawn) {
     spawn_location = spawn;
   }
 
@@ -37,10 +37,14 @@ public:
   }
   virtual void remove() {}
   virtual bool surfaceCollide(Surface& surface) { return true; }
-  virtual bool circleCollide(const Vector2f& c, float r) const { return (c.disSqr(getPosition()) <= r * r); }
+  virtual bool circleCollide(const std::shared_ptr<CircleCollider>& rhs) const { return (rhs->c.disSqr(getPosition()) <= rhs->r * rhs->r); }
   virtual Vector2f getPosition() const { return sprite.getPosition(); }
   virtual void setPosition(const Vector2f& p) { sprite.setPosition(p); }
   virtual void spawn() { setPosition(spawn_location); }
+  virtual bool collidesPlayer() const { return false; }
+  virtual void onHitPlayer() { }
+  virtual bool collidesSurface() const { return false; }
+  virtual void onHitSurface(const std::shared_ptr<Collision>& collision) { }
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_LEVEL_ELEMENT_H

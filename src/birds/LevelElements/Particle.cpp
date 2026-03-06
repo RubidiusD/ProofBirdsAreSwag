@@ -14,6 +14,10 @@ void Particle::update(float dt) {
   sprite.move(velocity * dt);
 }
 
+bool Particle::collidesSurface() const {
+  return true;
+}
+
 Particle::Particle(const Vector2f& pos, const Vector2f& vel) : AbstractLevelElement(pos) {
   sprite.setTexture(AssetManager::getTexture(101));
   sprite.setTextureRect({M::Rand4() * 3, M::Rand8() * 3, 3, 3});

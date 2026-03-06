@@ -30,6 +30,7 @@ protected:
   void cooldowns(float dt);
 public:
   Bird2(const Vector2f& pos) : AbstractCircle(pos) {}
+  bool collidesPlayer() const override;
 
   void render() override;
   void initialise() override;

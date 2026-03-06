@@ -161,5 +161,9 @@ Collision::Collision(const Vector2f& p, const Vector2f& n, Edge* e, bool r) {
 }
 
 float Collision::elasticity(float e) const {
-  return fmaxf((edge == nullptr) ? e : (e + edge->elasticity) / 2, 0.0f);
+  return fmaxf(0.0f, (e + (edge == nullptr ? elas : edge->elasticity)) / 2.0f);
+}
+
+Collision::Collision(const Vector2f &p, const Vector2f &n, bool inRange, float e2) : Collision(p, n, nullptr, inRange) {
+  elas = e2;
 }

@@ -7,6 +7,7 @@ const float AbstractPlayer::AIR_ACCELERATION = 480.0f;
 const float AbstractPlayer::JUMP = 360.0f;
 const float AbstractPlayer::DRAG = 1.75f;
 const float AbstractPlayer::ELASTIC = 0.5f;
+const float AbstractPlayer::RADIUS = 16.0f;
 
 void AbstractPlayer::update(float dt) {
   if (jumping && floor != nullptr) { // the moment you jump
@@ -26,7 +27,7 @@ void AbstractPlayer::update(float dt) {
     velocity += air_current * drag_modifier * dt;
   }
 
-  sprite.move(velocity * dt);
+  setPosition(hB->c + velocity * dt);
 
   if (i_timer != 0.0f) {
     i_timer -= dt;
@@ -53,6 +54,7 @@ void AbstractPlayer::initialise() {
   air_acceleration_speed = AIR_ACCELERATION;
   drag_modifier = DRAG;
   elasticity = ELASTIC;
+  hB->r = RADIUS;
 
   AssetManager::RegisterTexture("Data/images/Player.png", 99);
   sprite.setTexture(AssetManager::getTexture(99));

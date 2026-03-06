@@ -15,9 +15,11 @@ void AbstractLevel::update(float dt) {
   // update player
   player->applyWind(winds);
   player->update(dt);
-  for (Surface& surface : surfaces) {
-    if (player->surfaceCollide(surface)) {
-      break;
+  if (player->collidesSurface()) {
+    for (Surface& surface : surfaces) {
+      if (player->surfaceCollide(surface)) {
+        break;
+      }
     }
   }
 
@@ -30,10 +32,15 @@ void AbstractLevel::update(float dt) {
     elements[index]->applyWind(winds);
     elements[index]->update(dt);
 
-    for (Surface& surface : surfaces) {
-      if (elements[index]->surfaceCollide(surface)) {
-        break;
+    if (elements[index]->alive && elements[index]->collidesSurface()) {
+      for (Surface& surface : surfaces) {
+        if (elements[index]->surfaceCollide(surface)) {
+          break;
+        }
       }
+    }
+    if (elements[index]->alive && elements[index]->collidesPlayer() && elements[index]->circleCollide(player->hB)) {
+      elements[index]->onHitPlayer();
     }
 
     if (!elements[index]->alive) {
@@ -45,16 +52,6 @@ void AbstractLevel::update(float dt) {
       index --;
     }
   }
-
-  for (std::shared_ptr<Egg>& egg : eggs) {
-    if (egg->circleCollide(player->getPosition(), player->radius)) {
-      if (player->hurt(egg->getPosition())) {
-        open();
-      }
-    }
-  }
-
-  clearOut();
 }
 
 void AbstractLevel::render() {
@@ -145,12 +142,6 @@ void AbstractLevel::addListener(PlayerListener *listener) {
   listeners.emplace_back(listener);
 }
 
-void AbstractLevel::addEgg(const Vector2f& pos, const Vector2f& vel) {
-  eggs.emplace_back(new Egg(pos, vel));
-  elements.emplace_back(eggs.back());
-  eggs.back()->initialise();
-}
-
 void AbstractLevel::Look(const Vector2f& vector) {
   player->Look(vector);
 }
@@ -163,18 +154,6 @@ void AbstractLevel::spawnParticle(unsigned int number, const Vector2f& position,
   if (M::lengthSQ(direction) > 100) {
     for (unsigned index = 0; index != number; index ++) {
       spawnParticle(position, direction.rotate(Vector2f(1, M::Randf(-1, 1)).norm()));
-    }
-  }
-}
-
-void AbstractLevel::clearOut() {
-  for (int index = 0; index != eggs.size(); index ++) {
-    if (!eggs[index]->alive) {
-      for (int i = index + 1; i != eggs.size(); i ++) {
-        eggs[i - 1] = eggs[i];
-      }
-      eggs.pop_back();
-      index --;
     }
   }
 }
@@ -211,9 +190,18 @@ void AbstractLevel::windParticles(float dt) {
 Vector2f AbstractLevel::windAt(const Vector2f& point) const {
   Vector2f total;
   for (const std::shared_ptr<AbstractWind>& wind : winds) {
-    if (wind->isInside(point, 0)) {
+    if (wind->isInside(point)) {
       total += wind->velocity;
     }
   }
   return total;
+}
+
+void AbstractLevel::hurtPlayer(const Vector2f& source) {
+  if (player->hurt(source)) {
+    open();
+  }
+}
+std::shared_ptr<AbstractPlayer> AbstractLevel::getPlayer() {
+  return player;
 }

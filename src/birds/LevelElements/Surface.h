@@ -13,7 +13,9 @@ struct Collision {
   Vector2f normal = {};
   Edge* edge = nullptr;
   bool inRange = false;
+  float elas = 0.0f;
   Collision(const Vector2f& p, const Vector2f& n, Edge* e, bool inRange);
+  Collision(const Vector2f& p, const Vector2f& n, bool inRange, float e2);
   float elasticity(float e) const;
 };
 

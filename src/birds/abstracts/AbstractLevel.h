@@ -10,13 +10,11 @@ protected:
   std::vector<Surface> surfaces;
   std::shared_ptr<AbstractPlayer> player;
   std::vector<std::shared_ptr<AbstractLevelElement>> elements;
-  std::vector<std::shared_ptr<Egg>> eggs;
   sf::View view;
   std::vector<std::shared_ptr<AbstractWind>> winds;
   std::vector<PlayerListener*> listeners;
 
   float particle_rate = 0.1f;
-  void clearOut();
   void windParticles(float dt);
 
 public:
@@ -34,12 +32,13 @@ public:
   void Resize() override;
   void addElement(AbstractLevelElement* element);
   void addListener(PlayerListener* element);
-  void addEgg(const Vector2f& pos, const Vector2f& vel);
   void spawnParticle(const Vector2f& position, const Vector2f& velocity);
   void spawnParticle(unsigned number, const Vector2f& position, const Vector2f& direction);
   void removeListener(PlayerListener& listener);
 
   Vector2f windAt(const Vector2f& point) const;
+  virtual void hurtPlayer(const Vector2f& source);
+  std::shared_ptr<AbstractPlayer> getPlayer();
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_LEVEL_H
