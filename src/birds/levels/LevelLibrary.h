@@ -2,7 +2,7 @@
 #define BIRDSARESWAG_LEVEL_LIBRARY_H
 
 #include "../../abstracts/AbstractAction.h"
-#include "../abstracts/AbstractLevel.h"
+#include "AbstractLevel.h"
 class LevelLibrary {
 public:
   static std::vector<std::shared_ptr<AbstractLevel>> levels;

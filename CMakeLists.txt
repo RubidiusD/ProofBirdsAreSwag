@@ -33,30 +33,40 @@ set(SOURCE_FILES
     src/birds/menus/SplashScreen.h src/birds/menus/SplashScreen.cpp
     src/birds/menus/MainMenu.h src/birds/menus/MainMenu.cpp
     src/birds/menus/PauseMenu.h src/birds/menus/PauseMenu.cpp
+    src/birds/menus/ResultsMenu.h src/birds/menus/ResultsMenu.cpp
 
-    src/birds/abstracts/AbstractWind.h
-    src/birds/abstracts/AbstractLevelElement.h
-    src/birds/abstracts/AbstractCircle.h src/birds/abstracts/AbstractCircle.cpp
-    src/birds/abstracts/AbstractPlayer.h src/birds/abstracts/AbstractPlayer.cpp
-    src/birds/abstracts/AbstractLevel.h src/birds/abstracts/AbstractLevel.cpp
+    src/birds/LevelElements/CircleCollider.h
+    src/birds/LevelElements/AbstractLevelElement.h
+    src/birds/LevelElements/AbstractCircle.h src/birds/LevelElements/AbstractCircle.cpp
 
-    src/birds/LevelElements/Surface.h src/birds/LevelElements/Surface.cpp
-    src/birds/LevelElements/Particle.h src/birds/LevelElements/Particle.cpp
-    src/birds/LevelElements/Bird1.h src/birds/LevelElements/Bird1.cpp
-    src/birds/LevelElements/Bird2.h src/birds/LevelElements/Bird2.cpp
-    src/birds/LevelElements/BirdPlayer.h src/birds/LevelElements/BirdPlayer.cpp
-    src/birds/LevelElements/PlayerListener.h src/birds/LevelElements/PlayerListener.cpp
-    src/birds/LevelElements/CursorPlayer.h src/birds/LevelElements/CursorPlayer.cpp
-    src/birds/LevelElements/Egg.h src/birds/LevelElements/Egg.cpp
+    src/birds/LevelElements/scenery/Surface.h src/birds/LevelElements/scenery/Surface.cpp
+    src/birds/LevelElements/scenery/AbstractWind.h
+    src/birds/LevelElements/scenery/Billboard.h
+
+    src/birds/LevelElements/enemies/Bird1.h src/birds/LevelElements/enemies/Bird1.cpp
+    src/birds/LevelElements/enemies/Bird2.h src/birds/LevelElements/enemies/Bird2.cpp
+
+    src/birds/LevelElements/players/AbstractPlayer.h src/birds/LevelElements/players/AbstractPlayer.cpp
+    src/birds/LevelElements/players/BirdPlayer.h src/birds/LevelElements/players/BirdPlayer.cpp
+    src/birds/LevelElements/players/CursorPlayer.h src/birds/LevelElements/players/CursorPlayer.cpp
+
+    src/birds/LevelElements/util/AbstractBox.h
+    src/birds/LevelElements/util/PlayerListener.h src/birds/LevelElements/util/PlayerListener.cpp
+    src/birds/LevelElements/util/EndLevelTrigger.h
+    src/birds/LevelElements/util/SpawnTrigger.h
+
+    src/birds/LevelElements/projectiles/Egg.h src/birds/LevelElements/projectiles/Egg.cpp
+
+    src/birds/LevelElements/fx/Particle.h src/birds/LevelElements/fx/Particle.cpp
+    src/birds/LevelElements/fx/EggParticle.h
 
     src/birds/levels/LevelLoader.hpp
     src/birds/levels/LevelLibrary.h src/birds/levels/LevelLibrary.cpp
+    src/birds/levels/AbstractLevel.h src/birds/levels/AbstractLevel.cpp
 
     src/birds/levels/FlyingLevel.h src/birds/levels/FlyingLevel.cpp
     src/birds/levels/TestLevel.h src/birds/levels/TestLevel.cpp
     src/birds/levels/TrackingLevel.h src/birds/levels/TrackingLevel.cpp
-    src/birds/LevelElements/EggParticle.h
-    src/birds/abstracts/CircleCollider.h
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 

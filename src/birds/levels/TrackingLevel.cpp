@@ -1,6 +1,9 @@
 #include "TrackingLevel.h"
-#include "../LevelElements/Bird2.h"
-#include "../LevelElements/CursorPlayer.h"
+#include "../../managers/AssetManager.h"
+#include "../LevelElements/enemies/Bird2.h"
+#include "../LevelElements/scenery/Billboard.h"
+#include "../LevelElements/util/EndLevelTrigger.h"
+#include "../LevelElements/util/SpawnTrigger.h"
 
 void TrackingLevel::load() {
   surfaces.emplace_back(std::vector<Vector2f>({
@@ -52,6 +55,13 @@ void TrackingLevel::load() {
   player = std::make_shared<AbstractPlayer>(Vector2f{150.0f, -30.0f});
   addElement(new Bird2({-150.0f, -30.0f}));
   winds.emplace_back(new AbstractWind({-60.0f, -10.0f}, 0.5f));
+  addElement(new EndLevelTrigger({-550.0f, 50.0f, 100.0f, 100.0f}));
+
+  AssetManager::RegisterTexture("Data/images/Arrow.png", 150);
+  addElement(new Billboard({-80.0f, 150.0f}, 15.0f, AssetManager::getTexture(150)));
+  addElement(new Billboard({250.0f, 0.0f}, -15.0f, AssetManager::getTexture(150)));
+
+  addElement(new SpawnTrigger({-100.0f, -200.0f, 50.0f, 500.0f}, std::make_shared<Bird2>(Vector2f{-25.0f, -150.0f})));
 
   AbstractLevel::load();
 }

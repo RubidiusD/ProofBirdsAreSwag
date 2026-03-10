@@ -1,7 +1,7 @@
 #ifndef BIRDSARESWAG_TEST_LEVEL_H
 #define BIRDSARESWAG_TEST_LEVEL_H
 
-#include "../abstracts/AbstractLevel.h"
+#include "AbstractLevel.h"
 
 class TestLevel : public AbstractLevel {
 public:

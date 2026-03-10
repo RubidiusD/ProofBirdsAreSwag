@@ -1,7 +1,7 @@
 #ifndef BIRDSARESWAG_TRACKING_LEVEL_H
 #define BIRDSARESWAG_TRACKING_LEVEL_H
 
-#include "../abstracts/AbstractLevel.h"
+#include "AbstractLevel.h"
 
 class TrackingLevel : public AbstractLevel {
 public:

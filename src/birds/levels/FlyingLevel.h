@@ -1,7 +1,7 @@
 #ifndef BIRDSARESWAG_FLYING_LEVEL_H
 #define BIRDSARESWAG_FLYING_LEVEL_H
 
-#include "../abstracts/AbstractLevel.h"
+#include "AbstractLevel.h"
 
 class FlyingLevel : public AbstractLevel {
 public:

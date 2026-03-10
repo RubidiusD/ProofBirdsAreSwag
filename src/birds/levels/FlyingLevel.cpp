@@ -1,6 +1,6 @@
 #include "FlyingLevel.h"
 #include "../../managers/AssetManager.h"
-#include "../LevelElements/BirdPlayer.h"
+#include "../LevelElements/players/BirdPlayer.h"
 
 void FlyingLevel::load() {
   surfaces.emplace_back(std::vector<Vector2f>({

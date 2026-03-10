@@ -2,7 +2,7 @@
 #define BIRDSARESWAG_GAME_H
 
 #include "../abstracts/InputSubscriber.h"
-#include "abstracts/AbstractLevel.h"
+#include "levels/AbstractLevel.h"
 #include "levels/LevelLibrary.h"
 #include <SFML/Graphics.hpp>
 #include <memory>

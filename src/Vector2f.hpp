@@ -42,6 +42,7 @@ struct Vector2f {
 
   Vector2f operator()(const Vector2f& rhs) const { return {x * rhs.x, y * rhs.y}; }
   Vector2f operator()(float rhs) const { return {x * rhs, y * rhs}; }
+  Vector2f operator()(float x_, float y_) const { return {x * x_, y * y_}; }
   float operator[](unsigned long long index) const { return (index == 1) ? y : x; }
 
   Vector2f conj() const { return {x, -y}; }
