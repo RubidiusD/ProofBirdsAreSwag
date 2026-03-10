@@ -4,6 +4,7 @@
 #include "../LevelElements/players/AbstractPlayer.h"
 #include "../LevelElements/projectiles/Egg.h"
 #include "../LevelElements/util/PlayerListener.h"
+#include "../LevelElements/util/ProgressTrigger.h"
 
 class AbstractLevel : InputSubscriber {
 protected:
@@ -13,12 +14,17 @@ protected:
   sf::View view;
   std::vector<std::shared_ptr<AbstractWind>> winds;
   std::vector<PlayerListener*> listeners;
+  std::vector<ProgressTrigger> checkpoints;
 
   float particle_rate = 0.1f;
   void windParticles(float dt);
 
+  float timer = 0.0f;
+  unsigned progress = 0;
+
 public:
   void update(float dt);
+  void updateElements(float dt);
   virtual void render();
   virtual void load();
   virtual void open();
@@ -35,7 +41,9 @@ public:
   void spawnParticle(const Vector2f& position, const Vector2f& velocity);
   void spawnParticle(unsigned number, const Vector2f& position, const Vector2f& direction);
   void removeListener(PlayerListener& listener);
+  void addCheckpointAt(const Vector2f& pos1, const Vector2f& pos2);
 
+  void publishProgress() const;
   Vector2f windAt(const Vector2f& point) const;
   virtual void hurtPlayer(const Vector2f& source);
   std::shared_ptr<AbstractPlayer> getPlayer();

@@ -23,6 +23,7 @@ public:
   std::shared_ptr<CircleCollider> hB;
 
   bool alive = true;
+  bool destroy_on_load = false;
 
   virtual void update(float dt) { sprite.move(velocity * dt); }
   virtual void render() { S::Window.draw(sprite); }

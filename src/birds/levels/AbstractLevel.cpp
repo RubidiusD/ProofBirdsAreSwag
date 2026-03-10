@@ -4,6 +4,7 @@
 #include "../../managers/InputManager.h"
 #include "../../managers/MenuManager.h"
 #include "../LevelElements/fx/Particle.h"
+#include "../menus/ResultsMenu.h"
 
 void AbstractLevel::update(float dt) {
   // update wind
@@ -23,12 +24,21 @@ void AbstractLevel::update(float dt) {
     }
   }
 
-  printf("updating listeners \n");
   for (PlayerListener*& listener : listeners) {
     listener->QuarryIs(player->getPosition(), dt);
   }
 
   // update elements
+  updateElements(dt);
+
+  for (ProgressTrigger& trigger : checkpoints) {
+    trigger.update(dt);
+  }
+
+  timer += dt;
+}
+
+void AbstractLevel::updateElements(float dt) {
   for (long index = 0; index != elements.size(); index ++) {
     elements[index]->applyWind(winds);
     elements[index]->update(dt);
@@ -40,6 +50,7 @@ void AbstractLevel::update(float dt) {
         }
       }
     }
+
     if (listening_to_inputs && elements[index]->alive && elements[index]->collidesPlayer() && elements[index]->circleCollide(player->hB)) {
       elements[index]->onHitPlayer();
     }
@@ -87,14 +98,25 @@ void AbstractLevel::load() {
 void AbstractLevel::open() {
   listening_to_inputs = true;
   Resize();
+  timer = 0.0f;
   player->spawn();
-  for (std::shared_ptr<AbstractLevelElement>& element : elements) {
-    element->spawn();
+  for (unsigned index = 0; index != elements.size(); index ++) {
+    if (elements[index]->destroy_on_load) {
+      elements[index]->remove();
+      for (unsigned i = index + 1; i != elements.size(); i ++) {
+        elements[i - 1] = elements[i];
+      }
+      elements.pop_back();
+    }
+    else {
+      elements[index]->spawn();
+    }
   }
 }
 
 void AbstractLevel::close() {
   listening_to_inputs = false;
+  ResultsMenu::instance->AddAttempt(timer, checkpoints.size() + 1);
 }
 
 void AbstractLevel::unload() {
@@ -201,9 +223,19 @@ Vector2f AbstractLevel::windAt(const Vector2f& point) const {
 
 void AbstractLevel::hurtPlayer(const Vector2f& source) {
   if (player->hurt(source)) {
+    publishProgress();
     open();
   }
 }
+
 std::shared_ptr<AbstractPlayer> AbstractLevel::getPlayer() {
   return player;
+}
+
+void AbstractLevel::publishProgress() const {
+  ResultsMenu::instance->AddAttempt(timer, progress);
+}
+
+void AbstractLevel::addCheckpointAt(const Vector2f& pos1, const Vector2f& pos2) {
+  checkpoints.emplace_back(progress, pos1, pos2, checkpoints.size() + 1);
 }

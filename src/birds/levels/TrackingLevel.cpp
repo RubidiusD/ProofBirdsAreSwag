@@ -62,6 +62,11 @@ void TrackingLevel::load() {
   addElement(new Billboard({250.0f, 0.0f}, -15.0f, AssetManager::getTexture(150)));
 
   addElement(new SpawnTrigger({-100.0f, -200.0f, 50.0f, 500.0f}, std::make_shared<Bird2>(Vector2f{-25.0f, -150.0f})));
+  addCheckpointAt({ 000, -1000.0f}, { 000, 1000.0f});
+  addCheckpointAt({-100, 1000.0f}, {-100, -1000.0f});
+  addCheckpointAt({-200, -1000.0f}, {-200, 1000.0f});
+  addCheckpointAt({-300, 1000.0f}, {-300, -1000.0f});
+  addCheckpointAt({-400, -1000.0f}, {-400, 1000.0f});
 
   AbstractLevel::load();
 }

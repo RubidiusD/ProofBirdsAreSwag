@@ -16,8 +16,9 @@ public:
   void onHitPlayer() override {
     if (!done) {
       done = true;
-      printf("triggering lol \n");
-      LevelLibrary::current_level->addElement(template_object->makeCopy());
+      AbstractLevelElement* new_things = template_object->makeCopy();
+      new_things->destroy_on_load = true;
+      LevelLibrary::current_level->addElement(new_things);
       printf("element added \n");
     }
   }

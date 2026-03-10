@@ -14,7 +14,6 @@ private:
   static const float RADIUS;
   static const float DRAG;
 protected:
-  sf::Sprite predictions[10];
   PlayerListener playerPredictor;
   PlayerListener eggPredictor;
   PlayerListener selfPredictor;
@@ -32,13 +31,13 @@ public:
   Bird2(const Vector2f& pos) : AbstractCircle(pos) {}
   bool collidesPlayer() const override;
 
-  void render() override;
   void initialise() override;
   void update(float dt) override;
   bool isAimGood(const Vector2f& v);
   void remove() override;
   AbstractLevelElement *makeCopy(const Vector2f &spawn_) const override;
   AbstractLevelElement *makeCopy() const override;
+  void applyWind(const std::vector<std::shared_ptr<AbstractWind>>& winds) override;
 };
 
 #endif // BIRDSARESWAG_BIRD2_H

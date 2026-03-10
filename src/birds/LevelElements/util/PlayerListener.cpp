@@ -80,7 +80,7 @@ void PlayerListener::setCoefficient(int index, const Vector2f& value) {
 }
 
 Vector2f PlayerListener::current_position() const {
-  if (!s.empty() || s.back().t == 0.0f) {
+  if (!s.empty() && s.back().t == 0.0f) {
     return s.back().p;
   }
   else if (s.empty()) {

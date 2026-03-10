@@ -13,7 +13,7 @@ static void LoadMenus() {
   MenuManager::registerMenu(std::make_shared<MainMenu>());
   MenuManager::registerMenu(std::make_shared<SplashScreen>());
   MenuManager::registerMenu(std::make_shared<PauseMenu>());
-  MenuManager::registerMenu(std::make_shared<ResultsMenu>());
+  ResultsMenu::Register();
 
   AssetManager::RegisterFont("Data/fonts/monospace/MonospaceOblique.ttf", 0);
 //  AssetManager::RegisterFont("Data/fonts/open-sans/OpenSans-Bold.ttf", 0);

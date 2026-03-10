@@ -10,23 +10,12 @@ const float Bird2::JUMP = 256.0f;
 const float Bird2::RADIUS = 12.0f;
 const float Bird2::DRAG = 1.0f;
 
-void Bird2::render() {
-  AbstractCircle::render();
-  for (sf::Sprite& sprite : predictions) {
-    S::Window.draw(sprite);
-  }
-}
-
 void Bird2::initialise() {
   AbstractCircle::initialise();
 
   AssetManager::RegisterTexture("Data/images/Particles3.png", 101);
   AssetManager::RegisterTexture("Data/images/EggParticles.png", 102);
   AssetManager::RegisterTexture("Data/images/Egg.png", 110);
-  for (auto&  prediction : predictions) {
-    prediction.setTexture(AssetManager::getTexture(101));
-    prediction.setTextureRect({0, 0, 2, 2});
-  }
   AssetManager::RegisterTexture("Data/images/Bird1.png", 111);
   sprite.setTexture(AssetManager::getTexture(111));
   sprite.setOrigin(29, 12);
@@ -42,15 +31,15 @@ void Bird2::initialise() {
   hB->r = RADIUS;
 }
 
+void Bird2::applyWind(const std::vector<std::shared_ptr<AbstractWind>> &winds) {
+  AbstractCircle::applyWind(winds);
+}
+
 void Bird2::remove() {
   LevelLibrary::current_level->removeListener(playerPredictor);
 }
 
 void Bird2::update(float dt) {
-  for (int index = 1; index != 11; index ++) {
-    predictions[index - 1].setPosition(playerPredictor.f((float)index / 20.0f));
-  }
-
   selfPredictor.QuarryIs(getPosition(), dt);
 
   velocity.y += gravity * dt;
@@ -67,6 +56,7 @@ void Bird2::update(float dt) {
 
   Vector2f firing_velocity = velocity;
   firing_velocity.y += jump_strength;
+
   if (egg_cooldown == 0.0f && (spray != 0 || isAimGood(firing_velocity))) {
     LevelLibrary::current_level->addElement(new Egg(getPosition(), firing_velocity));
     if (spray == 1) {
@@ -126,11 +116,9 @@ void Bird2::flap() {
 }
 
 AbstractLevelElement* Bird2::makeCopy(const Vector2f& spawn_) const {
-  printf("making copy \n");
   return new Bird2(spawn_);
 }
 AbstractLevelElement* Bird2::makeCopy() const {
-  printf("making copy \n");
   return new Bird2(spawn_location);
 }
 
