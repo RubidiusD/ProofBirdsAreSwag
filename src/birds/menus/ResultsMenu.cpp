@@ -17,12 +17,13 @@ void ResultsMenu::load() {
 void ResultsMenu::open() {
   unsigned long long total = attempts.size();
   for (int index = 0; index != total; index ++) {
-    sf::Text* text = new sf::Text("Attempt " + std::to_string(index + 1) + ": " + std::to_string(attempts[index].progress) + " in " + std::to_string(attempts[index].duration), AssetManager::getFont(0), 18);
+    sf::Text* text = new sf::Text(std::to_string(index + 1) + ": " + std::to_string(attempts[index].progress) + " - " + attempts[index].look_nice(), AssetManager::getFont(0), 18);
     text->setPosition(S::Res(0.6f, 0.2f + 0.6f * ((float)index / (float)total)));
-    text->setFillColor(sf::Color::Red);
+    text->setFillColor({150, 255, 185});
     addDrawable(text);
   }
   AbstractMenu::open();
+  LevelLibrary::setLevel(-1);
 }
 
 void ResultsMenu::close() {

@@ -5,8 +5,8 @@
 
 Egg::Egg(const Vector2f& pos, const Vector2f& vel) : AbstractCircle(pos) {
   velocity = vel;
+  destroy_on_load = true;
 }
-void Egg::spawn() { alive = false; }
 
 void Egg::update(float dt) {
   velocity += (air_current - velocity) * dt * drag_modifier;
@@ -40,7 +40,4 @@ void Egg::initialise() {
 
   setPosition(spawn_location);
   drag_modifier = 0.5f;
-}
-
-void Egg::remove() {
 }

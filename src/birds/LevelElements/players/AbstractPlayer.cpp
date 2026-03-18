@@ -10,14 +10,14 @@ const float AbstractPlayer::ELASTIC = 0.5f;
 const float AbstractPlayer::RADIUS = 16.0f;
 
 void AbstractPlayer::update(float dt) {
-  if (jumping && floor != nullptr) { // the moment you jump
-    velocity += (floor->norm + intent * 0.5f) * jump_strength;
-    unsetFloor(floor);
+  if (jumping && floor1 != nullptr) { // the moment you jump
+    velocity += (floor1->norm + intent * 0.5f) * jump_strength;
+    unsetFloor(floor1);
     unsetFloor(floor2);
     jumping = false;
   }
   else {
-    if (floor != nullptr) { // otherwise
+    if (floor1 != nullptr) { // otherwise
       velocity += intent * acceleration_speed * dt;
     } else {
       velocity += intent * air_acceleration_speed * dt;
@@ -83,6 +83,7 @@ void AbstractPlayer::renderUI() {
 }
 
 void AbstractPlayer::spawn() {
+  printf("Spawning a player \n");
   lives = max_lives;
   lives_sprite.setTextureRect({0, 0, lives * 48, 48});
   velocity.set(0, 0);

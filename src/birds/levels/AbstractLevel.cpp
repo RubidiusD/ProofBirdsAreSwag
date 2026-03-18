@@ -100,13 +100,17 @@ void AbstractLevel::open() {
   Resize();
   timer = 0.0f;
   player->spawn();
-  for (unsigned index = 0; index != elements.size(); index ++) {
+  for (Surface& surface : surfaces) {
+    surface.active = surface.default_active;
+  }
+  for (int index = 0; index != elements.size(); index ++) {
     if (elements[index]->destroy_on_load) {
       elements[index]->remove();
       for (unsigned i = index + 1; i != elements.size(); i ++) {
         elements[i - 1] = elements[i];
       }
       elements.pop_back();
+      index --;
     }
     else {
       elements[index]->spawn();
@@ -183,8 +187,9 @@ void AbstractLevel::spawnParticle(unsigned int number, const Vector2f& position,
 }
 
 void AbstractLevel::removeListener(PlayerListener& listener) {
+  printf("Removing a Listener \n");
   for (int index = 0; index != listeners.size(); index ++) {
-    if (listeners[index] ==& listener) {
+    if (listeners[index] == &listener) {
       for (int i = index + 1; i != listeners.size(); i ++) {
         listeners[i - 1] = listeners[i];
       }
@@ -196,6 +201,8 @@ void AbstractLevel::removeListener(PlayerListener& listener) {
 
 void AbstractLevel::windParticles(float dt) {
   for (Surface& surface : surfaces) {
+    if (!surface.active)
+      continue;
     for (Edge& edge : surface.edges) {
       edge.wind_cooldown -= dt;
       if (edge.wind_cooldown <= 0.0f) {

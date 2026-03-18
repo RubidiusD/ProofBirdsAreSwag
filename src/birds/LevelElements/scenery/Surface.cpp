@@ -14,6 +14,10 @@ Surface::Surface(const std::vector<Vector2f>& points) {
   edges.back().setNext(&edges[0]);
 }
 
+Surface::Surface(const std::vector<Vector2f>& points, bool base_active) : Surface(points) {
+  active = default_active = base_active;
+}
+
 void Surface::initialiseTextures(float particle_rate) {
   pen.setTexture(AssetManager::getTexture(100));
 
@@ -73,6 +77,8 @@ void Surface::initialiseTextures(float particle_rate) {
 }
 
 std::shared_ptr<Collision> Surface::CollideCircle(const std::shared_ptr<CircleCollider>& c) {
+  if (!active)
+    return nullptr;
 
   std::shared_ptr<Collision> first = nullptr;
   std::shared_ptr<Collision> second = nullptr;
@@ -101,6 +107,8 @@ std::shared_ptr<Collision> Surface::CollideCircle(const std::shared_ptr<CircleCo
 }
 
 bool Surface::CollidePath(const Vector2f& next, const Vector2f& prev) const {
+  if (!active)
+    return false;
   for (const Edge& edge : edges) {
     if (edge.CollidePath(next, prev)) {
       return true;
@@ -110,8 +118,10 @@ bool Surface::CollidePath(const Vector2f& next, const Vector2f& prev) const {
 }
 
 void Surface::render() {
-  for (Edge& edge : edges) {
-    S::Window.draw(edge.sprite);
+  if (active) {
+    for (Edge& edge : edges) {
+      S::Window.draw(edge.sprite);
+    }
   }
 }
 

@@ -53,8 +53,11 @@ public:
   void initialiseTextures(float particle_rate);
 
   std::vector<Edge> edges;
+  bool active = true;
+  bool default_active = true;
 
   explicit Surface(const std::vector<Vector2f>& points);
+  explicit Surface(const std::vector<Vector2f>& points, bool base_active);
 };
 
 #endif // BIRDSARESWAG_SURFACE_H

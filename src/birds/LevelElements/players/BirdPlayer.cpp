@@ -27,9 +27,9 @@ void BirdPlayer::initialise() {
 }
 
 void BirdPlayer::update(float dt) {
-  if (jumping && floor != nullptr) { // the moment you jump
-    velocity += (floor->norm + intent * 0.5f) * jump_strength;
-    unsetFloor(floor);
+  if (jumping && floor1 != nullptr) { // the moment you jump
+    velocity += (floor1->norm + intent * 0.5f) * jump_strength;
+    unsetFloor(floor1);
     unsetFloor(floor2);
     flap_cooldown = 0.0f;
     jumping = false;
@@ -43,7 +43,7 @@ void BirdPlayer::update(float dt) {
       LevelLibrary::current_level->addElement(new Particle(getPosition(), Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm().i() * (100.0f + (float)M::Rand(0, 80))));
     }
   }
-  else if (floor != nullptr) { // if on ground and not jumping
+  else if (floor1 != nullptr) { // if on ground and not jumping
     velocity += intent * acceleration_speed * dt;
     velocity.y += gravity * dt;
     velocity += air_current * dt;

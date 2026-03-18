@@ -10,7 +10,7 @@
 class AbstractCircle : public AbstractLevelElement {
 protected:
   const float max_steepness = -0.0f;
-  Edge* floor = nullptr;
+  Edge* floor1 = nullptr;
   Edge* floor2 = nullptr;
 
   void stickToFloor();

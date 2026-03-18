@@ -24,6 +24,7 @@ public:
   }
 
   void spawn() override {
+    printf("Spawning a spawn trigger \n");
     done = false;
   }
 };

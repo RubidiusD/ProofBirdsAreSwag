@@ -41,6 +41,10 @@ void LevelLibrary::LoadLevelAction::end() {
   if (current_level != nullptr) {
     current_level->close();
   }
+  if (index >= levels.size()) {
+    current_level = nullptr;
+    return;
+  }
   current_level = levels[index];
   if (!current_level->isLoaded) {
     current_level->load();

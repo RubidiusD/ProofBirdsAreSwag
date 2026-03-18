@@ -1,5 +1,5 @@
-#ifndef BIRDSARESWAG_EGGPARTICLE_H
-#define BIRDSARESWAG_EGGPARTICLE_H
+#ifndef BIRDSARESWAG_EGG_PARTICLE_H
+#define BIRDSARESWAG_EGG_PARTICLE_H
 
 #include "../../../managers/AssetManager.h"
 #include "Particle.h"
@@ -17,4 +17,4 @@ public:
   }
 };
 
-#endif // BIRDSARESWAG_EGGPARTICLE_H
+#endif // BIRDSARESWAG_EGG_PARTICLE_H

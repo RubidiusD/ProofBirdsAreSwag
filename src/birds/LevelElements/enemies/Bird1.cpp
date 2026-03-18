@@ -15,7 +15,7 @@ void Bird1::initialise() {
 }
 
 void Bird1::update(float dt) {
-  if (floor == nullptr) {
+  if (floor1 == nullptr) {
     fly(dt);
   }
 }

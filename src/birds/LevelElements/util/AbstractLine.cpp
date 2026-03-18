@@ -9,6 +9,7 @@ AbstractLine::AbstractLine(const Vector2f& pos1_, const Vector2f& pos2_) : Abstr
 }
 
 void AbstractLine::spawn() {
+  printf("Spawning an abstract line \n");
   primed = false;
   triggered = false;
 }

@@ -26,6 +26,7 @@ Particle::Particle(const Vector2f& pos, const Vector2f& vel) : AbstractLevelElem
   sprite.setRotation((float)M::Rand(0, 359));
   velocity = vel;
   duration = 20.0f;
+  destroy_on_load = true;
 }
 
 bool Particle::surfaceCollide(Surface& surface) {

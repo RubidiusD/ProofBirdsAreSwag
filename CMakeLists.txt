@@ -45,6 +45,7 @@ set(SOURCE_FILES
 
     src/birds/LevelElements/enemies/Bird1.h src/birds/LevelElements/enemies/Bird1.cpp
     src/birds/LevelElements/enemies/Bird2.h src/birds/LevelElements/enemies/Bird2.cpp
+    src/birds/LevelElements/enemies/Bird3.h src/birds/LevelElements/enemies/Bird3.cpp
 
     src/birds/LevelElements/players/AbstractPlayer.h src/birds/LevelElements/players/AbstractPlayer.cpp
     src/birds/LevelElements/players/BirdPlayer.h src/birds/LevelElements/players/BirdPlayer.cpp
@@ -70,6 +71,7 @@ set(SOURCE_FILES
     src/birds/LevelElements/util/AbstractLine.h
     src/birds/LevelElements/util/ProgressTrigger.h
     src/birds/LevelElements/util/AbstractLine.cpp
+    src/birds/LevelElements/util/SurfaceToggleTrigger.h
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 

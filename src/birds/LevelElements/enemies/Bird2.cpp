@@ -36,6 +36,7 @@ void Bird2::applyWind(const std::vector<std::shared_ptr<AbstractWind>> &winds) {
 }
 
 void Bird2::remove() {
+  printf("Removing a Bird2 \n");
   LevelLibrary::current_level->removeListener(playerPredictor);
 }
 
