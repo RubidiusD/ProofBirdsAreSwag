@@ -83,7 +83,6 @@ void AbstractPlayer::renderUI() {
 }
 
 void AbstractPlayer::spawn() {
-  printf("Spawning a player \n");
   lives = max_lives;
   lives_sprite.setTextureRect({0, 0, lives * 48, 48});
   velocity.set(0, 0);

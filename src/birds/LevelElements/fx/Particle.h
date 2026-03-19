@@ -12,6 +12,7 @@ public:
   bool surfaceCollide(Surface& surface) override;
   void update(float dt) override;
   bool collidesSurface() const override;
+  void spawn() override;
 };
 
 #endif // BIRDSARESWAG_PARTICLE_H

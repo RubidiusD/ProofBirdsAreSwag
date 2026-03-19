@@ -1,6 +1,6 @@
 #include "TrackingLevel.h"
 #include "../../managers/AssetManager.h"
-#include "../LevelElements/enemies/Bird3.h"
+#include "../LevelElements/enemies/Bird2.h"
 #include "../LevelElements/scenery/Billboard.h"
 #include "../LevelElements/util/EndLevelTrigger.h"
 #include "../LevelElements/util/SpawnTrigger.h"
@@ -151,9 +151,9 @@ void TrackingLevel::load() {
   addElement(new SurfaceToggleTrigger(surfaces[3], true,  {-2200, 450, 250, 500}));
 
   player = std::make_shared<AbstractPlayer>(Vector2f{150.0f, -30.0f});
-  addElement(new Bird3({-150.0f, -30.0f}));
-  addElement(new SpawnTrigger({-100.0f, -200.0f, 50.0f, 500.0f}, std::make_shared<Bird3>(Vector2f{-25.0f, -150.0f})));
-  addElement(new SpawnTrigger({-1450.0f, 350.0f, 100.0f, 500.0f}, std::make_shared<Bird3>(Vector2f{-1405.0f,  400.0f})));
+  addElement(new Bird2({-150.0f, -30.0f}));
+  addElement(new SpawnTrigger({-100.0f, -200.0f, 50.0f, 500.0f}, std::make_shared<Bird2>(Vector2f{-25.0f, -150.0f})));
+  addElement(new SpawnTrigger({-1450.0f, 350.0f, 100.0f, 500.0f}, std::make_shared<Bird2>(Vector2f{-1405.0f,  400.0f})));
 
   AbstractLevel::load();
 }

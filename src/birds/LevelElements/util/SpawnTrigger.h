@@ -19,12 +19,10 @@ public:
       AbstractLevelElement* new_things = template_object->makeCopy();
       new_things->destroy_on_load = true;
       LevelLibrary::current_level->addElement(new_things);
-      printf("element added \n");
     }
   }
 
   void spawn() override {
-    printf("Spawning a spawn trigger \n");
     done = false;
   }
 };

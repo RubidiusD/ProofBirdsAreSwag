@@ -41,7 +41,7 @@ public:
   virtual bool circleCollide(const std::shared_ptr<CircleCollider>& rhs) const { return (rhs->c.disSqr(getPosition()) <= rhs->r * rhs->r); }
   virtual Vector2f getPosition() const { return sprite.getPosition(); }
   virtual void setPosition(const Vector2f& p) { sprite.setPosition(p); }
-  virtual void spawn() { printf("Spawning an Abstract Level Element \n"); setPosition(spawn_location); }
+  virtual void spawn() { setPosition(spawn_location); }
   virtual bool collidesPlayer() const { return false; }
   virtual void onHitPlayer() { }
   virtual bool collidesSurface() const { return false; }

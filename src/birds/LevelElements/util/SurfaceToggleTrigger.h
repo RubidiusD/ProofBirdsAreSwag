@@ -18,7 +18,6 @@ public:
   }
 
   void spawn() override {
-    printf("Spawning a surface toggle trigger \n");
     done = false;
   }
 

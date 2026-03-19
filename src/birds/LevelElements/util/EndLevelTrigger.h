@@ -21,7 +21,6 @@ public:
   }
 
   void onHitPlayer() override {
-    printf("Trying to load Menu \n");
     LevelLibrary::current_level->close();
     MenuManager::setMenu(ID);
   }

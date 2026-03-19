@@ -156,7 +156,6 @@ void AbstractCircle::applyWind(const std::vector<std::shared_ptr<AbstractWind>>&
 }
 
 void AbstractCircle::spawn() {
-  printf("Spawning a circle \n");
   setPosition(spawn_location);
   velocity.set(0.0f, 0.0f);
   unsetFloor(floor1);

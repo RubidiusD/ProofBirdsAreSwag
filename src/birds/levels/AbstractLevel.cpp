@@ -103,14 +103,16 @@ void AbstractLevel::open() {
   for (Surface& surface : surfaces) {
     surface.active = surface.default_active;
   }
-  for (int index = 0; index != elements.size(); index ++) {
+  bool incrementing;
+  for (int index = 0; index != elements.size(); index += incrementing ? 1 : 0) {
+    incrementing = true;
     if (elements[index]->destroy_on_load) {
       elements[index]->remove();
       for (unsigned i = index + 1; i != elements.size(); i ++) {
         elements[i - 1] = elements[i];
       }
       elements.pop_back();
-      index --;
+      incrementing = false;
     }
     else {
       elements[index]->spawn();
@@ -187,7 +189,6 @@ void AbstractLevel::spawnParticle(unsigned int number, const Vector2f& position,
 }
 
 void AbstractLevel::removeListener(PlayerListener& listener) {
-  printf("Removing a Listener \n");
   for (int index = 0; index != listeners.size(); index ++) {
     if (listeners[index] == &listener) {
       for (int i = index + 1; i != listeners.size(); i ++) {

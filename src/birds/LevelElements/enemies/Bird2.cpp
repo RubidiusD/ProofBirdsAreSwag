@@ -19,7 +19,6 @@ void Bird2::initialise() {
   AssetManager::RegisterTexture("Data/images/Bird1.png", 111);
   sprite.setTexture(AssetManager::getTexture(111));
   sprite.setOrigin(29, 12);
-  printf("adding predictor \n");
   LevelLibrary::current_level->addListener(&playerPredictor);
 
   elasticity = ELASTIC;
@@ -36,7 +35,6 @@ void Bird2::applyWind(const std::vector<std::shared_ptr<AbstractWind>> &winds) {
 }
 
 void Bird2::remove() {
-  printf("Removing a Bird2 \n");
   LevelLibrary::current_level->removeListener(playerPredictor);
 }
 
