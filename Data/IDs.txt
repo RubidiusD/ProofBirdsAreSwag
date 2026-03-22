@@ -12,6 +12,7 @@
 110: Egg
 111: Bird1
 112: Bird1's wing
+113: Wing Sprite Sheet
 
 150: Arrow
 

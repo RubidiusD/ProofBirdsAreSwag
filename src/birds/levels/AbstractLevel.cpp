@@ -67,7 +67,7 @@ void AbstractLevel::updateElements(float dt) {
 }
 
 void AbstractLevel::render() {
-  view.setCenter(player->getPosition());
+  view.setCenter(player->getPosition() + Vector2f{0.0f, -64.0f});
   S::Window.clear(sf::Color::White);
   S::Window.setView(view);
   player->render();

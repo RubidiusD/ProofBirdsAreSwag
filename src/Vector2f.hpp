@@ -4,6 +4,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
 #include <cstdio>
+#include <string>
 
 struct Vector2f {
   float x = 0.0f;
@@ -63,6 +64,7 @@ struct Vector2f {
   float dis(const Vector2f& rhs) const { return sqrtf(disSqr(rhs)); }
   float dot(const Vector2f& rhs) const { return x*rhs.x + y*rhs.y; }
   void print() const { printf("(%f, %f)", x, y); }
+  std::string to_string() const { return "(" + std::to_string((int)x) + ", " + std::to_string((int)y) + ")"; }
 };
 
 #endif // BIRDSARESWAG_VECTOR2F_HPP

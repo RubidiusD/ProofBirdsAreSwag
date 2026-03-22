@@ -24,8 +24,8 @@ void Surface::initialiseTextures(float particle_rate) {
   for (Edge& edge : edges) {
     edge.wind_cooldown = M::Randf(0.0f, particle_rate);
 
-    bool right_convex = (M::cross(edge.prev->dire, edge.dire).y >= 0.0f);
-    bool left_convex =  (M::cross(edge.dire, edge.next->dire).y >= 0.0f);
+    bool left_convex  = edge.prev->dire.unRotate(edge.dire).y >= 0.0f;
+    bool right_convex = edge.dire.unRotate(edge.next->dire).y >= 0.0f;
 
     const int length = (int) floorf(edge.getLength() / 4.0f) + (left_convex ? 0 : 2) + (right_convex ? 0 : 2);
     edge.rt.create(length * 4, 16);
@@ -121,6 +121,8 @@ void Surface::render() {
   if (active) {
     for (Edge& edge : edges) {
       S::Window.draw(edge.sprite);
+      S::Window.draw(edge.text1);
+      S::Window.draw(edge.text2);
     }
   }
 }
@@ -141,7 +143,19 @@ bool Edge::CollidePath(const Vector2f& n, const Vector2f& p) const {
   return (t2 >= 0.0f && t2 <= 1.0f && t1 >= 0.0f && t1 <= 1.0f);
 }
 
-Edge::Edge(const Vector2f& p) { point = p; }
+Edge::Edge(const Vector2f& p) {
+  point = p;
+  text1.setCharacterSize(18);
+  text1.setString(p.to_string());
+  text1.setPosition(p + Vector2f{0, 10});
+  text1.setFillColor(sf::Color::White);
+  text1.setFont(AssetManager::getFont(0));
+  text2.setCharacterSize(18);
+  text2.setString(p.to_string());
+  text2.setPosition(p + Vector2f{0.5, 10.5});
+  text2.setFillColor(sf::Color::Black);
+  text2.setFont(AssetManager::getFont(0));
+}
 
 void Edge::setNext(Edge* n) {
   next = n;
@@ -155,9 +169,7 @@ float Edge::getLength() const {
   return sqrtf(M::distanceSQ(point, next->point));
 }
 
-Edge::Edge(const Edge& edge) {
-  point = edge.point;
-}
+Edge::Edge(const Edge& edge) : Edge(edge.point) {}
 
 Vector2f Edge::chop(float r) const {
   return next->point + next->dire * (r * ((dire.x*(next->norm.y - norm.y) - dire.y*(next->norm.x - norm.x)) /(next->dire.x * dire.y - next->dire.y * dire.x))) + next->norm * r;

@@ -47,7 +47,6 @@ void Bird1::render() {
 
 void Bird1::Point(const std::shared_ptr<AbstractCircle>& t) {
   target = t->getPosition();
-  target_r = (target - getPosition()).norm();
 }
 
 void Bird1::setPosition(const Vector2f& pos) {

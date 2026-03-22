@@ -9,10 +9,11 @@
 
 class AbstractCircle : public AbstractLevelElement {
 protected:
-  const float max_steepness = -0.0f;
   Edge* floor1 = nullptr;
   Edge* floor2 = nullptr;
 
+  virtual bool snapTo(const std::shared_ptr<Collision>& collision);
+  virtual bool snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2);
   void stickToFloor();
   bool setFloor(Edge*&, Edge*) const;
   void unsetFloor(Edge*&) const;
@@ -29,15 +30,12 @@ public:
     hB = std::make_shared<CircleCollider>();
   }
   bool collidesSurface() const override;
-
-  virtual bool snapTo(const std::shared_ptr<Collision>& collision);
-  virtual bool snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2);
   bool surfaceCollide(Surface& surface) override;
   void setPosition(const Vector2f& pos) override;
   void applyWind(const std::vector<std::shared_ptr<AbstractWind>>& winds) override;
   void spawn() override;
   void initialise() override;
-  void onHitSurface(const std::shared_ptr<Collision> &collision) override;
+  void onHitSurface(const std::shared_ptr<Collision>& collision) override;
   void onHitPlayer() override;
   void bounceOff(const std::shared_ptr<AbstractCircle>& rhs);
 };

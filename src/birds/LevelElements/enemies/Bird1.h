@@ -15,7 +15,6 @@ protected:
   Vector2f wing_direction;
 
   Vector2f target;
-  Vector2f target_r;
 
   void fly(float dt);
 

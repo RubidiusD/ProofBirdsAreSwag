@@ -12,7 +12,7 @@ bool AbstractCircle::surfaceCollide(Surface& surface) {
   return false;
 }
 
-void AbstractCircle::onHitSurface(const std::shared_ptr<Collision> &collision) {
+void AbstractCircle::onHitSurface(const std::shared_ptr<Collision>& collision) {
   snapTo(collision);
 }
 
@@ -82,10 +82,8 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   }
   Vector2f old_vel = velocity;
   velocity = velocity.splat(collision->normal, collision->elasticity(elasticity));
-  if (collision->normal.y < max_steepness) {
-    setFloor(floor1, collision->edge);
-    unsetFloor(floor2);
-  }
+  setFloor(floor1, collision->edge);
+  unsetFloor(floor2);
   setPosition(collision->point + collision->normal * hB->r);
   float change = M::distanceSQ(old_vel, velocity);
   if (change > 1000.0f) {
@@ -132,14 +130,8 @@ bool AbstractCircle::setFloor(Edge*& receptacle, Edge* new_edge) const {
     return false;
   }
 
-  if (new_edge->norm.y < max_steepness) {
-    receptacle = new_edge;
-    return true;
-  }
-  else {
-    receptacle = nullptr;
-    return false;
-  }
+  receptacle = new_edge;
+  return true;
 }
 
 void AbstractCircle::unsetFloor(Edge*& receptacle) const {

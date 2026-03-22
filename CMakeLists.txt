@@ -72,6 +72,8 @@ set(SOURCE_FILES
     src/birds/LevelElements/util/ProgressTrigger.h
     src/birds/LevelElements/util/AbstractLine.cpp
     src/birds/LevelElements/util/SurfaceToggleTrigger.h
+    src/birds/LevelElements/enemies/AbstractBird.cpp
+    src/birds/LevelElements/enemies/AbstractBird.h
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 
