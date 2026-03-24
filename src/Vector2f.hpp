@@ -65,6 +65,9 @@ struct Vector2f {
   float dot(const Vector2f& rhs) const { return x*rhs.x + y*rhs.y; }
   void print() const { printf("(%f, %f)", x, y); }
   std::string to_string() const { return "(" + std::to_string((int)x) + ", " + std::to_string((int)y) + ")"; }
+  bool is(float x_, float y_) const {
+    return (x == x_ && y == y_);
+  }
 };
 
 #endif // BIRDSARESWAG_VECTOR2F_HPP

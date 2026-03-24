@@ -17,7 +17,8 @@ protected:
   virtual bool snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2);
   void stickToFloor();
   bool setFloor(Edge*&, Edge*) const;
-  void unsetFloor(Edge*&) const;
+  void unsetFloor(Edge*&);
+  void tickCoyote(float dt);
 
   float gravity = 640.0f;
   float acceleration_speed = 640.0f;
@@ -25,6 +26,9 @@ protected:
   float jump_strength = 640.0f;
   float drag_modifier = 1.0f;
   float elasticity = 0.0f;
+  float coyote = 0.0f;
+  float max_coyote = 0.125f;
+  Vector2f coyote_normal;
 
 public:
   explicit AbstractCircle(const Vector2f& spawn) : AbstractLevelElement(spawn) {

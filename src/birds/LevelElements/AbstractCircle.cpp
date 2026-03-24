@@ -31,6 +31,7 @@ void AbstractCircle::stickToFloor() {
       if (cB == nullptr) { // no longer touching or in line with current floor1
         if (!(cA != nullptr && cA->inRange && snapTo(cA)) && !(cC != nullptr && cC->inRange && snapTo(cC))) {
           unsetFloor(floor1);
+          coyote = max_coyote;
         }
       }
       else {
@@ -46,6 +47,7 @@ void AbstractCircle::stickToFloor() {
       if (cA == nullptr && cB == nullptr) {
         unsetFloor(floor1);
         unsetFloor(floor2);
+        coyote = max_coyote;
       }
       else if ((cA == nullptr || !cA->inRange) && cB != nullptr && cB->inRange) {
         snapTo(cB);
@@ -78,8 +80,10 @@ void AbstractCircle::initialise() {
 
 bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   if (collision == nullptr) {
+    coyote = max_coyote;
     return false;
   }
+  coyote_normal.set(0, 0);
   Vector2f old_vel = velocity;
   velocity = velocity.splat(collision->normal, collision->elasticity(elasticity));
   if (can_stick) {
@@ -97,8 +101,10 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
 
 bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2) {
   if (c1 == nullptr || c2 == nullptr) {
+    coyote = max_coyote;
     return false;
   }
+  coyote_normal.set(0, 0);
   Edge* e1 = c1->edge;
   Edge* e2 = c2->edge;
   setPosition(e1->chop(hB->r));
@@ -136,7 +142,17 @@ bool AbstractCircle::setFloor(Edge*& receptacle, Edge* new_edge) const {
   return true;
 }
 
-void AbstractCircle::unsetFloor(Edge*& receptacle) const {
+void AbstractCircle::unsetFloor(Edge*& receptacle) {
+  if (receptacle == nullptr) {
+    return;
+  }
+  if (coyote_normal.is(0.0f, 0.0f)) {
+    coyote_normal = receptacle->norm;
+  }
+  else {
+    coyote_normal += receptacle->norm;
+    coyote_normal /= 2.0f;
+  }
   receptacle = nullptr;
 }
 
@@ -176,4 +192,10 @@ void AbstractCircle::bounceOff(const std::shared_ptr<AbstractCircle>& rhs) {
   float r = (elasticity + rhs->elasticity) / 2;
   velocity = Vector2f{(u3.x+u4.x+r*u4.x-r*u3.x) / (2), u3.y}.unRotate(c3) / c3.magSqr();
   rhs->velocity = Vector2f{(u4.x+u3.x+r*u3.x-r*u4.x) / (2), u4.y}.unRotate(c3) / c3.magSqr();
+}
+
+void AbstractCircle::tickCoyote(float dt) {
+  if (can_stick && floor1 != nullptr && coyote != 0.0f) {
+    coyote = fmaxf(coyote - dt, 0.0f);
+  }
 }

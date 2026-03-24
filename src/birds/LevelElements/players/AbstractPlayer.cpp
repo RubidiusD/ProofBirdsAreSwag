@@ -8,13 +8,16 @@ const float AbstractPlayer::JUMP = 360.0f;
 const float AbstractPlayer::DRAG = 1.75f;
 const float AbstractPlayer::ELASTIC = 0.5f;
 const float AbstractPlayer::RADIUS = 16.0f;
+const float AbstractPlayer::COYOTE = 0.125f;
 
 void AbstractPlayer::update(float dt) {
-  if (jumping && floor1 != nullptr) { // the moment you jump
-    velocity += (floor1->norm + intent * 0.5f) * jump_strength;
+  tickCoyote(dt);
+  if (jumping && (floor1 != nullptr || coyote != 0.0f)) { // the moment you jump
+    velocity += ((floor1 != nullptr ? floor1->norm : coyote_normal) + intent * 0.5f) * jump_strength;
     unsetFloor(floor1);
     unsetFloor(floor2);
     jumping = false;
+    coyote = 0.0f;
   }
   else {
     if (floor1 != nullptr) { // otherwise
@@ -55,6 +58,7 @@ void AbstractPlayer::initialise() {
   drag_modifier = DRAG;
   elasticity = ELASTIC;
   hB->r = RADIUS;
+  max_coyote = COYOTE;
 
   AssetManager::RegisterTexture("Data/images/Player.png", 99);
   sprite.setTexture(AssetManager::getTexture(99));

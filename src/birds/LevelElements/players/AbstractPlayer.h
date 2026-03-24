@@ -17,6 +17,7 @@ private:
   static const float DRAG;
   static const float ELASTIC;
   static const float RADIUS;
+  static const float COYOTE;
 protected:
   Vector2f intent;
   bool jumping = false;
