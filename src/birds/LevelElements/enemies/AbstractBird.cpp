@@ -28,6 +28,7 @@ void AbstractBird::initialise() {
   setWingRect({0, 0, 29, 27});
   wing.setOrigin(23, 5);
   LevelLibrary::current_level->addListener(&playerPredictor);
+  can_stick = false;
 }
 
 void AbstractBird::render() {
@@ -84,7 +85,7 @@ void AbstractBird::tickWing(float dt) {
     velocity += Vector2f{facing * 0.89508196721f, -0.44590163934f} * dt * air_acceleration_speed * flap_cooldown;
     break;
   case (81):
-    velocity += Vector2f{facing * 0.98019801980198019801980198019802f, 0.1980198019801980198019801980198f} * dt * air_acceleration_speed * flap_cooldown;
+    velocity += Vector2f{facing * 0.980198019802f, 0.19801980198f} * dt * air_acceleration_speed * flap_cooldown;
     break;
   }
   if (anim_cooldown <= 0.0f) {

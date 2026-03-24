@@ -17,18 +17,27 @@ void Bird3::initialise() {
   air_acceleration_speed = AIR_ACCELERATION;
   drag_modifier = DRAG;
   hB->r = RADIUS;
+  stamina = max_stamina;
 }
 
 void Bird3::update(float dt) {
   selfPredictor.QuarryIs(getPosition(), dt);
 
-  velocity += (playerPredictor.f(0.5f) + Vector2f{0.0f, -100.0f} - selfPredictor.f(0.5f)).norm() * air_acceleration_speed * dt;
+  if (stamina != 0.0f) {
+    velocity += (playerPredictor.f(0.5f) + Vector2f{0.0f, -100.0f} - selfPredictor.f(0.5f)).norm() * air_acceleration_speed * dt;
+  }
   velocity += (air_current - velocity) * drag_modifier * dt;
   setPosition(velocity * dt + sprite.getPosition());
 
   cooldowns(dt);
   considerEgg();
   tickWing(dt);
+}
+
+void Bird3::onHitSurface(const std::shared_ptr<Collision> &collision) {
+  if (snapTo(collision)) {
+    stamina = fminf(stamina + 1, max_stamina);
+  }
 }
 
 void Bird3::cooldowns(float dt) {
@@ -38,6 +47,7 @@ void Bird3::cooldowns(float dt) {
       egg_cooldown = 0.0f;
     }
   }
+  stamina = fmaxf(stamina - dt, 0.0f);
 }
 
 AbstractLevelElement* Bird3::makeCopy(const Vector2f& spawn_) const {

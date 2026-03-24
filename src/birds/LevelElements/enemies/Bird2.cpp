@@ -28,13 +28,13 @@ void Bird2::update(float dt) {
   setPosition(velocity * dt + sprite.getPosition());
 
   cooldowns(dt);
-  considerFlap(dt);
+  considerFlap();
   tickWing(dt);
   considerEgg();
 }
 
-void Bird2::considerFlap(float dt) {
-  if (spray == 0 && flap_cooldown == 0.0f) {
+void Bird2::considerFlap() {
+  if (spray == 0 && flap_cooldown == 0.0f && stamina >= 1.0f) {
     flap();
   }
 }
@@ -52,6 +52,7 @@ void Bird2::cooldowns(float dt) {
       egg_cooldown = 0.0f;
     }
   }
+  stamina = fminf(stamina + dt, max_stamina);
 }
 
 void Bird2::flap() {
@@ -64,6 +65,7 @@ void Bird2::flap() {
   else if (cur.x > tar.x + 50.0f && pre.x > tarp.x - 25.0f)  { setWingRect({0, 54, 29, 27}); wing_direction = {-1, 0}; }
   else if (cur.y > tar.y - 75.0f && pre.y > tarp.y - 100.0f) { setWingRect({0, 27, 29, 27}); }
   else { return; }
+  stamina -= 1.0f;
   flap_cooldown = flap_max_cooldown;
   anim_cooldown = 0.125f;
 //  LevelLibrary::current_level->spawnParticle(8, cur, change * -1.0f);

@@ -21,9 +21,13 @@ protected:
   float anim_cooldown = 0.125f;
   sf::IntRect wingRect;
 
+  float stamina = 5.0f;
+  float max_stamina = 10.0f;
+
   void tickWing(float dt);
   void considerEgg();
   void setWingRect(const sf::IntRect& rect);
+
 public:
   explicit AbstractBird(const Vector2f& pos) : AbstractCircle(pos) {}
   bool collidesPlayer() const override;

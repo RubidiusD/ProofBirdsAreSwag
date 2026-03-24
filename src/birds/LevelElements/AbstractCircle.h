@@ -11,6 +11,7 @@ class AbstractCircle : public AbstractLevelElement {
 protected:
   Edge* floor1 = nullptr;
   Edge* floor2 = nullptr;
+  bool can_stick = true;
 
   virtual bool snapTo(const std::shared_ptr<Collision>& collision);
   virtual bool snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2);

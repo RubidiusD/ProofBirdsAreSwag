@@ -16,8 +16,9 @@ public:
 
   void initialise() override;
   void update(float dt) override;
-  AbstractLevelElement *makeCopy(const Vector2f &spawn_) const override;
-  AbstractLevelElement *makeCopy() const override;
+  AbstractLevelElement* makeCopy(const Vector2f& spawn_) const override;
+  AbstractLevelElement* makeCopy() const override;
+  void onHitSurface(const std::shared_ptr<Collision>& collision) override;
 };
 
 #endif // BIRDSARESWAG_BIRD2_H

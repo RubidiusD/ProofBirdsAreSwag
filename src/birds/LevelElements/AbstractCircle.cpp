@@ -82,8 +82,10 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   }
   Vector2f old_vel = velocity;
   velocity = velocity.splat(collision->normal, collision->elasticity(elasticity));
-  setFloor(floor1, collision->edge);
-  unsetFloor(floor2);
+  if (can_stick) {
+    setFloor(floor1, collision->edge);
+    unsetFloor(floor2);
+  }
   setPosition(collision->point + collision->normal * hB->r);
   float change = M::distanceSQ(old_vel, velocity);
   if (change > 1000.0f) {

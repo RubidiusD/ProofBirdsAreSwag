@@ -13,7 +13,7 @@ private:
   static const float DRAG;
 
   void cooldowns(float dt);
-  void considerFlap(float dt);
+  void considerFlap();
 protected:
   float flap_max_cooldown = 0.5f;
 
