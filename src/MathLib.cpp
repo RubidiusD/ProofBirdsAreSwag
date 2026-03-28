@@ -93,3 +93,7 @@ float M::parallelMag(const Vector2f& v, const Vector2f& n, bool normalised) {
 Vector2f M::cross(const Vector2f& a, const Vector2f& b) {
   return {a.x * b.x + a.y * b.y, a.y * b.x - a.x + b.y};
 }
+
+unsigned M::max(unsigned int a, unsigned int b) {
+  return a > b ? a : b;
+}

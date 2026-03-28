@@ -35,7 +35,7 @@ void AbstractLevel::update(float dt) {
     trigger.update(dt);
   }
 
-  timer += dt;
+  chapter.duration += dt;
 }
 
 void AbstractLevel::updateElements(float dt) {
@@ -98,7 +98,7 @@ void AbstractLevel::load() {
 void AbstractLevel::open() {
   listening_to_inputs = true;
   Resize();
-  timer = 0.0f;
+  chapter.reset();
   player->spawn();
   for (Surface& surface : surfaces) {
     surface.active = surface.default_active;
@@ -122,7 +122,7 @@ void AbstractLevel::open() {
 
 void AbstractLevel::close() {
   listening_to_inputs = false;
-  ResultsMenu::instance->AddAttempt(timer, checkpoints.size() + 1);
+//  ResultsMenu::instance->AddAttempt(timer, checkpoints.size() + 1);
 }
 
 void AbstractLevel::unload() {
@@ -231,7 +231,7 @@ Vector2f AbstractLevel::windAt(const Vector2f& point) const {
 
 void AbstractLevel::hurtPlayer(const Vector2f& source) {
   if (player->hurt(source)) {
-    publishProgress();
+    publishProgress(DIED);
     open();
   }
 }
@@ -240,10 +240,11 @@ std::shared_ptr<AbstractPlayer> AbstractLevel::getPlayer() {
   return player;
 }
 
-void AbstractLevel::publishProgress() const {
-  ResultsMenu::instance->AddAttempt(timer, progress);
+void AbstractLevel::publishProgress(ProgressType type) {
+  chapter.type = type;
+  ResultsMenu::instance->AddChapter(chapter);
 }
 
 void AbstractLevel::addCheckpointAt(const Vector2f& pos1, const Vector2f& pos2) {
-  checkpoints.emplace_back(progress, pos1, pos2, checkpoints.size() + 1);
+  checkpoints.emplace_back(chapter.progress, pos1, pos2, checkpoints.size() + 1); // chapter.progress here is a reference lol
 }

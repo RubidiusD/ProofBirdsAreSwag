@@ -36,7 +36,7 @@ void Bird3::update(float dt) {
 
 void Bird3::onHitSurface(const std::shared_ptr<Collision> &collision) {
   if (snapTo(collision)) {
-    stamina = fminf(stamina + 1, max_stamina);
+    stamina = fminf(stamina + 2, max_stamina);
   }
 }
 

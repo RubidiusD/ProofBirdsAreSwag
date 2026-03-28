@@ -27,7 +27,7 @@ protected:
   float drag_modifier = 1.0f;
   float elasticity = 0.0f;
   float coyote = 0.0f;
-  float max_coyote = 0.125f;
+  float max_coyote = 0.6125f;
   Vector2f coyote_normal;
 
 public:

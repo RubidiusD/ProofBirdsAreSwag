@@ -15,6 +15,7 @@ public:
   static float lengthSQ(const Vector2f& v);
   static float parallelMag(const Vector2f& v, const Vector2f& n);
   static float parallelMag(const Vector2f& v, const Vector2f& n, bool normalised);
+  static unsigned max(unsigned a, unsigned b);
 
   template<typename T> static T Max(T a, T b);
   template<typename T> static T Min(T a, T b);

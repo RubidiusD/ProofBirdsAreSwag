@@ -11,11 +11,7 @@ public:
     index = i;
     fire_once = true;
   }
-  void onSpecificTrigger() override {
-    if (index > target) {
-      target = index;
-    }
-  }
+  void onSpecificTrigger() override;
 };
 
 #endif // BIRDSARESWAG_PROGRESS_TRIGGER_H

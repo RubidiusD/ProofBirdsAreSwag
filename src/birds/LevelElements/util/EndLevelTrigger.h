@@ -21,6 +21,7 @@ public:
   }
 
   void onHitPlayer() override {
+    LevelLibrary::current_level->publishProgress(WON);
     LevelLibrary::current_level->close();
     MenuManager::setMenu(ID);
   }

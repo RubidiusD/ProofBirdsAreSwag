@@ -4,6 +4,7 @@
 #include "../LevelElements/players/AbstractPlayer.h"
 #include "../LevelElements/projectiles/Egg.h"
 #include "../LevelElements/util/PlayerListener.h"
+#include "../LevelElements/util/ProgressData.h"
 #include "../LevelElements/util/ProgressTrigger.h"
 
 class AbstractLevel : InputSubscriber {
@@ -19,8 +20,7 @@ protected:
   float particle_rate = 0.1f;
   void windParticles(float dt);
 
-  float timer = 0.0f;
-  unsigned progress = 0;
+  Chapter chapter;
 
 public:
   void update(float dt);
@@ -42,8 +42,8 @@ public:
   void spawnParticle(unsigned number, const Vector2f& position, const Vector2f& direction);
   void removeListener(PlayerListener& listener);
   void addCheckpointAt(const Vector2f& pos1, const Vector2f& pos2);
+  void publishProgress(ProgressType type);
 
-  void publishProgress() const;
   Vector2f windAt(const Vector2f& point) const;
   virtual void hurtPlayer(const Vector2f& source);
   std::shared_ptr<AbstractPlayer> getPlayer();

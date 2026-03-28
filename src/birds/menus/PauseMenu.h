@@ -34,6 +34,15 @@ public:
   }
 };
 
+class OptOutButton : public LoadMenuButton {
+public:
+  OptOutButton(const sf::String& text_, const Neighbours& n, const Vector2f& ratio_) : LoadMenuButton(text_, n, ratio_, "MAIN") {}
+  void Press() override {
+    LevelLibrary::current_level->publishProgress(QUIT);
+    LoadMenuButton::Press();
+  }
+};
+
 class PauseMenu : public AbstractMenu {
 public:
   PauseMenu();
