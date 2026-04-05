@@ -5,6 +5,7 @@
 #include "../AbstractCircle.h"
 #include "../scenery/AbstractWind.h"
 #include "../scenery/Surface.h"
+#include "../util/ProgressData.h"
 #include <SFML/Graphics/Sprite.hpp>
 #include <memory>
 
@@ -26,8 +27,9 @@ protected:
   sf::Sprite lives_sprite;
   float i_timer = 0.25f;
   float max_i_timer = 0.25f;
+  Chapter& chapter;
 public:
-  AbstractPlayer(const Vector2f& spawn) : AbstractCircle(spawn) {}
+  AbstractPlayer(const Vector2f& spawn, Chapter& c) : AbstractCircle(spawn), chapter(c) {}
 
   void update(float dt) override;
   void initialise() override;

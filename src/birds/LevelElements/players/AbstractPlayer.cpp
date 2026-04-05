@@ -12,8 +12,18 @@ const float AbstractPlayer::COYOTE = 0.125f;
 
 void AbstractPlayer::update(float dt) {
   tickCoyote(dt);
+  if (intent.dot(velocity) < 0) {
+    chapter.time_spent_counter_steering += dt;
+  }
   if (jumping && (floor1 != nullptr || coyote != 0.0f)) { // the moment you jump
-    velocity += ((floor1 != nullptr ? floor1->norm : coyote_normal) + intent * 0.5f) * jump_strength;
+    if (floor1 == nullptr) {
+      chapter.times_coyoted ++;
+      velocity += (coyote_normal + intent * 0.5f) * jump_strength;
+    }
+    else {
+      velocity += (floor1->norm + intent * 0.5f) * jump_strength;
+    }
+    chapter.times_jumped ++;
     unsetFloor(floor1);
     unsetFloor(floor2);
     jumping = false;
@@ -76,6 +86,7 @@ bool AbstractPlayer::hurt(const Vector2f& source) {
   if (i_timer != 0.0f) {
     return false;
   }
+  chapter.times_hit ++;
   i_timer = max_i_timer;
   lives --;
   lives_sprite.setTextureRect({0, 0, lives * 48, 48});

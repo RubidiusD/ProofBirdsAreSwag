@@ -32,6 +32,7 @@ struct Edge {
   sf::Text text2;
   float elasticity = 0.0f;
   float wind_cooldown = 0.0f;
+  bool concave = false;
 
   explicit Edge(const Vector2f& p);
   Edge(const Edge& edge);

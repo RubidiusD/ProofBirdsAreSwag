@@ -243,6 +243,7 @@ std::shared_ptr<AbstractPlayer> AbstractLevel::getPlayer() {
 void AbstractLevel::publishProgress(ProgressType type) {
   chapter.type = type;
   ResultsMenu::instance->AddChapter(chapter);
+  chapter.reset();
 }
 
 void AbstractLevel::addCheckpointAt(const Vector2f& pos1, const Vector2f& pos2) {

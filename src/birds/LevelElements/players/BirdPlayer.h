@@ -26,7 +26,7 @@ protected:
   void fly(float dt);
 
 public:
-  BirdPlayer(const Vector2f& pos) : AbstractPlayer(pos) {}
+  BirdPlayer(const Vector2f& pos, Chapter& c) : AbstractPlayer(pos, c) {}
 
   void Look(const Vector2f& vector) override;
   void render() override;

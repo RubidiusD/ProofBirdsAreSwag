@@ -14,20 +14,22 @@ enum ProgressType {
 };
 
 struct Chapter {
-  ProgressType type = UNFINISHED;
-  unsigned progress = 0;
-  float duration = 0.0f;
-  unsigned times_hit = 0;
-  float time_spent_counter_steering = 0.0f;
-  unsigned times_jumped = 0;
-  unsigned times_coyoted = 0;
+  ProgressType type = UNFINISHED; // made
+  unsigned progress = 0; // made
+  float duration = 0.0f; // made
+  unsigned times_hit = 0; // made
+  unsigned times_missed = 0;
+  float time_spent_counter_steering = 0.0f; // made
+  unsigned times_jumped = 0; // made
+  unsigned times_coyoted = 0; // made
   unsigned times_bounced = 0;
   unsigned times_stuck = 0;
 
-  Chapter(unsigned p, float d, unsigned h, float s, unsigned j, unsigned c, unsigned b, unsigned l, ProgressType t) {
+  Chapter(unsigned p, float d, unsigned h, unsigned m, float s, unsigned j, unsigned c, unsigned b, unsigned l, ProgressType t) {
     progress = p;
     duration = d;
     times_hit = h;
+    times_missed = m;
     time_spent_counter_steering = s;
     times_jumped = j;
     times_coyoted = c;
@@ -43,6 +45,7 @@ struct Chapter {
     progress = rhs.progress;
     duration += rhs.duration;
     times_hit += rhs.times_hit;
+    times_missed = rhs.times_missed;
     time_spent_counter_steering += rhs.time_spent_counter_steering;
     times_jumped += rhs.times_jumped;
     times_coyoted += rhs.times_coyoted;
@@ -81,8 +84,8 @@ struct Attempt : public Chapter {
 
   Attempt() = default;
 
-  void AddChapter(unsigned p, float d, unsigned h, float s, unsigned j, unsigned c, unsigned b, unsigned l, ProgressType t) {
-    chapters.emplace_back(p, d, h, s, j, c, b, l, t);
+  void AddChapter(unsigned p, float d, unsigned h, unsigned m, float s, unsigned j, unsigned c, unsigned b, unsigned l, ProgressType t) {
+    chapters.emplace_back(p, d, h, m, s, j, c, b, l, t);
     operator+=(chapters.back());
   }
 

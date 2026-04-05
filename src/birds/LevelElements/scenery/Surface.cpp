@@ -24,10 +24,7 @@ void Surface::initialiseTextures(float particle_rate) {
   for (Edge& edge : edges) {
     edge.wind_cooldown = M::Randf(0.0f, particle_rate);
 
-    bool left_convex  = edge.prev->dire.unRotate(edge.dire).y >= 0.0f;
-    bool right_convex = edge.dire.unRotate(edge.next->dire).y >= 0.0f;
-
-    const int length = (int) floorf(edge.getLength() / 4.0f) + (left_convex ? 0 : 2) + (right_convex ? 0 : 2);
+    const int length = (int) floorf(edge.getLength() / 4.0f) + (edge.concave ? 2 : 0) + (edge.next->concave ? 2 : 0);
     edge.rt.create(length * 4, 16);
     if (length < 5) {
       const int size1 = (int) M::Rand(1, std::min(4, length - 1));
@@ -67,10 +64,10 @@ void Surface::initialiseTextures(float particle_rate) {
     edge.sprite.setPosition(edge.point.avg(edge.next->point) - edge.norm * 8.0f);
     edge.sprite.setRotation((atan2f(edge.norm.y, edge.norm.x) * 180.0f / 3.1415926535f)+90);
 
-    if (left_convex && !right_convex) {
+    if (!edge.concave && edge.next->concave) {
       edge.sprite.move(edge.direN * 4.0f);
     }
-    else if (right_convex && !left_convex) {
+    else if (!edge.next->concave && edge.concave) {
       edge.sprite.move(edge.direN * -4.0f);
     }
   }
@@ -109,12 +106,7 @@ std::shared_ptr<Collision> Surface::CollideCircle(const std::shared_ptr<CircleCo
 bool Surface::CollidePath(const Vector2f& next, const Vector2f& prev) const {
   if (!active)
     return false;
-  for (const Edge& edge : edges) {
-    if (edge.CollidePath(next, prev)) {
-      return true;
-    }
-  }
-  return false;
+  return std::any_of(edges.cbegin(), edges.cend(), [&](const Edge& edge) { return edge.CollidePath(next, prev); });
 }
 
 void Surface::render() {
@@ -163,6 +155,7 @@ void Edge::setNext(Edge* n) {
   dire = next->point - point;
   direN = dire.norm();
   norm = direN.i();
+  next->concave = dire.unRotate(next->dire).y < 0.0f;
 }
 
 float Edge::getLength() const {
