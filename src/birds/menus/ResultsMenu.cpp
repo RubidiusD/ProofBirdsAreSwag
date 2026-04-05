@@ -44,16 +44,6 @@ void ResultsMenu::CleanseAttempts() {
   }
 }
 
-void ResultsMenu::AddChapter(unsigned int p, float d, unsigned int h, float s, unsigned int j, unsigned int c, unsigned int b, unsigned int l, ProgressType t) {
-  if (attempts.empty() || attempts.back().type != UNFINISHED) {
-    attempts.emplace_back();
-    attempts.back().AddChapter(p, d, h, s, j, c, b, l, t);
-  }
-  else {
-    attempts.back().AddChapter(p, d, h, s, j, c, b, l, t);
-  }
-}
-
 void ResultsMenu::AddChapter(const Chapter& new_attempt) {
   if (attempts.empty() || attempts.back().type != UNFINISHED) {
     attempts.emplace_back();

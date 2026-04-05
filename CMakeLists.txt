@@ -22,7 +22,7 @@ set(SOURCE_FILES
     src/managers/InputManager.h src/managers/InputManager.cpp
     src/Settings.h src/Settings.cpp
 
-    src/abstracts/AbstractMenu.h src/abstracts/AbstractMenu.cpp
+    src/birds/menus/AbstractMenu.h src/birds/menus/AbstractMenu.cpp
     src/abstracts/AbstractAction.h src/abstracts/AbstractAction.cpp
     src/abstracts/InputSubscriber.h
 
@@ -76,6 +76,7 @@ set(SOURCE_FILES
     src/birds/LevelElements/enemies/AbstractBird.h
     src/birds/LevelElements/util/ProgressData.h
     src/birds/LevelElements/util/ProgressTrigger.cpp
+    src/managers/GamepadInterpreter.h
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 

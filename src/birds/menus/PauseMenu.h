@@ -1,10 +1,11 @@
 #ifndef BIRDSARESWAG_PAUSE_MENU_H
 #define BIRDSARESWAG_PAUSE_MENU_H
 
-#include "../../abstracts/AbstractMenu.h"
 #include "../../abstracts/ScreenElements/TextButton.h"
+#include "../../managers/InputManager.h"
 #include "../../managers/MenuManager.h"
 #include "../levels/LevelLibrary.h"
+#include "AbstractMenu.h"
 
 class CloseMenuButton : public TextButton {
 public:
@@ -40,6 +41,15 @@ public:
   void Press() override {
     LevelLibrary::current_level->publishProgress(QUIT);
     LoadMenuButton::Press();
+  }
+};
+
+class ControllerButton : public TextButton {
+public:
+  ControllerButton(const Neighbours& n, const Vector2f& ratio_) : TextButton(0, "Reset Controller", n, ratio_) {}
+  void Press() override {
+    printf("Resetting Controller \n");
+    InputManager::StartController();
   }
 };
 

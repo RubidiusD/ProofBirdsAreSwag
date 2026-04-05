@@ -2,6 +2,7 @@
 #define BIRDSARESWAG_INPUTMANAGER_H
 
 #include "../abstracts/InputSubscriber.h"
+#include "GamepadInterpreter.h"
 #include <memory>
 #include <vector>
 
@@ -13,6 +14,8 @@ private:
   static std::shared_ptr<InputSubscriber> CurrentSubscriber;
 
   static const std::shared_ptr<InputSubscriber>& getCurrentSubscriber();
+
+  static GamepadInterpreter pad;
 
   static void Up(bool down);
   static void Down(bool down);
@@ -26,6 +29,7 @@ public:
   static void manageInput(sf::Event event);
   static void update(float dt);
   static void Resize();
+  static void StartController();
 };
 
 #endif // BIRDSARESWAG_INPUTMANAGER_H

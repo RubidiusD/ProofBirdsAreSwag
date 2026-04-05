@@ -24,6 +24,8 @@ struct Chapter {
   unsigned times_coyoted = 0; // made
   unsigned times_bounced = 0;
   unsigned times_stuck = 0;
+  float first_egg = -1.0f;
+  float second_egg = -1.0f;
 
   Chapter(unsigned p, float d, unsigned h, unsigned m, float s, unsigned j, unsigned c, unsigned b, unsigned l, ProgressType t) {
     progress = p;
@@ -83,11 +85,6 @@ struct Attempt : public Chapter {
   }
 
   Attempt() = default;
-
-  void AddChapter(unsigned p, float d, unsigned h, unsigned m, float s, unsigned j, unsigned c, unsigned b, unsigned l, ProgressType t) {
-    chapters.emplace_back(p, d, h, m, s, j, c, b, l, t);
-    operator+=(chapters.back());
-  }
 
   void AddChapter(const Chapter& chapter) {
     chapters.emplace_back(chapter);

@@ -8,6 +8,7 @@ class S {
 public:
   static bool CursorMode;
   static bool CursorDown;
+  static bool Controller;
 
   static sf::RenderWindow Window;
   static Vector2f Res;

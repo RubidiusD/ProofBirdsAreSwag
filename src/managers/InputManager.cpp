@@ -6,6 +6,7 @@
 std::vector<std::shared_ptr<InputSubscriber>> InputManager::subscribers;
 std::shared_ptr<InputSubscriber> InputManager::NothingBurger = std::make_shared<InputSubscriber>();
 std::shared_ptr<InputSubscriber> InputManager::CurrentSubscriber = NothingBurger;
+GamepadInterpreter InputManager::pad(0);
 
 void InputManager::subscribe(InputSubscriber* new_subscriber) {
   if (subscribers.empty()) {
@@ -135,13 +136,43 @@ void InputManager::Pause(bool down) {
 
 void InputManager::update(float dt) {
   CurrentSubscriber = getCurrentSubscriber();
-  CurrentSubscriber->Move({
-      (action_pressed[LEFT] ? -1.0f : 0.0f) + (action_pressed[RIGHT] ? 1.0f : 0.0f),
-      (action_pressed[UP] ? -1.0f : 0.0f) + (action_pressed[DOWN] ? 1.0f : 0.0f),
-  });
+  if (S::Controller) {
+    CurrentSubscriber->Move(pad.getLeft());
+    CurrentSubscriber->Look(pad.getRight());
+
+    Up(pad.lastL.y < -0.5f);
+    Down(pad.lastL.y > 0.5f);
+    Left(pad.lastL.x < -0.5f);
+    Right(pad.lastL.x > 0.5f);
+    Pause(pad.pressed(7));
+    Select(pad.pressed(0));
+  }
+  else {
+    CurrentSubscriber->Move({
+        (action_pressed[LEFT] ? -1.0f : 0.0f) + (action_pressed[RIGHT] ? 1.0f : 0.0f),
+        (action_pressed[UP] ? -1.0f : 0.0f) + (action_pressed[DOWN] ? 1.0f : 0.0f),
+    });
+  }
+
+  // 0: A, 1: B, 2: X, 3: Y, 4: LB, 5: RB, 6: Select, 7: Start
+  // triggers are axis Z
+  // right stick is UV, down is positive V, right is positive U
+  // left stick is XY, down is positive Y, right is positive X
+  // D-pad is povXpovY, down is negative Y, right is positive X
 }
 
 void InputManager::Resize() {
   S::ScreenSize = (Vector2f)S::Window.getSize();
   CurrentSubscriber->Resize();
+}
+
+void InputManager::StartController() {
+  if (sf::Joystick::isConnected(0)) {
+    S::Controller = true;
+
+    pad.LDrift.reset();
+    pad.RDrift.reset();
+    pad.LDrift = pad.getLeft();
+    pad.RDrift = pad.getRight();
+  }
 }

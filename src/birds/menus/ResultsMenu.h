@@ -2,8 +2,8 @@
 #define BIRDSARESWAG_RESULTS_MENU_H
 
 #include "../../MathLib.h"
-#include "../../abstracts/AbstractMenu.h"
 #include "../LevelElements/util/ProgressData.h"
+#include "AbstractMenu.h"
 #include <ntdef.h>
 #include <vector>
 
@@ -12,7 +12,6 @@ protected:
   std::vector<Attempt> attempts;
 public:
   ResultsMenu() : AbstractMenu("RSMU") {}
-  void AddChapter(unsigned p, float d, unsigned h, float s, unsigned j, unsigned c, unsigned b, unsigned l, ProgressType t);
   void AddChapter(const Chapter& new_attempt);
   void CleanseAttempts();
   void load() override;

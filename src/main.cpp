@@ -10,6 +10,7 @@ int main() {
 //  S::Window.setMouseCursorVisible(false);
   S::ScreenSize = S::Window.getSize();
 
+  InputManager::StartController();
   MenuLoader::LoadMenus();
   MenuManager::setMenu("SPSH");
   LevelLoader::LoadLevels();

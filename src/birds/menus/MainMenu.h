@@ -2,11 +2,11 @@
 #define BIRDSARESWAG_MAIN_MENU_H
 
 #include "../../Settings.h"
-#include "../../abstracts/AbstractMenu.h"
 #include "../../abstracts/ScreenElements/TextButton.h"
 #include "../../managers/AssetManager.h"
 #include "../../managers/MenuManager.h"
 #include "../levels/LevelLibrary.h"
+#include "AbstractMenu.h"
 
 class MainMenu : public AbstractMenu {
 public:

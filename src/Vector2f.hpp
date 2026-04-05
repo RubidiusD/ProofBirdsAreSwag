@@ -1,6 +1,7 @@
 #ifndef BIRDSARESWAG_VECTOR2F_HPP
 #define BIRDSARESWAG_VECTOR2F_HPP
 
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
 #include <cstdio>
@@ -16,6 +17,11 @@ struct Vector2f {
   template<typename T> Vector2f(T x_, T y_) { x = (float)x_; y = (float)y_; }
   Vector2f(const sf::Vector2f& rhs) { x = rhs.x; y = rhs.y; }
   template<typename T> Vector2f(const sf::Vector2<T>& rhs) { x = (float)rhs.x; y = (float)rhs.y; }
+  Vector2f(const sf::FloatRect& rhs) { x = rhs.left; y = rhs.top; }
+
+  static Vector2f fromBounds(const sf::FloatRect& rect) {
+    return {rect.width, rect.height};
+  }
 
   operator sf::Vector2f() const { return {x, y}; }
   template<typename T> operator sf::Vector2<T>() const { return {(T)x, (T)y}; }
@@ -40,6 +46,8 @@ struct Vector2f {
   Vector2f& operator-=(float rhs) { return set(x - rhs, y - rhs); }
   Vector2f& operator*=(float rhs) { return set(x * rhs, y * rhs); }
   Vector2f& operator/=(float rhs) { return set(x / rhs, y / rhs); }
+
+  Vector2f& operator=(const Vector2f& rhs) = default;
 
   Vector2f operator()(const Vector2f& rhs) const { return {x * rhs.x, y * rhs.y}; }
   Vector2f operator()(float rhs) const { return {x * rhs, y * rhs}; }
@@ -68,6 +76,7 @@ struct Vector2f {
   bool is(float x_, float y_) const {
     return (x == x_ && y == y_);
   }
+  void reset() { x = 0.0f; y = 0.0f; }
 };
 
 #endif // BIRDSARESWAG_VECTOR2F_HPP
