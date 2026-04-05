@@ -17,12 +17,12 @@ private:
 
   static GamepadInterpreter pad;
 
-  static void Up(bool down);
-  static void Down(bool down);
-  static void Left(bool down);
-  static void Right(bool down);
-  static void Select(bool down);
-  static void Pause(bool down);
+  static bool Up(bool down);
+  static bool Down(bool down);
+  static bool Left(bool down);
+  static bool Right(bool down);
+  static bool Select(bool down);
+  static bool Pause(bool down);
 public:
   static void subscribe(InputSubscriber* new_subscriber);
   static void remove(InputSubscriber* new_subscriber);

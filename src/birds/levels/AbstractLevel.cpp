@@ -36,6 +36,13 @@ void AbstractLevel::update(float dt) {
   }
 
   chapter.duration += dt;
+
+  if (chapter.first_egg != -1.0f) {
+    chapter.first_egg += dt;
+    if (chapter.second_egg != -1.0f) {
+      chapter.second_egg += dt;
+    }
+  }
 }
 
 void AbstractLevel::updateElements(float dt) {
@@ -230,6 +237,13 @@ Vector2f AbstractLevel::windAt(const Vector2f& point) const {
 }
 
 void AbstractLevel::hurtPlayer(const Vector2f& source) {
+  if (chapter.first_egg == -1.0f) {
+    chapter.first_egg = 0.0f;
+  }
+  else if (chapter.second_egg == -1.0f) {
+    chapter.second_egg = 0.0f;
+  }
+
   if (player->hurt(source)) {
     publishProgress(DIED);
     open();

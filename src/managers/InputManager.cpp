@@ -45,6 +45,7 @@ void InputManager::manageInput(sf::Event event) {
   switch (event.type) {
   case (sf::Event::KeyPressed):
   case (sf::Event::KeyReleased):
+    S::ControllerRecent = false;
     CurrentSubscriber->KeyPressed(event.key.code, event.type == sf::Event::KeyPressed);
     switch (event.key.code) {
     case (sf::Keyboard::W):
@@ -92,51 +93,64 @@ const std::shared_ptr<InputSubscriber>& InputManager::getCurrentSubscriber() {
   return NothingBurger;
 }
 
-void InputManager::Up(bool down) {
+bool InputManager::Up(bool down) {
   if (down != action_pressed[UP]) {
     action_pressed[UP] = down;
     CurrentSubscriber->Up(down);
+    return down;
   }
+  return false;
 }
 
-void InputManager::Down(bool down) {
+bool InputManager::Down(bool down) {
   if (down != action_pressed[DOWN]) {
     action_pressed[DOWN] = down;
     CurrentSubscriber->Down(down);
+    return down;
   }
+  return false;
 }
 
-void InputManager::Left(bool down) {
+bool InputManager::Left(bool down) {
   if (down != action_pressed[LEFT]) {
     action_pressed[LEFT] = down;
     CurrentSubscriber->Left(down);
+    return down;
   }
+  return false;
 }
 
-void InputManager::Right(bool down) {
+bool InputManager::Right(bool down) {
   if (down != action_pressed[RIGHT]) {
     action_pressed[RIGHT] = down;
     CurrentSubscriber->Right(down);
+    return down;
   }
+  return false;
 }
 
-void InputManager::Select(bool down) {
+bool InputManager::Select(bool down) {
   if (down != action_pressed[SELECT]) {
     action_pressed[SELECT] = down;
     CurrentSubscriber->Select(down);
+    return down;
   }
+  return false;
 }
 
-void InputManager::Pause(bool down) {
+bool InputManager::Pause(bool down) {
   if (down != action_pressed[PAUSE]) {
     action_pressed[PAUSE] = down;
     CurrentSubscriber->Pause(down);
+    return down;
   }
+  return false;
 }
 
 void InputManager::update(float dt) {
   CurrentSubscriber = getCurrentSubscriber();
-  if (S::Controller) {
+  if (S::Controller && (S::ControllerRecent || pad.pressed(0) || pad.getLeft().magSqr() > 0.1f)) {
+    S::ControllerRecent = true;
     CurrentSubscriber->Move(pad.getLeft());
     CurrentSubscriber->Look(pad.getRight());
 
@@ -158,7 +172,7 @@ void InputManager::update(float dt) {
   // triggers are axis Z
   // right stick is UV, down is positive V, right is positive U
   // left stick is XY, down is positive Y, right is positive X
-  // D-pad is povXpovY, down is negative Y, right is positive X
+  // D-pad is PovXPovY, down is negative Y, right is positive X
 }
 
 void InputManager::Resize() {
@@ -169,6 +183,7 @@ void InputManager::Resize() {
 void InputManager::StartController() {
   if (sf::Joystick::isConnected(0)) {
     S::Controller = true;
+    S::ControllerRecent = true;
 
     pad.LDrift.reset();
     pad.RDrift.reset();

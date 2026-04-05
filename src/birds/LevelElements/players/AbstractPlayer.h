@@ -41,6 +41,10 @@ public:
   void Jump(bool down);
   bool hurt(const Vector2f& source);
   void spawn() override;
+
+protected:
+  void onStick() override;
+  void onBounce() override;
 };
 
 #endif // BIRDSARESWAG_ABSTRACTPLAYER_H

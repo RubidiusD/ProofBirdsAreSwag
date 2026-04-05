@@ -30,6 +30,8 @@ protected:
   float max_coyote = 0.6125f;
   Vector2f coyote_normal;
 
+  virtual void onStick() {}
+  virtual void onBounce() {}
 public:
   explicit AbstractCircle(const Vector2f& spawn) : AbstractLevelElement(spawn) {
     hB = std::make_shared<CircleCollider>();

@@ -40,6 +40,10 @@ void AbstractPlayer::update(float dt) {
     velocity += air_current * drag_modifier * dt;
   }
 
+  if (floor2 != nullptr) {
+    snapTo(floor1, floor2);
+  }
+
   setPosition(hB->c + velocity * dt);
 
   if (i_timer != 0.0f) {
@@ -50,6 +54,14 @@ void AbstractPlayer::update(float dt) {
   }
 
   stickToFloor();
+}
+
+void AbstractPlayer::onStick() {
+  chapter.times_stuck ++;
+}
+
+void AbstractPlayer::onBounce() {
+  chapter.times_bounced ++;
 }
 
 void AbstractPlayer::Move(const Vector2f& vector) {

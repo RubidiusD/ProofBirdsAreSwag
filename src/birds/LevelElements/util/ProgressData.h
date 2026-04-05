@@ -22,23 +22,10 @@ struct Chapter {
   float time_spent_counter_steering = 0.0f; // made
   unsigned times_jumped = 0; // made
   unsigned times_coyoted = 0; // made
-  unsigned times_bounced = 0;
-  unsigned times_stuck = 0;
-  float first_egg = -1.0f;
-  float second_egg = -1.0f;
-
-  Chapter(unsigned p, float d, unsigned h, unsigned m, float s, unsigned j, unsigned c, unsigned b, unsigned l, ProgressType t) {
-    progress = p;
-    duration = d;
-    times_hit = h;
-    times_missed = m;
-    time_spent_counter_steering = s;
-    times_jumped = j;
-    times_coyoted = c;
-    times_bounced = b;
-    times_stuck = l;
-    type = t;
-  }
+  unsigned times_bounced = 0; // made
+  unsigned times_stuck = 0; // made
+  float first_egg = -1.0f; // made
+  float second_egg = -1.0f; // made
 
   Chapter() = default;
 
@@ -53,6 +40,8 @@ struct Chapter {
     times_coyoted += rhs.times_coyoted;
     times_bounced += rhs.times_bounced;
     times_stuck += rhs.times_stuck;
+    first_egg = rhs.first_egg;
+    second_egg = rhs.second_egg;
     return *this;
   }
 
@@ -66,6 +55,8 @@ struct Chapter {
     times_coyoted = 0;
     times_bounced = 0;
     times_stuck = 0;
+    first_egg = -1.0f;
+    second_egg = -1.0f;
   }
 };
 

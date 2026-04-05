@@ -24,9 +24,9 @@ void AbstractCircle::setPosition(const Vector2f& pos) {
 void AbstractCircle::stickToFloor() {
   if (floor1 != nullptr) {
     if (floor2 == nullptr) {
-      std::shared_ptr<Collision> cA = floor1->prev->CollideCircle(hB);
+      std::shared_ptr<Collision> cA = floor1->concave ? floor1->prev->CollideCircle(hB) : nullptr;
       std::shared_ptr<Collision> cB = floor1->CollideCircle(hB);
-      std::shared_ptr<Collision> cC = floor1->next->CollideCircle(hB);
+      std::shared_ptr<Collision> cC = floor1->next->concave ? floor1->next->CollideCircle(hB) : nullptr;
 
       if (cB == nullptr) { // no longer touching or in line with current floor1
         if (!(cA != nullptr && cA->inRange && snapTo(cA)) && !(cC != nullptr && cC->inRange && snapTo(cC))) {
@@ -87,7 +87,10 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   Vector2f old_vel = velocity;
   velocity = velocity.splat(collision->normal, collision->elasticity(elasticity));
   if (can_stick) {
-    setFloor(floor1, collision->edge);
+    if (setFloor(floor1, collision->edge))
+      onStick();
+    else
+      onBounce();
     unsetFloor(floor2);
   }
   setPosition(collision->point + collision->normal * hB->r);
