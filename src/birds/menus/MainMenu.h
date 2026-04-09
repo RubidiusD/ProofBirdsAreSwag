@@ -2,11 +2,11 @@
 #define BIRDSARESWAG_MAIN_MENU_H
 
 #include "../../Settings.h"
-#include "../../abstracts/ScreenElements/TextButton.h"
 #include "../../managers/AssetManager.h"
 #include "../../managers/MenuManager.h"
 #include "../levels/LevelLibrary.h"
 #include "AbstractMenu.h"
+#include "ScreenElements/DragButton.h"
 
 class MainMenu : public AbstractMenu {
 public:
@@ -27,6 +27,12 @@ public:
       MenuManager::closeMenu();
       LevelLibrary::setLevel(index);
     }
+  };
+
+  class PlayerIndexButton : public DragButton {
+  public:
+    PlayerIndexButton(const Neighbours& n, const Vector2f& ratio_) : DragButton(0, "Player Index: ", 0.0f, 32.0f, "", n, ratio_) {};
+    void Depress() override { S::player_index = (unsigned)value; }
   };
 };
 

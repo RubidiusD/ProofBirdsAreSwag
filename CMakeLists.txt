@@ -22,14 +22,17 @@ set(SOURCE_FILES
     src/managers/InputManager.h src/managers/InputManager.cpp
     src/Settings.h src/Settings.cpp
 
-    src/birds/menus/AbstractMenu.h src/birds/menus/AbstractMenu.cpp
     src/abstracts/AbstractAction.h src/abstracts/AbstractAction.cpp
     src/abstracts/InputSubscriber.h
 
-    src/abstracts/ScreenElements/AbstractButton.h src/abstracts/ScreenElements/AbstractButton.cpp
-    src/abstracts/ScreenElements/TextButton.h src/abstracts/ScreenElements/TextButton.cpp
 
     src/birds/Game.h src/birds/Game.cpp
+
+    src/birds/menus/ScreenElements/AbstractButton.h
+    src/birds/menus/ScreenElements/TextButton.h
+    src/birds/menus/ScreenElements/DragButton.h
+
+    src/birds/menus/AbstractMenu.h src/birds/menus/AbstractMenu.cpp
     src/birds/menus/SplashScreen.h src/birds/menus/SplashScreen.cpp
     src/birds/menus/MainMenu.h src/birds/menus/MainMenu.cpp
     src/birds/menus/PauseMenu.h src/birds/menus/PauseMenu.cpp
@@ -43,6 +46,7 @@ set(SOURCE_FILES
     src/birds/LevelElements/scenery/AbstractWind.h
     src/birds/LevelElements/scenery/Billboard.h
 
+    src/birds/LevelElements/enemies/AbstractBird.h src/birds/LevelElements/enemies/AbstractBird.cpp
     src/birds/LevelElements/enemies/Bird1.h src/birds/LevelElements/enemies/Bird1.cpp
     src/birds/LevelElements/enemies/Bird2.h src/birds/LevelElements/enemies/Bird2.cpp
     src/birds/LevelElements/enemies/Bird3.h src/birds/LevelElements/enemies/Bird3.cpp
@@ -68,12 +72,11 @@ set(SOURCE_FILES
     src/birds/levels/FlyingLevel.h src/birds/levels/FlyingLevel.cpp
     src/birds/levels/TestLevel.h src/birds/levels/TestLevel.cpp
     src/birds/levels/TrackingLevel.h src/birds/levels/TrackingLevel.cpp
+
     src/birds/LevelElements/util/AbstractLine.h
     src/birds/LevelElements/util/ProgressTrigger.h
     src/birds/LevelElements/util/AbstractLine.cpp
     src/birds/LevelElements/util/SurfaceToggleTrigger.h
-    src/birds/LevelElements/enemies/AbstractBird.cpp
-    src/birds/LevelElements/enemies/AbstractBird.h
     src/birds/LevelElements/util/ProgressData.h
     src/birds/LevelElements/util/ProgressTrigger.cpp
     src/managers/GamepadInterpreter.h

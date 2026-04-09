@@ -10,6 +10,8 @@ public:
   static bool CursorDown;
   static bool Controller;
   static bool ControllerRecent;
+  static unsigned player_index;
+  static Vector2f mouse;
 
   static sf::RenderWindow Window;
   static Vector2f Res;

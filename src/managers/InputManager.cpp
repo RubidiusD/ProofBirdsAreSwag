@@ -72,10 +72,10 @@ void InputManager::manageInput(sf::Event event) {
   case (sf::Event::MouseButtonPressed):
   case (sf::Event::MouseButtonReleased):
     if (event.mouseButton.button == sf::Mouse::Left) {
-      Select(event.type == sf::Event::MouseButtonPressed);
+      Select(S::CursorDown = event.type == sf::Event::MouseButtonPressed);
     } return;
   case (sf::Event::MouseMoved):
-    CurrentSubscriber->Point({(float)event.mouseMove.x, (float)event.mouseMove.y});
+    CurrentSubscriber->Point(S::mouse = {event.mouseMove.x, event.mouseMove.y});
     CurrentSubscriber->Look((Vector2f(event.mouseMove.x, event.mouseMove.y) - Vector2f(S::ScreenSize.x, S::ScreenSize.y) / 2).norm()); return;
   case (sf::Event::Resized):
     Resize();

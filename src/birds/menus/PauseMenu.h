@@ -1,11 +1,11 @@
 #ifndef BIRDSARESWAG_PAUSE_MENU_H
 #define BIRDSARESWAG_PAUSE_MENU_H
 
-#include "../../abstracts/ScreenElements/TextButton.h"
 #include "../../managers/InputManager.h"
 #include "../../managers/MenuManager.h"
 #include "../levels/LevelLibrary.h"
 #include "AbstractMenu.h"
+#include "ScreenElements/TextButton.h"
 
 class CloseMenuButton : public TextButton {
 public:

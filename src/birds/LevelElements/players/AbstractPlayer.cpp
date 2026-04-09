@@ -41,7 +41,7 @@ void AbstractPlayer::update(float dt) {
   }
 
   if (floor2 != nullptr) {
-    snapTo(floor1, floor2);
+    snapTo(floor1->CollideCircle(hB), floor2->CollideCircle(hB));
   }
 
   setPosition(hB->c + velocity * dt);

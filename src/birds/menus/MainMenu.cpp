@@ -14,6 +14,7 @@ void MainMenu::load() {
   buttons.emplace_back(new LoadLevelButton("Tracking Level", {1, 3, 0, 4}, {0.5, 0.4}, 2));
   buttons.emplace_back(new ControllerButton({2, 4, 0, 4}, {0.5, 0.5}));
   buttons.emplace_back(new CloseGameButton({3, 4, 0, 4}, {0.5, 0.75}));
+  buttons.emplace_back(new PlayerIndexButton({0, 4, 2, 2}, {0.8f, 0.5f}));
 
   addText(sf::Color::White, 0, 16, ": Move", {0.3f, 0.9f});
   addText(sf::Color::White, 0, 16, ": Jump", {0.8f, 0.9f});

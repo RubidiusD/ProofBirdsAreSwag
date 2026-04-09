@@ -2,7 +2,7 @@
 #define BIRDSARESWAG_ABSTRACTMENU_H
 
 #include "../../abstracts/InputSubscriber.h"
-#include "../../abstracts/ScreenElements/AbstractButton.h"
+#include "ScreenElements/AbstractButton.h"
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/String.hpp>
 #include <SFML/Window/Keyboard.hpp>
