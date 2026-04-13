@@ -13,6 +13,10 @@ public:
   static unsigned player_index;
   static Vector2f mouse;
 
+  static bool bird2;
+  static bool bird3;
+  static bool bird4;
+
   static sf::RenderWindow Window;
   static Vector2f Res;
   static Vector2f ScreenSize;

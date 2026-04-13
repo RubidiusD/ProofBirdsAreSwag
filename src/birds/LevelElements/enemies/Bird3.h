@@ -1,5 +1,5 @@
-#ifndef BIRDSARESWAG_BIRD2_H
-#define BIRDSARESWAG_BIRD2_H
+#ifndef BIRDSARESWAG_BIRD3_H
+#define BIRDSARESWAG_BIRD3_H
 
 #include "AbstractBird.h"
 
@@ -12,7 +12,7 @@ private:
 
   void cooldowns(float dt);
 public:
-  explicit Bird3(const Vector2f& pos) : AbstractBird(pos) {}
+  explicit Bird3(const Vector2f& pos) : AbstractBird(pos) { name = "Bird that Schmoves"; }
 
   void initialise() override;
   void update(float dt) override;
@@ -21,4 +21,4 @@ public:
   void onHitSurface(const std::shared_ptr<Collision>& collision) override;
 };
 
-#endif // BIRDSARESWAG_BIRD2_H
+#endif // BIRDSARESWAG_BIRD3_H

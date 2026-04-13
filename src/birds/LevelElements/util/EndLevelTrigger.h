@@ -22,7 +22,7 @@ public:
 
   void onHitPlayer() override {
     LevelLibrary::current_level->publishProgress(WON);
-    LevelLibrary::current_level->close();
+    LevelLibrary::setLevel(-1);
     MenuManager::setMenu(ID);
   }
 };

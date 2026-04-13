@@ -31,7 +31,7 @@ public:
 
   class PlayerIndexButton : public DragButton {
   public:
-    PlayerIndexButton(const Neighbours& n, const Vector2f& ratio_) : DragButton(0, "Player Index: ", 0.0f, 32.0f, "", n, ratio_) {};
+    PlayerIndexButton(const Neighbours& n, const Vector2f& ratio_) : DragButton(0, "Player Index: ", 0.0f, 32.0f, "", n, ratio_) { S::player_index = (unsigned)value; };
     void Depress() override { S::player_index = (unsigned)value; }
   };
 };

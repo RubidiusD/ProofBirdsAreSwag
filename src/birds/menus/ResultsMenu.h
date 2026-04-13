@@ -2,6 +2,7 @@
 #define BIRDSARESWAG_RESULTS_MENU_H
 
 #include "../../MathLib.h"
+#include "../LevelElements/enemies/AbstractBird.h"
 #include "../LevelElements/util/ProgressData.h"
 #include "AbstractMenu.h"
 #include <ntdef.h>
@@ -13,13 +14,14 @@ protected:
 public:
   ResultsMenu() : AbstractMenu("RSMU") {}
   void AddChapter(const Chapter& new_attempt);
-  void CleanseAttempts();
+  void SaveAndCleanseAttempts();
   void load() override;
   void open() override;
   void close() override;
 
   static void Register();
   static std::shared_ptr<ResultsMenu> instance;
+  static std::shared_ptr<AbstractBird> bird;
 };
 
 #endif // BIRDSARESWAG_RESULTS_MENU_H

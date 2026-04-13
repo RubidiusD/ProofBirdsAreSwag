@@ -35,6 +35,8 @@ public:
   bool isAimGood(const Vector2f& v);
   void remove() override;
 
+  std::string name;
+
   AbstractLevelElement *makeCopy() const override;
   AbstractLevelElement *makeCopy(const Vector2f &spawn_) const override;
   void setPosition(const Vector2f &pos) override;

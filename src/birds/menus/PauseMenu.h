@@ -5,6 +5,7 @@
 #include "../../managers/MenuManager.h"
 #include "../levels/LevelLibrary.h"
 #include "AbstractMenu.h"
+#include "ResultsMenu.h"
 #include "ScreenElements/TextButton.h"
 
 class CloseMenuButton : public TextButton {
@@ -40,6 +41,7 @@ public:
   OptOutButton(const sf::String& text_, const Neighbours& n, const Vector2f& ratio_) : LoadMenuButton(text_, n, ratio_, "MAIN") {}
   void Press() override {
     LevelLibrary::current_level->publishProgress(QUIT);
+    ResultsMenu::instance->SaveAndCleanseAttempts();
     LoadMenuButton::Press();
   }
 };

@@ -1,10 +1,12 @@
 #include "TrackingLevel.h"
 #include "../../managers/AssetManager.h"
 #include "../LevelElements/enemies/Bird2.h"
+#include "../LevelElements/enemies/Bird3.h"
 #include "../LevelElements/scenery/Billboard.h"
 #include "../LevelElements/util/EndLevelTrigger.h"
 #include "../LevelElements/util/SpawnTrigger.h"
 #include "../LevelElements/util/SurfaceToggleTrigger.h"
+#include "../menus/ResultsMenu.h"
 
 void TrackingLevel::load() {
   surfaces.emplace_back(std::vector<Vector2f>({
@@ -141,35 +143,41 @@ void TrackingLevel::load() {
   addElement(new Billboard({-1500,  615}, 0.0f, AssetManager::getTexture(150)));
   addElement(new Billboard({-2100,  635}, 195.0f, AssetManager::getTexture(150)));
 
-  addCheckpointAt({    50,  250}, { - 200, - 150});
   addCheckpointAt({ - 250,  250}, { - 400, - 125});
   addCheckpointAt({ - 612,  230}, { - 575, -   0});
-  addCheckpointAt({ - 905,  309}, { - 852,   100});
   addCheckpointAt({ - 954,  362}, { -1205,   472});
-  addCheckpointAt({ -1205,  725}, { -1205,   472});
   addCheckpointAt({ -1549,  784}, { -1532,   417});
-  addCheckpointAt({ -1950,  450}, { -1950,   950});
   addCheckpointAt({ -1713,  767}, { -1263,   732});
-  addCheckpointAt({ -1307,  986}, { -1196,   846});
   addCheckpointAt({ - 752, 1011}, { - 800,   802});
-  addCheckpointAt({ - 400,  853}, { - 325,  1147});
   addCheckpointAt({     0,  803}, {     3,   999});
-  addCheckpointAt({   600,  941}, {   438,  1132});
   addElement(new EndLevelTrigger({850, 1050, 150.0f, 300.0f}));
   addElement(new SurfaceToggleTrigger(surfaces[4], false, {-2200, 450, 250, 500}));
   addElement(new SurfaceToggleTrigger(surfaces[3], true,  {-2200, 450, 250, 500}));
 
   player = std::make_shared<AbstractPlayer>(Vector2f{150.0f, -30.0f}, chapter);
-  addElement(new Bird2({-150.0f, -30.0f}));
-  addElement(new SpawnTrigger({-100.0f, -200.0f, 50.0f, 500.0f}, std::make_shared<Bird2>(Vector2f{-25.0f, -150.0f})));
-  addElement(new SpawnTrigger({-1450.0f, 350.0f, 100.0f, 500.0f}, std::make_shared<Bird2>(Vector2f{-1405.0f,  400.0f})));
 
   AbstractLevel::load();
 }
 
+template<typename T> std::shared_ptr<T> launder(T* t) {return std::shared_ptr<T>{t};}
+
 void TrackingLevel::open() {
   S::Window.setMouseCursorVisible(false);
   AbstractLevel::open();
+
+  if (!S::bird3) {
+    ResultsMenu::bird = std::make_shared<Bird3>(Vector2f{0.0f, 0.0f});
+  }
+  else if (!S::bird2) {
+    ResultsMenu::bird = std::make_shared<Bird2>(Vector2f{0.0f, 0.0f});
+  }
+
+  addElement(ResultsMenu::bird->makeCopy({-150.0f, -30.0f}));
+  elements.back()->destroy_on_load = true;
+  addElement(new SpawnTrigger({-100.0f, -200.0f, 50.0f, 500.0f}, launder<AbstractLevelElement>(ResultsMenu::bird->makeCopy({-25.0f, -150.0f}))));
+  elements.back()->destroy_on_load = true;
+  addElement(new SpawnTrigger({-1450.0f, 350.0f, 100.0f, 500.0f}, launder<AbstractLevelElement>(ResultsMenu::bird->makeCopy({-1405.0f,  400.0f}))));
+  elements.back()->destroy_on_load = true;
 }
 
 void TrackingLevel::Pause(bool down) {
@@ -179,9 +187,15 @@ void TrackingLevel::Pause(bool down) {
 
 void TrackingLevel::close() {
   S::Window.setMouseCursorVisible(true);
-  AbstractLevel::close();
-}
 
-void TrackingLevel::Point(const Vector2f& vector) {
-  player->Point(S::Window.mapPixelToCoords(sf::Vector2i(vector), view));
+  if (!S::bird3) {
+    S::bird3 = true;
+    printf("Bird 3 is done \n");
+  }
+  else if (!S::bird2) {
+    S::bird2 = true;
+    printf("Bird 2 is done \n");
+  }
+
+  AbstractLevel::close();
 }
