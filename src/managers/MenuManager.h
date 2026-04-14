@@ -2,7 +2,7 @@
 #define BIRDSARESWAG_MENU_MANAGER_H
 
 #include "../abstracts/AbstractAction.h"
-#include "../birds/menus/AbstractMenu.h"
+#include "../menus/AbstractMenu.h"
 #include <SFML/Graphics.hpp>
 
 class MenuManager {

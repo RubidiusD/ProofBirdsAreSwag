@@ -1,7 +1,7 @@
+#include "Game.h"
 #include "Settings.h"
-#include "birds/Game.h"
-#include "birds/levels/LevelLoader.hpp"
-#include "birds/menus/MenuLoader.hpp"
+#include "levels/LevelLoader.hpp"
+#include "menus/MenuLoader.hpp"
 #include "managers/ActionManager.h"
 #include "managers/InputManager.h"
 

@@ -1,1 +1,56 @@
 ------------ New Bird -------------
+ -$- -$- Bird Type: Pigeon -$- -$-
+
+ %% Attempt: 42.7154
+Time of first egg: 31.007
+Time of second egg: -1
+    Chapter: 1
+Type: 0
+Duration: 2.27251
+Times Hit: 1
+Times Missed: 0
+Time Spent Counter Steering: 0.015873
+Times Jumped: 1
+Times Coyoted: 0
+Times Bounced: 6
+Times Stuck: 29
+    Chapter: 2
+Type: 0
+Duration: 1.3554
+Times Hit: 0
+Times Missed: 0
+Time Spent Counter Steering: 0.46062
+Times Jumped: 1
+Times Coyoted: 0
+Times Bounced: 3
+Times Stuck: 5
+    Chapter: 3
+Type: 0
+Duration: 2.31564
+Times Hit: 0
+Times Missed: 0
+Time Spent Counter Steering: 0.936045
+Times Jumped: 0
+Times Coyoted: 0
+Times Bounced: 2
+Times Stuck: 59
+    Chapter: 4
+Type: 0
+Duration: 2.49718
+Times Hit: 0
+Times Missed: 0
+Time Spent Counter Steering: 0.313642
+Times Jumped: 0
+Times Coyoted: 0
+Times Bounced: 6
+Times Stuck: 73
+    Chapter: 0
+Type: 3
+Duration: 34.2746
+Times Hit: 1
+Times Missed: 0
+Time Spent Counter Steering: 3.66233
+Times Jumped: 10
+Times Coyoted: 1
+Times Bounced: 35
+Times Stuck: 1396

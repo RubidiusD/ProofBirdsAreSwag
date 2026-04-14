@@ -1,0 +1,17 @@
+#ifndef BIRDSARESWAG_SPLASHSCREEN_H
+#define BIRDSARESWAG_SPLASHSCREEN_H
+
+#include "AbstractMenu.h"
+#include <SFML/Graphics/Text.hpp>
+
+class SplashScreen : public AbstractMenu {
+public:
+  SplashScreen();
+  void KeyPressed(sf::Keyboard::Key key, bool down) override;
+  void load() override;
+  void Select(bool down) override;
+
+private:
+};
+
+#endif // BIRDSARESWAG_SPLASHSCREEN_H
