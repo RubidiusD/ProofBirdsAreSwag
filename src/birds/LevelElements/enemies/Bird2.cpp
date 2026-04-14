@@ -68,7 +68,6 @@ void Bird2::flap() {
   stamina -= 1.0f;
   flap_cooldown = flap_max_cooldown;
   anim_cooldown = 0.125f;
-//  LevelLibrary::current_level->spawnParticle(8, cur, change * -1.0f);
 }
 
 AbstractLevelElement* Bird2::makeCopy(const Vector2f& spawn_) const {

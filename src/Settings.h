@@ -6,9 +6,8 @@
 
 class S {
 public:
-  static bool CursorMode;
   static bool CursorDown;
-  static bool Controller;
+  static bool ControllerConnected;
   static bool ControllerRecent;
   static unsigned player_index;
   static Vector2f mouse;

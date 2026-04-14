@@ -1,16 +1,16 @@
 ------------ New Bird -------------
- -$- -$- Bird Type: Bird That Flaps -$- -$-
+ -$- -$- Bird Type: Pigeon -$- -$-
 
- %% Attempt: 7.20769
-Time of first egg: -1
-Time of second egg: -1
+ %% Attempt: 5.79962
+Time of first egg: 4.45073
+Time of second egg: 1.93668
     Chapter: 0
 Type: 3
-Duration: 7.20769
-Times Hit: 0
+Duration: 5.79962
+Times Hit: 2
 Times Missed: 0
-Time Spent Counter Steering: 0.315721
-Times Jumped: 1
+Time Spent Counter Steering: 0.662767
+Times Jumped: 0
 Times Coyoted: 0
-Times Bounced: 8
-Times Stuck: 250
+Times Bounced: 13
+Times Stuck: 225

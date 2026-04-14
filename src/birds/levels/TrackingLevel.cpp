@@ -2,6 +2,7 @@
 #include "../../managers/AssetManager.h"
 #include "../LevelElements/enemies/Bird2.h"
 #include "../LevelElements/enemies/Bird3.h"
+#include "../LevelElements/enemies/Bird4.h"
 #include "../LevelElements/scenery/Billboard.h"
 #include "../LevelElements/util/EndLevelTrigger.h"
 #include "../LevelElements/util/SpawnTrigger.h"
@@ -166,10 +167,13 @@ void TrackingLevel::open() {
   AbstractLevel::open();
 
   if (!S::bird3) {
-    ResultsMenu::bird = std::make_shared<Bird3>(Vector2f{0.0f, 0.0f});
+    ResultsMenu::bird = std::make_shared<Bird4>(Vector2f{0.0f, 0.0f});
   }
   else if (!S::bird2) {
     ResultsMenu::bird = std::make_shared<Bird2>(Vector2f{0.0f, 0.0f});
+  }
+  else if (!S::bird4) {
+    ResultsMenu::bird = std::make_shared<Bird4>(Vector2f{0.0f, 0.0f});
   }
 
   addElement(ResultsMenu::bird->makeCopy({-150.0f, -30.0f}));

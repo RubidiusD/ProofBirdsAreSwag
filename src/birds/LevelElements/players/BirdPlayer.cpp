@@ -1,5 +1,4 @@
 #include "BirdPlayer.h"
-#include "../../../MathLib.h"
 #include "../../../managers/AssetManager.h"
 #include "../../levels/LevelLibrary.h"
 #include "../fx/Particle.h"

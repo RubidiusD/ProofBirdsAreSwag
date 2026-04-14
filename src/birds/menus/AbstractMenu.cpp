@@ -74,7 +74,6 @@ void AbstractMenu::addDrawable(sf::Drawable* new_drawable) {
 }
 
 void AbstractMenu::Up(bool down) {
-  S::CursorMode = false;
   if (down) {
     if (current_button == nullptr) selectButton(default_index);
     else selectButton(current_button->neighbours.u);
@@ -82,7 +81,6 @@ void AbstractMenu::Up(bool down) {
 }
 
 void AbstractMenu::Down(bool down) {
-  S::CursorMode = false;
   if (down) {
     if (current_button == nullptr) selectButton(default_index);
     else selectButton(current_button->neighbours.d);
@@ -90,7 +88,6 @@ void AbstractMenu::Down(bool down) {
 }
 
 void AbstractMenu::Left(bool down) {
-  S::CursorMode = false;
   if (down) {
     if (current_button == nullptr) selectButton(default_index);
     else selectButton(current_button->neighbours.l);
@@ -98,7 +95,6 @@ void AbstractMenu::Left(bool down) {
 }
 
 void AbstractMenu::Right(bool down) {
-  S::CursorMode = false;
   if (down) {
     if (current_button == nullptr) selectButton(default_index);
     else selectButton(current_button->neighbours.r);

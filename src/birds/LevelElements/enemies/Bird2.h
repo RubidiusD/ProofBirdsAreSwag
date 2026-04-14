@@ -23,8 +23,8 @@ public:
 
   void initialise() override;
   void update(float dt) override;
-  AbstractLevelElement *makeCopy(const Vector2f &spawn_) const override;
-  AbstractLevelElement *makeCopy() const override;
+  AbstractLevelElement* makeCopy(const Vector2f &spawn_) const override;
+  AbstractLevelElement* makeCopy() const override;
 };
 
 #endif // BIRDSARESWAG_BIRD2_H

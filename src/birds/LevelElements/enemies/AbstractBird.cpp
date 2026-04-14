@@ -49,7 +49,7 @@ void AbstractBird::remove() {
 bool AbstractBird::isAimGood(const Vector2f& v) {
   eggPredictor.setCoefficient(0, getPosition());
   eggPredictor.setCoefficient(1, v);
-  eggPredictor.setCoefficient(2, (air_current / 2 + Vector2f{0, 640.0f}) / 2);
+  eggPredictor.setCoefficient(2, (air_current + Vector2f{0, 640.0f}) / 2);
 
   return eggPredictor.nearest(playerPredictor, 0.2f) < 256.0f;
 }

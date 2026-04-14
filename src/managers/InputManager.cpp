@@ -149,7 +149,7 @@ bool InputManager::Pause(bool down) {
 
 void InputManager::update(float dt) {
   CurrentSubscriber = getCurrentSubscriber();
-  if (S::Controller && (S::ControllerRecent || pad.pressed(0) || pad.getLeft().magSqr() > 0.1f)) {
+  if (S::ControllerConnected && (S::ControllerRecent || pad.pressed(0) || pad.getLeft().magSqr() > 0.1f)) {
     S::ControllerRecent = true;
     CurrentSubscriber->Move(pad.getLeft());
     CurrentSubscriber->Look(pad.getRight());
@@ -182,7 +182,7 @@ void InputManager::Resize() {
 
 void InputManager::StartController() {
   if (sf::Joystick::isConnected(0)) {
-    S::Controller = true;
+    S::ControllerConnected = true;
     S::ControllerRecent = true;
 
     pad.LDrift.reset();

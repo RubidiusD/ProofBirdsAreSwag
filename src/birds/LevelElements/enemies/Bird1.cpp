@@ -37,7 +37,6 @@ void Bird1::fly(float dt) {
     Vector2f W = wind * (perp_resistance + para_resistance);
     velocity += (W + G) * dt;
   }
-  sprite.setRotation(atan2f(velocity.y, velocity.x));
 }
 
 void Bird1::render() {

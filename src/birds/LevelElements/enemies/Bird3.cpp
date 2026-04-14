@@ -5,7 +5,7 @@
 const float Bird3::ELASTIC = 0.75f;
 const float Bird3::AIR_ACCELERATION = 1536.0f;
 const float Bird3::RADIUS = 12.0f;
-const float Bird3::DRAG = 0.5f;
+const float Bird3::DRAG = 0.25f;
 
 void Bird3::initialise() {
   AbstractBird::initialise();

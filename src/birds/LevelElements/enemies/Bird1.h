@@ -6,7 +6,6 @@
 class Bird1 : AbstractCircle {
 private:
   const float gravity = 2.5f;
-  const float speed = 480.0f;
   const float para_resistance = 0.1f;
   const float perp_resistance = 0.65f;
   const float lift_coefficient = 10.0f;

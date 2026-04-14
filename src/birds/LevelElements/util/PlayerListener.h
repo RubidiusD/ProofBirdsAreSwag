@@ -39,6 +39,7 @@ public:
   void setCoefficients(const Vector2f*& coefficients, int number);
   void setCoefficient(int index, const Vector2f& value);
   float nearest(const PlayerListener& rhs, float step) const;
+  unsigned getPrecision() const { return s.size(); }
 };
 
 #endif // BIRDSARESWAG_PLAYER_LISTENER_H

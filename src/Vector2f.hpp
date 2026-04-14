@@ -65,7 +65,7 @@ struct Vector2f {
   Vector2f cpy() const { return {x, y}; }
   Vector2f norm() const { return cpy() / sqrtf(magSqr()); };
   Vector2f avg(const Vector2f& rhs) const { return (cpy() + rhs) / 2; }
-  Vector2f i() const { return {-y, x}; }
+  Vector2f i() const { return {-y, x}; } // 90 clockwise rotation
   float magSqr() const { return x*x + y*y; }
   float mag() const { return sqrtf(magSqr()); }
   float disSqr(const Vector2f& rhs) const { return (x-rhs.x)*(x-rhs.x) + (y-rhs.y)*(y-rhs.y); }

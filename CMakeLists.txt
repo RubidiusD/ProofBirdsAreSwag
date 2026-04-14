@@ -20,6 +20,7 @@ set(SOURCE_FILES
     src/managers/MenuManager.h src/managers/MenuManager.cpp
     src/managers/AssetManager.h src/managers/AssetManager.cpp
     src/managers/InputManager.h src/managers/InputManager.cpp
+    src/managers/GamepadInterpreter.h
     src/Settings.h src/Settings.cpp
 
     src/abstracts/AbstractAction.h src/abstracts/AbstractAction.cpp
@@ -50,6 +51,7 @@ set(SOURCE_FILES
     src/birds/LevelElements/enemies/Bird1.h src/birds/LevelElements/enemies/Bird1.cpp
     src/birds/LevelElements/enemies/Bird2.h src/birds/LevelElements/enemies/Bird2.cpp
     src/birds/LevelElements/enemies/Bird3.h src/birds/LevelElements/enemies/Bird3.cpp
+    src/birds/LevelElements/enemies/Bird4.h src/birds/LevelElements/enemies/Bird4.cpp
 
     src/birds/LevelElements/players/AbstractPlayer.h src/birds/LevelElements/players/AbstractPlayer.cpp
     src/birds/LevelElements/players/BirdPlayer.h src/birds/LevelElements/players/BirdPlayer.cpp
@@ -59,7 +61,6 @@ set(SOURCE_FILES
     src/birds/LevelElements/util/PlayerListener.h src/birds/LevelElements/util/PlayerListener.cpp
     src/birds/LevelElements/util/EndLevelTrigger.h
     src/birds/LevelElements/util/SpawnTrigger.h
-
     src/birds/LevelElements/projectiles/Egg.h src/birds/LevelElements/projectiles/Egg.cpp
 
     src/birds/LevelElements/fx/Particle.h src/birds/LevelElements/fx/Particle.cpp
@@ -79,7 +80,6 @@ set(SOURCE_FILES
     src/birds/LevelElements/util/SurfaceToggleTrigger.h
     src/birds/LevelElements/util/ProgressData.h
     src/birds/LevelElements/util/ProgressTrigger.cpp
-    src/managers/GamepadInterpreter.h
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 
