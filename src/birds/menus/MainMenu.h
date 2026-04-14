@@ -9,9 +9,18 @@
 #include "ScreenElements/DragButton.h"
 
 class MainMenu : public AbstractMenu {
+protected:
+  sf::Sprite WASD;
+  sf::Sprite Space;
+  sf::Sprite LeftStick;
+  sf::Sprite AButton;
+  float anim_timer = 0.0f;
+
 public:
   MainMenu();
   void load() override;
+  void render() override;
+  void update(float dt) override;
 
   class CloseGameButton : public TextButton {
   public:

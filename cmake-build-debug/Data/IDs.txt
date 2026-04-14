@@ -3,6 +3,11 @@
 001: Text Box
 002: Cursor
 
+021: WASD gif
+022: Space gif
+023: LStick
+024: A Button
+
 098: Hearts
 099: Player
 100: Floor Tiles
