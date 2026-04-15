@@ -4,7 +4,7 @@
 
 bool AbstractCircle::surfaceCollide(Surface& surface) {
   std::shared_ptr<Collision> collision = surface.CollideCircle(hB);
-  if (collision != nullptr && collision->edge != floor1 && collision->edge != floor2) {
+  if (collision != nullptr && (floor1 == nullptr || (collision->edge != floor1 && collision->edge != floor1->prev && collision->edge != floor1->next))) {
     onHitSurface(collision);
 
     return true;
@@ -13,7 +13,19 @@ bool AbstractCircle::surfaceCollide(Surface& surface) {
 }
 
 void AbstractCircle::onHitSurface(const std::shared_ptr<Collision>& collision) {
-  snapTo(collision);
+  if (floor1 != nullptr && collision->edge != nullptr) {
+    printf("doin both \n");
+    std::shared_ptr<Collision> collision1 = floor1->CollideCircle(hB);
+    if (floor1->dire.dot(collision->edge->norm) > 0.0f) {
+      snapTo(collision1, collision);
+    }
+    else {
+      snapTo(collision, collision1);
+    }
+  }
+  else {
+    snapTo(collision);
+  }
 }
 
 void AbstractCircle::setPosition(const Vector2f& pos) {
@@ -41,12 +53,14 @@ void AbstractCircle::stickToFloor() {
       }
     }
     else {
+      printf("I'm not the issue I swear \n");
       std::shared_ptr<Collision> cA = floor1->CollideCircle(hB);
       std::shared_ptr<Collision> cB = floor2->CollideCircle(hB);
 
       if (cA == nullptr && cB == nullptr) {
         unsetFloor(floor1);
         unsetFloor(floor2);
+        sprite.setColor(sf::Color::White);
         coyote = max_coyote;
       }
       else if ((cA == nullptr || !cA->inRange) && cB != nullptr && cB->inRange) {
@@ -80,7 +94,7 @@ void AbstractCircle::initialise() {
 
 bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   if (collision == nullptr) {
-//    coyote = max_coyote;
+    coyote = max_coyote;
     return false;
   }
   coyote_normal.set(0, 0);
@@ -92,6 +106,7 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
     else
       onBounce();
     unsetFloor(floor2);
+    sprite.setColor(sf::Color::White);
   }
   setPosition(collision->point + collision->normal * hB->r);
   float change = M::distanceSQ(old_vel, velocity);
@@ -103,23 +118,26 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
 }
 
 bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2) {
+  printf("actually I'm the problem \n");
   if (c1 == nullptr || c2 == nullptr) {
     coyote = max_coyote;
     return false;
   }
+  if (!c2->edge->concave) {
+    return snapTo(c2);
+  }
   coyote_normal.set(0, 0);
   Edge* e1 = c1->edge;
   Edge* e2 = c2->edge;
-  setPosition(e1->chop(hB->r));
+  setPosition(e2->point + e2->dire * (hB->r * ((e1->dire.x*(e2->norm.y - e1->norm.y) - e1->dire.y*(e2->norm.x - e1->norm.x)) /(e2->dire.x * e1->dire.y - e2->dire.y * e1->dire.x))) + e2->norm * hB->r);
 
   float E1 = c1->elasticity(elasticity);
   float E2 = c2->elasticity(elasticity);
-  Vector2f a = velocity.splat(e1->norm, E1).splat(e2->norm, E2);
-  Vector2f b = velocity.splat(e2->norm, E2).splat(e1->norm, E1);
   Vector2f old_vel = velocity;
-  velocity = (M::lengthSQ(a) > M::lengthSQ(b)) ? a : b;
+  velocity = velocity.dot(e2->direN) < 0 ? velocity.splat(e1->norm, E1).operator*(0.75).splat(e2->norm, E2) : velocity.splat(e2->norm, E2).operator*(0.75).splat(e1->norm, E1);
   if (setFloor(floor1, e1)) {
     setFloor(floor2, e2);
+    sprite.setColor(sf::Color::Red);
   }
   else {
     setFloor(floor1, e2);
@@ -173,6 +191,7 @@ void AbstractCircle::spawn() {
   velocity.set(0.0f, 0.0f);
   unsetFloor(floor1);
   unsetFloor(floor2);
+  sprite.setColor(sf::Color::White);
 }
 
 void AbstractCircle::onHitPlayer() {

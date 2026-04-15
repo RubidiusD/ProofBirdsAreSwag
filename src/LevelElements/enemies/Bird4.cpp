@@ -3,7 +3,7 @@
 const float Bird4::ELASTIC = 0.25f;
 const float Bird4::GRAVITY = 384.0f;
 const float Bird4::ACCELERATION = 256.0f;
-const float Bird4::AIR_ACCELERATION = 1024.0f;
+const float Bird4::AIR_ACCELERATION = 512.0f;
 const float Bird4::RADIUS = 12.0f;
 const float Bird4::DRAG = 1.0f;
 const float Bird4::JUMP = 128.0f;

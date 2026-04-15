@@ -77,8 +77,8 @@ std::shared_ptr<Collision> Surface::CollideCircle(const std::shared_ptr<CircleCo
   if (!active)
     return nullptr;
 
-  std::shared_ptr<Collision> first = nullptr;
-  std::shared_ptr<Collision> second = nullptr;
+  std::shared_ptr<Collision> first;
+  std::shared_ptr<Collision> second;
 
   for (auto& edge : edges) {
     std::shared_ptr<Collision> collision = edge.CollideCircle(c);
@@ -121,7 +121,13 @@ void Surface::render() {
 
 std::shared_ptr<Collision> Edge::CollideCircle(const std::shared_ptr<CircleCollider>& c) {
   float t3 = ((norm.x*point.y - c->c.y*norm.x + c->c.x*norm.y - point.x*norm.y) / (dire.x*norm.y - dire.y*norm.x));
-  if (t3 < 0 || t3 > 1) {
+  if (t3 < 0) {
+    if (!concave && c->c.disSqr(point) <= c->r * c->r)
+      return std::make_shared<Collision>(point, (c->c - point).norm(), this, true);
+    else
+      return nullptr;
+  }
+  if (t3 > 1) {
     return nullptr;
   }
   Vector2f p = point + dire * t3;

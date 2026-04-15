@@ -57,10 +57,8 @@ void ResultsMenu::AddChapter(const Chapter& new_attempt) {
 }
 
 void ResultsMenu::SaveAndCleanseAttempts() {
-  std::ofstream file("Records/RecordOf" + std::to_string(S::player_index) + ".txt");
+  std::fstream file("Records/RecordOf" + std::to_string(S::player_index) + bird->name + ".txt");
 
-  file << "------------ New Bird -------------" << std::endl;
-  file << " -$- -$- Bird Type: " << bird->name << " -$- -$-" << std::endl << std::endl;
   for (const auto& run : attempts) {
     file << " %% Attempt: " << run.duration << std::endl;
     file << "Time of first egg: " << run.first_egg << std::endl;
