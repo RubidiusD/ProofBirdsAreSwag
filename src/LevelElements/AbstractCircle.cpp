@@ -4,7 +4,7 @@
 
 bool AbstractCircle::surfaceCollide(Surface& surface) {
   std::shared_ptr<Collision> collision = surface.CollideCircle(hB);
-  if (collision != nullptr && (floor1 == nullptr || (collision->edge != floor1 && collision->edge != floor1->prev && collision->edge != floor1->next))) {
+  if (collision != nullptr && !snapTo(collision, collision->collisionTheSecond) && (floor1 == nullptr || (collision->edge != floor1 && collision->edge != floor1->prev && collision->edge != floor1->next))) {
     onHitSurface(collision);
 
     return true;
@@ -64,12 +64,15 @@ void AbstractCircle::stickToFloor() {
         coyote = max_coyote;
       }
       else if ((cA == nullptr || !cA->inRange) && cB != nullptr && cB->inRange) {
+        printf("choice 1 \n");
         snapTo(cB);
       }
       else if ((cB == nullptr || !cB->inRange) && cA != nullptr && cA->inRange) {
+        printf("choice 2 \n");
         snapTo(cA);
       }
       else if (cB->inRange && cA->inRange) {
+        printf("choice 3 \n");
         snapTo(cA, cB);
       }
       else {
@@ -78,9 +81,11 @@ void AbstractCircle::stickToFloor() {
         Vector2f floor2Dire = floor2->direN;
 
         if (dire.dot(floor1Dire) > dire.dot(floor2Dire)) {
+          printf("choice 4 \n");
           snapTo(cA);
         }
         else {
+          printf("choice 5 \n");
           snapTo(cB);
         }
       }
@@ -118,7 +123,6 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
 }
 
 bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2) {
-  printf("actually I'm the problem \n");
   if (c1 == nullptr || c2 == nullptr) {
     coyote = max_coyote;
     return false;
@@ -126,22 +130,22 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& c1, const std::sha
   if (!c2->edge->concave) {
     return snapTo(c2);
   }
+  printf("IT@S ME BITCHES \n");
   coyote_normal.set(0, 0);
   Edge* e1 = c1->edge;
   Edge* e2 = c2->edge;
   setPosition(e2->point + e2->dire * (hB->r * ((e1->dire.x*(e2->norm.y - e1->norm.y) - e1->dire.y*(e2->norm.x - e1->norm.x)) /(e2->dire.x * e1->dire.y - e2->dire.y * e1->dire.x))) + e2->norm * hB->r);
 
-  float E1 = c1->elasticity(elasticity);
-  float E2 = c2->elasticity(elasticity);
-  Vector2f old_vel = velocity;
-  velocity = velocity.dot(e2->direN) < 0 ? velocity.splat(e1->norm, E1).operator*(0.75).splat(e2->norm, E2) : velocity.splat(e2->norm, E2).operator*(0.75).splat(e1->norm, E1);
   if (setFloor(floor1, e1)) {
+    printf("I should be fucking called already what is this \n");
     setFloor(floor2, e2);
     sprite.setColor(sf::Color::Red);
   }
   else {
     setFloor(floor1, e2);
   }
+  Vector2f old_vel = velocity;
+  velocity = velocity.splat(e1->norm, 0).splat(e2->norm, 0);
   float change = M::distanceSQ(old_vel, velocity);
   if (change > 1000.0f) {
     for (unsigned index = 0; index != 2; index ++) {

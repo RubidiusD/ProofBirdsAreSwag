@@ -12,6 +12,7 @@ struct Collision {
   Vector2f point = {};
   Vector2f normal = {};
   Edge* edge = nullptr;
+  std::shared_ptr<Collision> collisionTheSecond = nullptr;
   bool inRange = false;
   float elas = 0.0f;
   Collision(const Vector2f& p, const Vector2f& n, Edge* e, bool inRange);

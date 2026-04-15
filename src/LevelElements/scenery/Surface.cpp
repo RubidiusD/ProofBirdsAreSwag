@@ -12,6 +12,10 @@ Surface::Surface(const std::vector<Vector2f>& points) {
     edges[index].setNext(&edges[index + 1]);
   }
   edges.back().setNext(&edges[0]);
+  for (Edge& edge : edges) {
+    edge.next->concave = edge.dire.dot(edge.next->norm) < 0.0f;
+    edge.next->text2.setFillColor(edge.next->concave ? sf::Color::Red : sf::Color::Blue);
+  }
 }
 
 Surface::Surface(const std::vector<Vector2f>& points, bool base_active) : Surface(points) {
@@ -99,7 +103,8 @@ std::shared_ptr<Collision> Surface::CollideCircle(const std::shared_ptr<CircleCo
     return first;
   }
   else {
-    return std::make_shared<Collision>(second->edge->point, (second->point - first->point).i().norm(), nullptr, true);
+    first->collisionTheSecond = second;
+    return first;
   }
 }
 
@@ -161,7 +166,6 @@ void Edge::setNext(Edge* n) {
   dire = next->point - point;
   direN = dire.norm();
   norm = direN.i();
-  next->concave = dire.unRotate(next->dire).y < 0.0f;
 }
 
 float Edge::getLength() const {
