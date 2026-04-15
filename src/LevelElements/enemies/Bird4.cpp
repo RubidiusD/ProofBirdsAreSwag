@@ -2,9 +2,10 @@
 
 const float Bird4::ELASTIC = 0.25f;
 const float Bird4::GRAVITY = 384.0f;
-const float Bird4::ACCELERATION = 512.0f;
+const float Bird4::ACCELERATION = 256.0f;
 const float Bird4::AIR_ACCELERATION = 2048.0f;
 const float Bird4::RADIUS = 12.0f;
+const float Bird4::DRAG = 1.0f;
 
 void Bird4::initialise() {
   AbstractBird::initialise();
@@ -14,20 +15,42 @@ void Bird4::initialise() {
   acceleration_speed = ACCELERATION;
   air_acceleration_speed = AIR_ACCELERATION;
   hB->r = RADIUS;
-  max_stamina = 5.0f;
+  drag_modifier = DRAG; // this is the ground drag modifier lol
+  max_stamina = 10.0f;
+
+  can_stick = true;
+}
+
+void Bird4::onStick() {
+  wing.setTextureRect({0, 0, 29, 27});
+  flap_cooldown = 0.0f;
 }
 
 void Bird4::update(float dt) {
   selfPredictor.QuarryIs(getPosition(), dt);
 
-  tiltWing(dt);
-  soar(dt);
-  setPosition(velocity * dt + sprite.getPosition());
+  if (floor1 == nullptr) {
+    tiltWing(dt);
+    soar(dt);
+    setPosition(hB->c + velocity * dt);
+    considerFlap();
+    considerEgg();
+  }
+  else {
+    Vector2f intent = playerPredictor.f(0.5f) + Vector2f{0.0f, -100.0f} - selfPredictor.f(0.5f);
+    intent.normInPlace();
+    velocity += intent * acceleration_speed * dt;
+    velocity.y += gravity * dt;
+    air_current -= velocity;
+    velocity += air_current * drag_modifier * dt;
 
-  cooldowns(dt);
-  considerFlap();
+    setPosition(hB->c + velocity * dt);
+
+    stickToFloor();
+  }
+
   tickWing(dt);
-  considerEgg();
+  cooldowns(dt);
 }
 
 void Bird4::tiltWing(float dt) {
@@ -35,10 +58,12 @@ void Bird4::tiltWing(float dt) {
     return;
   }
   Vector2f wing_normal = wing_direction.i();
-  Vector2f intent = playerPredictor.f(0.5f) + Vector2f{0.0f, -100.0f} - selfPredictor.f(0.5f);
-  float strength = intent.dot(wing_normal);
-  wing_direction += wing_normal * strength * dt * 0.00025f;
-  wing_direction = wing_direction.norm();
+  Vector2f error = playerPredictor.f(1.0f) + Vector2f{0.0f, -100.0f} - selfPredictor.f(1.0f);
+  float strength = fminf(error.dot(wing_normal), 100.0f) * 0.0001f;
+//  wing_direction += wing_normal * strength * dt * 0.00025f;
+  wing_direction = wing_direction.rotate({cosf(strength * dt), sinf(strength * dt)});
+  wing_direction.normInPlace();
+
   wing.setRotation(atan2f(wing_direction.y, wing_direction.x) * 180.0f / 3.1415926535f);
   wing.setScale(1, wing_direction.x > 0 ? 1.0f : -1.0f);
 }
@@ -65,8 +90,17 @@ void Bird4::soar(float dt) {
 }
 
 void Bird4::considerFlap() {
-  if (spray == 0 && flap_cooldown == 0.0f && stamina >= 1.0f) {
-    flap();
+  if (spray == 0 && (playerPredictor.current_position() - hB->c).norm().dot(wing_direction) >= 0.5f && stamina >= 1.0f) {
+    if (flap_cooldown == 0.0f)
+      flap();
+    else if (flap_cooldown <= flap_max_cooldown / 2) {
+      if (last_stroke_down) {
+        flapForwards();
+      }
+      else {
+        flapUpwards();
+      }
+    }
   }
 }
 
@@ -83,7 +117,37 @@ void Bird4::cooldowns(float dt) {
       egg_cooldown = 0.0f;
     }
   }
-  stamina = fminf(stamina + dt, max_stamina);
+  stamina = fminf(stamina + dt * (floor1 == nullptr ? 1.0f : 3.0f), max_stamina);
+}
+
+void Bird4::flapUpwards() {
+  Vector2f cur = getPosition();
+  Vector2f tar = playerPredictor.current_position();
+  Vector2f pre = selfPredictor.f(0.5f);
+  Vector2f tarp = playerPredictor.f(0.5f);
+
+  if (cur.y > tar.y - 75.0f && pre.y > tarp.y - 100.0f) {
+    setWingRect({0, 27, 29, 27});
+    stamina -= 1.0f;
+    flap_cooldown = flap_max_cooldown;
+    anim_cooldown = 0.125f;
+    last_stroke_down = true;
+  }
+}
+
+void Bird4::flapForwards() {
+  Vector2f cur = getPosition();
+  Vector2f tar = playerPredictor.current_position();
+  Vector2f pre = selfPredictor.f(0.5f);
+  Vector2f tarp = playerPredictor.f(0.5f);
+
+  if ((cur.x < tar.x - 200.0f && pre.x < tarp.x - 50.0f) || (cur.x > tar.x + 200.0f && pre.x > tarp.x + 50.0f)) {
+    setWingRect({0, 81, 29, 27});
+    stamina -= 1.0f;
+    flap_cooldown = flap_max_cooldown / 2;
+    anim_cooldown = 0.125f;
+    last_stroke_down = false;
+  }
 }
 
 void Bird4::flap() {
@@ -92,13 +156,13 @@ void Bird4::flap() {
   Vector2f pre = selfPredictor.f(0.5f);
   Vector2f tarp = playerPredictor.f(0.5f);
 
-  if (cur.x < tar.x - 50.0f && pre.x < tarp.x + 25.0f)  { setWingRect({0, 54, 29, 27}); wing_direction = { 1, 0}; }
-  else if (cur.x > tar.x + 50.0f && pre.x > tarp.x - 25.0f)  { setWingRect({0, 54, 29, 27}); wing_direction = {-1, 0}; }
+  if ((cur.x < tar.x - 50.0f && pre.x < tarp.x + 25.0f) || (cur.x > tar.x + 50.0f && pre.x > tarp.x - 25.0f))  { setWingRect({0, 54, 29, 27}); }
   else if (cur.y > tar.y - 75.0f && pre.y > tarp.y - 100.0f) { setWingRect({0, 27, 29, 27}); }
   else { return; }
   stamina -= 1.0f;
   flap_cooldown = flap_max_cooldown;
   anim_cooldown = 0.125f;
+  last_stroke_down = true;
 }
 
 AbstractLevelElement* Bird4::makeCopy(const Vector2f& spawn_) const {

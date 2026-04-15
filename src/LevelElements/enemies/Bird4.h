@@ -10,6 +10,7 @@ private:
   static const float ACCELERATION;
   static const float AIR_ACCELERATION;
   static const float RADIUS;
+  static const float DRAG;
 
   void cooldowns(float dt);
   void considerFlap();
@@ -19,9 +20,15 @@ protected:
   const float perp_resistance = 1.0f;
   const float lift_coefficient = 10.0f;
 
+  bool last_stroke_down = true;
+
   void flap();
+  void flapForwards();
+  void flapUpwards();
   void soar(float dt);
   void tiltWing(float dt);
+  void onStick() override;
+
 public:
   explicit Bird4(const Vector2f& pos) : AbstractBird(pos) { name = "Pigeon"; }
 

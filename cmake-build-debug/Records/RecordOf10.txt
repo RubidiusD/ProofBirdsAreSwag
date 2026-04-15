@@ -1,56 +1,56 @@
 ------------ New Bird -------------
  -$- -$- Bird Type: Pigeon -$- -$-
 
- %% Attempt: 42.7154
-Time of first egg: 31.007
+ %% Attempt: 24.2286
+Time of first egg: 11.2071
 Time of second egg: -1
     Chapter: 1
 Type: 0
-Duration: 2.27251
-Times Hit: 1
-Times Missed: 0
-Time Spent Counter Steering: 0.015873
-Times Jumped: 1
-Times Coyoted: 0
-Times Bounced: 6
-Times Stuck: 29
-    Chapter: 2
-Type: 0
-Duration: 1.3554
+Duration: 4.07199
 Times Hit: 0
 Times Missed: 0
-Time Spent Counter Steering: 0.46062
+Time Spent Counter Steering: 0.05055
+Times Jumped: 0
+Times Coyoted: 0
+Times Bounced: 8
+Times Stuck: 137
+    Chapter: 2
+Type: 0
+Duration: 1.38305
+Times Hit: 0
+Times Missed: 0
+Time Spent Counter Steering: 0.015799
 Times Jumped: 1
 Times Coyoted: 0
 Times Bounced: 3
-Times Stuck: 5
+Times Stuck: 9
     Chapter: 3
 Type: 0
-Duration: 2.31564
+Duration: 2.65363
 Times Hit: 0
 Times Missed: 0
-Time Spent Counter Steering: 0.936045
-Times Jumped: 0
+Time Spent Counter Steering: 0.214662
+Times Jumped: 1
 Times Coyoted: 0
-Times Bounced: 2
-Times Stuck: 59
+Times Bounced: 4
+Times Stuck: 11
     Chapter: 4
 Type: 0
-Duration: 2.49718
+Duration: 2.46198
 Times Hit: 0
 Times Missed: 0
-Time Spent Counter Steering: 0.313642
+Time Spent Counter Steering: 0
 Times Jumped: 0
 Times Coyoted: 0
-Times Bounced: 6
-Times Stuck: 73
+Times Bounced: 3
+Times Stuck: 87
     Chapter: 0
 Type: 3
-Duration: 34.2746
+Duration: 13.658
 Times Hit: 1
 Times Missed: 0
-Time Spent Counter Steering: 3.66233
-Times Jumped: 10
-Times Coyoted: 1
-Times Bounced: 35
-Times Stuck: 1396
+Time Spent Counter Steering: 1.89649
+Times Jumped: 3
+Times Coyoted: 0
+Times Bounced: 11
+Times Stuck: 591

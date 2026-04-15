@@ -61,6 +61,11 @@ set(SOURCE_FILES
     src/LevelElements/util/PlayerListener.h src/LevelElements/util/PlayerListener.cpp
     src/LevelElements/util/EndLevelTrigger.h
     src/LevelElements/util/SpawnTrigger.h
+    src/LevelElements/util/AbstractLine.h src/LevelElements/util/AbstractLine.cpp
+    src/LevelElements/util/ProgressTrigger.h src/LevelElements/util/ProgressTrigger.cpp
+    src/LevelElements/util/SurfaceToggleTrigger.h
+    src/LevelElements/util/ProgressData.h
+
     src/LevelElements/projectiles/Egg.h src/LevelElements/projectiles/Egg.cpp
 
     src/LevelElements/fx/Particle.h src/LevelElements/fx/Particle.cpp
@@ -69,17 +74,9 @@ set(SOURCE_FILES
     src/levels/LevelLoader.hpp
     src/levels/LevelLibrary.h src/levels/LevelLibrary.cpp
     src/levels/AbstractLevel.h src/levels/AbstractLevel.cpp
-
     src/levels/FlyingLevel.h src/levels/FlyingLevel.cpp
     src/levels/TestLevel.h src/levels/TestLevel.cpp
     src/levels/TrackingLevel.h src/levels/TrackingLevel.cpp
-
-    src/LevelElements/util/AbstractLine.h
-    src/LevelElements/util/ProgressTrigger.h
-    src/LevelElements/util/AbstractLine.cpp
-    src/LevelElements/util/SurfaceToggleTrigger.h
-    src/LevelElements/util/ProgressData.h
-    src/LevelElements/util/ProgressTrigger.cpp
 )
 add_executable(BirdsAreSwag ${SOURCE_FILES})
 

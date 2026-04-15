@@ -37,7 +37,7 @@ void AbstractPlayer::update(float dt) {
     }
     velocity.y += gravity * dt;
     air_current -= velocity;
-    velocity += air_current * drag_modifier * dt;
+    velocity += air_current * drag_modifier * dt * (floor1 == nullptr ? 1.0f : 0.5f);
   }
 
   if (floor2 != nullptr) {
