@@ -80,7 +80,7 @@ void AbstractCircle::initialise() {
 
 bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   if (collision == nullptr) {
-    coyote = max_coyote;
+//    coyote = max_coyote;
     return false;
   }
   coyote_normal.set(0, 0);
@@ -198,7 +198,7 @@ void AbstractCircle::bounceOff(const std::shared_ptr<AbstractCircle>& rhs) {
 }
 
 void AbstractCircle::tickCoyote(float dt) {
-  if (can_stick && floor1 != nullptr && coyote != 0.0f) {
+  if (can_stick && floor1 == nullptr && coyote != 0.0f) {
     coyote = fmaxf(coyote - dt, 0.0f);
   }
 }

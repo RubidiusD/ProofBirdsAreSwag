@@ -3,9 +3,10 @@
 const float Bird4::ELASTIC = 0.25f;
 const float Bird4::GRAVITY = 384.0f;
 const float Bird4::ACCELERATION = 256.0f;
-const float Bird4::AIR_ACCELERATION = 2048.0f;
+const float Bird4::AIR_ACCELERATION = 1024.0f;
 const float Bird4::RADIUS = 12.0f;
 const float Bird4::DRAG = 1.0f;
+const float Bird4::JUMP = 128.0f;
 
 void Bird4::initialise() {
   AbstractBird::initialise();
@@ -17,6 +18,7 @@ void Bird4::initialise() {
   hB->r = RADIUS;
   drag_modifier = DRAG; // this is the ground drag modifier lol
   max_stamina = 10.0f;
+  jump_strength = JUMP;
 
   can_stick = true;
 }
@@ -28,9 +30,9 @@ void Bird4::onStick() {
 
 void Bird4::update(float dt) {
   selfPredictor.QuarryIs(getPosition(), dt);
+  tiltWing(dt);
 
   if (floor1 == nullptr) {
-    tiltWing(dt);
     soar(dt);
     setPosition(hB->c + velocity * dt);
     considerFlap();
@@ -39,14 +41,23 @@ void Bird4::update(float dt) {
   else {
     Vector2f intent = playerPredictor.f(0.5f) + Vector2f{0.0f, -100.0f} - selfPredictor.f(0.5f);
     intent.normInPlace();
-    velocity += intent * acceleration_speed * dt;
+
+    if (stamina == max_stamina) {
+      velocity += (floor1->norm + intent * 0.5f) * jump_strength;
+      unsetFloor(floor1);
+      unsetFloor(floor2);
+    }
+    else {
+      velocity += intent * acceleration_speed * dt;
+    }
     velocity.y += gravity * dt;
     air_current -= velocity;
     velocity += air_current * drag_modifier * dt;
 
     setPosition(hB->c + velocity * dt);
 
-    stickToFloor();
+    if (floor1 != nullptr)
+      stickToFloor();
   }
 
   tickWing(dt);
@@ -59,9 +70,9 @@ void Bird4::tiltWing(float dt) {
   }
   Vector2f wing_normal = wing_direction.i();
   Vector2f error = playerPredictor.f(1.0f) + Vector2f{0.0f, -100.0f} - selfPredictor.f(1.0f);
-  float strength = fminf(error.dot(wing_normal), 100.0f) * 0.0001f;
-//  wing_direction += wing_normal * strength * dt * 0.00025f;
-  wing_direction = wing_direction.rotate({cosf(strength * dt), sinf(strength * dt)});
+  float strength = fminf(error.dot(wing_normal), 100.0f) * 0.001f;
+  wing_direction += wing_normal * strength * dt * 0.25f;
+//  wing_direction = wing_direction.rotate({cosf(strength * dt), sinf(strength * dt)});
   wing_direction.normInPlace();
 
   wing.setRotation(atan2f(wing_direction.y, wing_direction.x) * 180.0f / 3.1415926535f);

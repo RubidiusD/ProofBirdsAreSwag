@@ -11,13 +11,14 @@ private:
   static const float AIR_ACCELERATION;
   static const float RADIUS;
   static const float DRAG;
+  static const float JUMP;
 
   void cooldowns(float dt);
   void considerFlap();
 protected:
   const float flap_max_cooldown = 0.5f;
-  const float para_resistance = 0.5f;
-  const float perp_resistance = 1.0f;
+  const float para_resistance = 0.75f;
+  const float perp_resistance = 1.5f;
   const float lift_coefficient = 10.0f;
 
   bool last_stroke_down = true;

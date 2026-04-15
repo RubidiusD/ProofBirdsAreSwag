@@ -125,7 +125,7 @@ std::shared_ptr<Collision> Edge::CollideCircle(const std::shared_ptr<CircleColli
     return nullptr;
   }
   Vector2f p = point + dire * t3;
-  return std::make_shared<Collision>(p, norm, this, c->c.disSqr(p) <= c->r * c->r);
+  return std::make_shared<Collision>(p, norm, this, c->c.disSqr(p) <= (c->r + 2) * (c->r + 2));
 }
 
 bool Edge::CollidePath(const Vector2f& n, const Vector2f& p) const {

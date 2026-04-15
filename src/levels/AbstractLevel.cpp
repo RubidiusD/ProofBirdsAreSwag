@@ -111,7 +111,7 @@ void AbstractLevel::open() {
     surface.active = surface.default_active;
   }
   bool incrementing;
-  for (int index = 0; index != elements.size(); index += incrementing ? 1 : 0) {
+  for (int index = elements.size() - 1; index != -1; index -= incrementing ? 1 : 0) {
     incrementing = true;
     if (elements[index]->destroy_on_load) {
       elements[index]->remove();
@@ -246,7 +246,9 @@ void AbstractLevel::hurtPlayer(const Vector2f& source) {
 
   if (player->hurt(source)) {
     publishProgress(DIED);
+    printf("publish progress is fine \n");
     open();
+    printf("open is also fine \n");
   }
 }
 

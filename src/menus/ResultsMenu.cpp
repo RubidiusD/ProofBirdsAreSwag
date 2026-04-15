@@ -82,8 +82,6 @@ void ResultsMenu::SaveAndCleanseAttempts() {
   file.close();
 
   // Cleansing Them Attempts
-  for (int index = (int)attempts.size() - 1; index != -1; index --) {
-    attempts.pop_back();
-    static_visuals.pop_back();
-  }
+  attempts.clear();
+  static_visuals.clear();
 }

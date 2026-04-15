@@ -43,6 +43,7 @@ public:
     LevelLibrary::current_level->publishProgress(QUIT);
     ResultsMenu::instance->SaveAndCleanseAttempts();
     LoadMenuButton::Press();
+    LevelLibrary::setLevel(-1);
   }
 };
 
