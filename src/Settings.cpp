@@ -15,4 +15,4 @@ sf::RenderWindow S::Window(sf::VideoMode::getFullscreenModes()[0], "Birds are pr
 //sf::RenderWindow S::Window({960, 540}, "Birds are pretty swag yo");
 Vector2f S::ScreenSize;
 sf::View S::UI_View;
-const float S::stick_tolerance = 5.0f;
+const float S::stick_tolerance = 4.0f;

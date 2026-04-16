@@ -4,7 +4,7 @@
 
 bool AbstractCircle::surfaceCollide(Surface& surface) {
   std::shared_ptr<Collision> collision = surface.CollideCircle(hB);
-  if (collision != nullptr && !snapTo(collision, collision->collisionTheSecond) && (floor1 == nullptr || (collision->edge != floor1 && collision->edge != floor1->prev && collision->edge != floor1->next))) {
+  if (collision != nullptr && !snapTo(collision, collision->collisionTheSecond) && (floor == nullptr || (collision->edge != floor && collision->edge != floor->prev && collision->edge != floor->next))) {
     onHitSurface(collision);
 
     return true;
@@ -13,10 +13,10 @@ bool AbstractCircle::surfaceCollide(Surface& surface) {
 }
 
 void AbstractCircle::onHitSurface(const std::shared_ptr<Collision>& collision) {
-  if (floor1 != nullptr && collision->edge != nullptr) {
+  if (floor != nullptr && collision->edge != nullptr) {
     printf("doin both \n");
-    std::shared_ptr<Collision> collision1 = floor1->CollideCircle(hB);
-    if (floor1->dire.dot(collision->edge->norm) > 0.0f) {
+    std::shared_ptr<Collision> collision1 = floor->CollideCircle(hB);
+    if (floor->dire.dot(collision->edge->norm) > 0.0f) {
       snapTo(collision, collision1);
     }
     else {
@@ -34,14 +34,14 @@ void AbstractCircle::setPosition(const Vector2f& pos) {
 }
 
 void AbstractCircle::stickToFloor() {
-  if (floor1 != nullptr) {
-    std::shared_ptr<Collision> cA = floor1->concave ? floor1->prev->CollideCircle(hB) : nullptr;
-    std::shared_ptr<Collision> cB = floor1->CollideCircle(hB);
-    std::shared_ptr<Collision> cC = floor1->next->concave ? floor1->next->CollideCircle(hB) : nullptr;
+  if (floor != nullptr) {
+    std::shared_ptr<Collision> cA = floor->concave ? floor->prev->CollideCircle(hB) : nullptr;
+    std::shared_ptr<Collision> cB = floor->CollideCircle(hB);
+    std::shared_ptr<Collision> cC = floor->next->concave ? floor->next->CollideCircle(hB) : nullptr;
 
-    if (cB == nullptr) { // no longer touching or in line with current floor1
+    if (cB == nullptr) { // no longer touching or in line with current floor
       if (!(cA != nullptr && cA->inRange && snapTo(cA)) && !(cC != nullptr && cC->inRange && snapTo(cC))) {
-        unsetFloor(floor1);
+        unsetFloor(floor);
         coyote = max_coyote;
       }
     }
@@ -66,7 +66,7 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   Vector2f old_vel = velocity;
   velocity = velocity.splat(collision->normal, collision->elasticity(elasticity));
   if (can_stick) {
-    if (setFloor(floor1, collision->edge))
+    if (setFloor(floor, collision->edge))
       onStick();
     else
       onBounce();
@@ -103,8 +103,8 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& c1, const std::sha
   Vector2f b = velocity.splat(e2->norm, E2).splat(e1->norm, E1);
   velocity = (M::lengthSQ(a) > M::lengthSQ(b)) ? a : b;
 
-  if (!setFloor(floor1, e1)) {
-    setFloor(floor1, e2);
+  if (!setFloor(floor, e1)) {
+    setFloor(floor, e2);
   }
   float change = M::distanceSQ(old_vel, velocity);
   if (change > 1000.0f) {
@@ -153,7 +153,7 @@ void AbstractCircle::applyWind(const std::vector<std::shared_ptr<AbstractWind>>&
 void AbstractCircle::spawn() {
   setPosition(spawn_location);
   velocity.set(0.0f, 0.0f);
-  unsetFloor(floor1);
+  unsetFloor(floor);
   sprite.setColor(sf::Color::White);
 }
 
@@ -180,7 +180,7 @@ void AbstractCircle::bounceOff(const std::shared_ptr<AbstractCircle>& rhs) {
 }
 
 void AbstractCircle::tickCoyote(float dt) {
-  if (can_stick && floor1 == nullptr && coyote != 0.0f) {
+  if (can_stick && floor == nullptr && coyote != 0.0f) {
     coyote = fmaxf(coyote - dt, 0.0f);
   }
 }

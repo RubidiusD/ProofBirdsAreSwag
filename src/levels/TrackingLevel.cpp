@@ -128,10 +128,10 @@ void TrackingLevel::load() {
       {-1495,  735},
   }), false);
   surfaces.emplace_back(std::vector<Vector2f>({
-      {-1253,  732},
-      {-1413,  697},
-      {-1723,  767},
-      {-1549,  784}
+      {-1200,  794},
+      {-1413,  727},
+      {-1775,  800},
+      {-1549,  815}
   }), true);
   winds.emplace_back(new AbstractWind({- 60.0f, -10.0f}, 0.5f));
   winds.emplace_back(new AbstractWind({  00.0f, -50.0f}, { -500, -500, 1000, 1000}));
@@ -167,7 +167,7 @@ void TrackingLevel::open() {
   AbstractLevel::open();
 
   if (!S::bird3) {
-    ResultsMenu::bird = std::make_shared<Bird4>(Vector2f{0.0f, 0.0f});
+    ResultsMenu::bird = std::make_shared<Bird3>(Vector2f{0.0f, 0.0f});
   }
   else if (!S::bird2) {
     ResultsMenu::bird = std::make_shared<Bird2>(Vector2f{0.0f, 0.0f});

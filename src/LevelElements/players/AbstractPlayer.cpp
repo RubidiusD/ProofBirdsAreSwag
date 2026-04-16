@@ -6,7 +6,7 @@ const float AbstractPlayer::ACCELERATION = 960.0f;
 const float AbstractPlayer::AIR_ACCELERATION = 480.0f;
 const float AbstractPlayer::JUMP = 360.0f;
 const float AbstractPlayer::DRAG = 1.75f;
-const float AbstractPlayer::ELASTIC = 0.75f;
+const float AbstractPlayer::ELASTIC = 1.0f;
 const float AbstractPlayer::RADIUS = 16.0f;
 const float AbstractPlayer::COYOTE = 0.125f;
 
@@ -15,29 +15,29 @@ void AbstractPlayer::update(float dt) {
   if (intent.dot(velocity) < 0) {
     chapter.time_spent_counter_steering += dt;
   }
-  if (jumping && (floor1 != nullptr || coyote != 0.0f)) { // the moment you jump
-    if (floor1 == nullptr) {
+  if (jumping && (floor != nullptr || coyote != 0.0f)) { // the moment you jump
+    if (floor == nullptr) {
       chapter.times_coyoted ++;
       velocity += (coyote_normal + intent * 0.5f) * jump_strength;
     }
     else {
-      velocity += (floor1->norm + intent * 0.5f) * jump_strength;
+      velocity += (floor->norm + intent * 0.5f) * jump_strength;
     }
     chapter.times_jumped ++;
-    unsetFloor(floor1);
+    unsetFloor(floor);
     sprite.setColor(sf::Color::White);
     jumping = false;
     coyote = 0.0f;
   }
   else {
-    if (floor1 != nullptr) { // otherwise
+    if (floor != nullptr) { // otherwise
       velocity += intent * acceleration_speed * dt;
     } else {
       velocity += intent * air_acceleration_speed * dt;
     }
     velocity.y += gravity * dt;
     air_current -= velocity;
-    velocity += air_current * drag_modifier * dt * (floor1 == nullptr ? 1.0f : 0.5f);
+    velocity += air_current * drag_modifier * dt * (floor == nullptr ? 1.0f : 0.5f);
   }
 
   setPosition(hB->c + velocity * dt);

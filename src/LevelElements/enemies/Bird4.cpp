@@ -1,12 +1,13 @@
 #include "Bird4.h"
+#include "../../levels/LevelLibrary.h"
 
-const float Bird4::ELASTIC = 0.25f;
+const float Bird4::ELASTIC = -0.25f;
 const float Bird4::GRAVITY = 384.0f;
 const float Bird4::ACCELERATION = 256.0f;
-const float Bird4::AIR_ACCELERATION = 512.0f;
+const float Bird4::AIR_ACCELERATION = 1024.0f;
 const float Bird4::RADIUS = 12.0f;
 const float Bird4::DRAG = 1.0f;
-const float Bird4::JUMP = 128.0f;
+const float Bird4::JUMP = 256.0f;
 
 void Bird4::initialise() {
   AbstractBird::initialise();
@@ -32,7 +33,7 @@ void Bird4::update(float dt) {
   selfPredictor.QuarryIs(getPosition(), dt);
   tiltWing(dt);
 
-  if (floor1 == nullptr) {
+  if (floor == nullptr) {
     soar(dt);
     setPosition(hB->c + velocity * dt);
     considerFlap();
@@ -42,9 +43,9 @@ void Bird4::update(float dt) {
     Vector2f intent = playerPredictor.f(0.5f) + Vector2f{0.0f, -100.0f} - selfPredictor.f(0.5f);
     intent.normInPlace();
 
-    if (stamina == max_stamina) {
-      velocity += (floor1->norm + intent * 0.5f) * jump_strength;
-      unsetFloor(floor1);
+    if (stamina == max_stamina) { // take off
+      velocity += (floor->norm + intent * 0.5f) * jump_strength;
+      unsetFloor(floor);
     }
     else {
       velocity += intent * acceleration_speed * dt;
@@ -55,7 +56,7 @@ void Bird4::update(float dt) {
 
     setPosition(hB->c + velocity * dt);
 
-    if (floor1 != nullptr)
+    if (floor != nullptr)
       stickToFloor();
   }
 
@@ -67,11 +68,20 @@ void Bird4::tiltWing(float dt) {
   if (playerPredictor.getPrecision() < 2) {
     return;
   }
-  Vector2f wing_normal = wing_direction.i();
-  Vector2f error = playerPredictor.f(1.0f) + Vector2f{0.0f, -100.0f} - selfPredictor.f(1.0f);
-  float strength = fminf(error.dot(wing_normal), 100.0f) * 0.001f;
-  wing_direction += wing_normal * strength * dt * 0.25f;
-//  wing_direction = wing_direction.rotate({cosf(strength * dt), sinf(strength * dt)});
+  Vector2f target_direction;
+  float disSQ = hB->c.disSqr(playerPredictor.current_position());
+  if (disSQ <= 10000) {
+    Vector2f wing_normal = wing_direction.i();
+    Vector2f error = playerPredictor.f(1.0f) + Vector2f{0.0f, -100.0f} - selfPredictor.f(1.0f);
+    float strength = fminf(error.dot(wing_normal), 100.0f) * 0.001f;
+    target_direction = wing_normal * strength * 0.25;
+  }
+  else {
+    target_direction.x = (hB->c.x < playerPredictor.current_position().x) ? 1.0f : -1.0f;
+    target_direction.y = -0.2f;
+  }
+
+  wing_direction += target_direction * dt;
   wing_direction.normInPlace();
 
   wing.setRotation(atan2f(wing_direction.y, wing_direction.x) * 180.0f / 3.1415926535f);
@@ -127,7 +137,7 @@ void Bird4::cooldowns(float dt) {
       egg_cooldown = 0.0f;
     }
   }
-  stamina = fminf(stamina + dt * (floor1 == nullptr ? 1.0f : 3.0f), max_stamina);
+  stamina = fminf(stamina + dt * (floor == nullptr ? 1.0f : 3.0f), max_stamina);
 }
 
 void Bird4::flapUpwards() {
@@ -139,9 +149,11 @@ void Bird4::flapUpwards() {
   if (cur.y > tar.y - 75.0f && pre.y > tarp.y - 100.0f) {
     setWingRect({0, 27, 29, 27});
     stamina -= 1.0f;
+    printf("upwards %f \n", flap_cooldown);
     flap_cooldown = flap_max_cooldown;
     anim_cooldown = 0.125f;
     last_stroke_down = true;
+    LevelLibrary::current_level->spawnParticle(4, hB->c, velocity * -1.0f);
   }
 }
 
@@ -154,9 +166,11 @@ void Bird4::flapForwards() {
   if ((cur.x < tar.x - 200.0f && pre.x < tarp.x - 50.0f) || (cur.x > tar.x + 200.0f && pre.x > tarp.x + 50.0f)) {
     setWingRect({0, 81, 29, 27});
     stamina -= 1.0f;
-    flap_cooldown = flap_max_cooldown / 2;
+    printf("forwards %f \n", flap_cooldown);
+    flap_cooldown = flap_max_cooldown;
     anim_cooldown = 0.125f;
     last_stroke_down = false;
+    LevelLibrary::current_level->spawnParticle(4, hB->c, velocity * -1.0f);
   }
 }
 
@@ -170,9 +184,11 @@ void Bird4::flap() {
   else if (cur.y > tar.y - 75.0f && pre.y > tarp.y - 100.0f) { setWingRect({0, 27, 29, 27}); }
   else { return; }
   stamina -= 1.0f;
+  printf("neutral %f \n", flap_cooldown);
   flap_cooldown = flap_max_cooldown;
   anim_cooldown = 0.125f;
   last_stroke_down = true;
+  LevelLibrary::current_level->spawnParticle(4, hB->c, velocity * -1.0f);
 }
 
 AbstractLevelElement* Bird4::makeCopy(const Vector2f& spawn_) const {
