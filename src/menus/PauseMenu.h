@@ -31,7 +31,7 @@ class LoadMenuButton : public TextButton {
 public:
   LoadMenuButton(const sf::String& text_, const Neighbours& n, const Vector2f& ratio_, const sf::String& menu_id) : TextButton(0, text_, n, ratio_) {ID = AbstractMenu::makeID(menu_id);}
   void Press() override {
-    printf("Trying to load Menu \n");
+    //  printf("Trying to load Menu \n");
     MenuManager::setMenu(ID);
   }
 };
@@ -51,7 +51,7 @@ class ControllerButton : public TextButton {
 public:
   ControllerButton(const Neighbours& n, const Vector2f& ratio_) : TextButton(0, "Reset ControllerConnected", n, ratio_) {}
   void Press() override {
-    printf("Resetting ControllerConnected \n");
+    //  printf("Resetting ControllerConnected \n");
     InputManager::StartController();
   }
 };

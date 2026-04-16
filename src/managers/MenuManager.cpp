@@ -22,7 +22,7 @@ bool MenuManager::setMenu(unsigned menu_id) {
   if (isLoading) {
     return false;
   }
-  printf("Wasn't already loading \n");
+  //  printf("Wasn't already loading \n");
 
   short lowest_index = -1;
   auto highest_index = (short)menus.size();

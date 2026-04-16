@@ -12,12 +12,12 @@ const float Bird2::DRAG = 1.5f;
 void Bird2::initialise() {
   AbstractBird::initialise();
 
-  elasticity = ELASTIC;
-  gravity = GRAVITY;
-  acceleration_speed = ACCELERATION;
-  air_acceleration_speed = AIR_ACCELERATION;
-  drag_modifier = DRAG;
-  hB->r = RADIUS;
+  elasticity = Bird2::ELASTIC;
+  gravity = Bird2::GRAVITY;
+  acceleration_speed = Bird2::ACCELERATION;
+  air_acceleration_speed = Bird2::AIR_ACCELERATION;
+  drag_modifier = Bird2::DRAG;
+  hB->r = Bird2::RADIUS;
 }
 
 void Bird2::update(float dt) {

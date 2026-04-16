@@ -48,10 +48,10 @@ void LevelLibrary::LoadLevelAction::end() {
   current_level = levels[index];
   if (!current_level->isLoaded) {
     current_level->load();
-    printf("Loaded Level %d \n", index);
+    //  printf("Loaded Level %d \n", index);
   }
   current_level->open();
-  printf("Opened Level %d \n", index);
+  //  printf("Opened Level %d \n", index);
 }
 
 const float LevelLibrary::ResumeLevelAction::duration = 0.1f;

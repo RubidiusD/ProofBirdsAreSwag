@@ -12,14 +12,14 @@ const float Bird4::JUMP = 256.0f;
 void Bird4::initialise() {
   AbstractBird::initialise();
 
-  elasticity = ELASTIC;
-  gravity = GRAVITY;
-  acceleration_speed = ACCELERATION;
-  air_acceleration_speed = AIR_ACCELERATION;
-  hB->r = RADIUS;
-  drag_modifier = DRAG; // this is the ground drag modifier lol
+  elasticity = Bird4::ELASTIC;
+  gravity = Bird4::GRAVITY;
+  acceleration_speed = Bird4::ACCELERATION;
+  air_acceleration_speed = Bird4::AIR_ACCELERATION;
+  hB->r = Bird4::RADIUS;
+  drag_modifier = Bird4::DRAG; // this is the ground drag modifier lol
   max_stamina = 10.0f;
-  jump_strength = JUMP;
+  jump_strength = Bird4::JUMP;
 
   can_stick = true;
 }
@@ -149,7 +149,7 @@ void Bird4::flapUpwards() {
   if (cur.y > tar.y - 75.0f && pre.y > tarp.y - 100.0f) {
     setWingRect({0, 27, 29, 27});
     stamina -= 1.0f;
-    printf("upwards %f \n", flap_cooldown);
+    //  printf("upwards %f \n", flap_cooldown);
     flap_cooldown = flap_max_cooldown;
     anim_cooldown = 0.125f;
     last_stroke_down = true;
@@ -166,7 +166,7 @@ void Bird4::flapForwards() {
   if ((cur.x < tar.x - 200.0f && pre.x < tarp.x - 50.0f) || (cur.x > tar.x + 200.0f && pre.x > tarp.x + 50.0f)) {
     setWingRect({0, 81, 29, 27});
     stamina -= 1.0f;
-    printf("forwards %f \n", flap_cooldown);
+    //  printf("forwards %f \n", flap_cooldown);
     flap_cooldown = flap_max_cooldown;
     anim_cooldown = 0.125f;
     last_stroke_down = false;
@@ -184,7 +184,7 @@ void Bird4::flap() {
   else if (cur.y > tar.y - 75.0f && pre.y > tarp.y - 100.0f) { setWingRect({0, 27, 29, 27}); }
   else { return; }
   stamina -= 1.0f;
-  printf("neutral %f \n", flap_cooldown);
+  //  printf("neutral %f \n", flap_cooldown);
   flap_cooldown = flap_max_cooldown;
   anim_cooldown = 0.125f;
   last_stroke_down = true;

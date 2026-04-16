@@ -14,7 +14,7 @@ bool AbstractCircle::surfaceCollide(Surface& surface) {
 
 void AbstractCircle::onHitSurface(const std::shared_ptr<Collision>& collision) {
   if (floor != nullptr && collision->edge != nullptr) {
-    printf("doin both \n");
+//    //  printf("doin both \n");
     std::shared_ptr<Collision> collision1 = floor->CollideCircle(hB);
     if (floor->dire.dot(collision->edge->norm) > 0.0f) {
       snapTo(collision, collision1);

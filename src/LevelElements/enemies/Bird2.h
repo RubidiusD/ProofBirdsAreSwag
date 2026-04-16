@@ -19,7 +19,7 @@ protected:
 
   void flap();
 public:
-  explicit Bird2(const Vector2f& pos) : AbstractBird(pos) { name = "Bird That Flaps"; }
+  explicit Bird2(const Vector2f& pos) : AbstractBird(pos) { name = "BirdThatFlaps"; }
 
   void initialise() override;
   void update(float dt) override;

@@ -18,7 +18,7 @@ void ResultsMenu::load() {
 }
 
 void ResultsMenu::open() {
-  printf("Trying to open that thang \n");
+  //  printf("Trying to open that thang \n");
   while (true) {
     if (attempts.back().duration < 1.0f)
       attempts.pop_back();
@@ -29,16 +29,16 @@ void ResultsMenu::open() {
   unsigned long long total = attempts.size();
   for (int index = 0; index != total; index ++) {
     sf::Text* text = new sf::Text(std::to_string(index + 1) + ": " + std::to_string(attempts[index].progress) + " - " + attempts[index].look_nice(), AssetManager::getFont(0), 18);
-    printf("Going for it with %u: %u \n", index + 1, attempts[index].progress);
+    //  printf("Going for it with %u: %u \n", index + 1, attempts[index].progress);
     text->setPosition(S::Res(0.6f, 0.2f + 0.6f * ((float)index / (float)total)));
     text->setFillColor({150, 255, 185});
     addDrawable(text);
   }
-  printf("Done lol \n");
+  //  printf("Done lol \n");
   AbstractMenu::open();
-  printf("Opened it :) \n");
+  //  printf("Opened it :) \n");
   LevelLibrary::setLevel(-1);
-  printf("Closed it :) \n");
+  //  printf("Closed it :) \n");
 }
 
 void ResultsMenu::close() {
@@ -57,7 +57,7 @@ void ResultsMenu::AddChapter(const Chapter& new_attempt) {
 }
 
 void ResultsMenu::SaveAndCleanseAttempts() {
-  std::fstream file("Records/RecordOf" + std::to_string(S::player_index) + bird->name + ".txt");
+  std::ofstream file("RecordOf" + std::to_string(S::player_index) + bird->name + ".txt");
 
   for (const auto& run : attempts) {
     file << " %% Attempt: " << run.duration << std::endl;
@@ -68,7 +68,6 @@ void ResultsMenu::SaveAndCleanseAttempts() {
       file << "Type: " << chapter.type << std::endl;
       file << "Duration: " << chapter.duration << std::endl;
       file << "Times Hit: " << chapter.times_hit << std::endl;
-      file << "Times Missed: " << chapter.times_missed << std::endl;
       file << "Time Spent Counter Steering: " << chapter.time_spent_counter_steering << std::endl;
       file << "Times Jumped: " << chapter.times_jumped << std::endl;
       file << "Times Coyoted: " << chapter.times_coyoted << std::endl;

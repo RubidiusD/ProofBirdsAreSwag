@@ -75,7 +75,7 @@ void InputManager::manageInput(sf::Event event) {
       Select(S::CursorDown = event.type == sf::Event::MouseButtonPressed);
     } return;
   case (sf::Event::MouseMoved):
-    CurrentSubscriber->Point(S::mouse = {event.mouseMove.x, event.mouseMove.y});
+    CurrentSubscriber->Point({event.mouseMove.x, event.mouseMove.y});
     CurrentSubscriber->Look((Vector2f(event.mouseMove.x, event.mouseMove.y) - Vector2f(S::ScreenSize.x, S::ScreenSize.y) / 2).norm()); return;
   case (sf::Event::Resized):
     Resize();

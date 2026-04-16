@@ -9,5 +9,5 @@ void AbstractAction::tick(float dt) {
 }
 
 void AbstractAction::identify() const {
-  printf("%s \n", identity.c_str());
+  //  printf("%s \n", identity.c_str());
 }

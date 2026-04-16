@@ -29,8 +29,6 @@ struct Edge {
   Vector2f norm;
   sf::Sprite sprite;
   sf::RenderTexture rt;
-  sf::Text text1;
-  sf::Text text2;
   float elasticity = 0.0f;
   float wind_cooldown = 0.0f;
   bool concave = false;

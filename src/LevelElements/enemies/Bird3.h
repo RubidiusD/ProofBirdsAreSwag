@@ -12,7 +12,7 @@ private:
 
   void cooldowns(float dt);
 public:
-  explicit Bird3(const Vector2f& pos) : AbstractBird(pos) { name = "Bird that Schmoves"; }
+  explicit Bird3(const Vector2f& pos) : AbstractBird(pos) { name = "BirdThatSchmoves"; }
 
   void initialise() override;
   void update(float dt) override;

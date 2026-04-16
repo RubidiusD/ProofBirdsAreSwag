@@ -18,7 +18,6 @@ struct Chapter {
   unsigned progress = 0; // made
   float duration = 0.0f; // made
   unsigned times_hit = 0; // made
-  unsigned times_missed = 0;
   float time_spent_counter_steering = 0.0f; // made
   unsigned times_jumped = 0; // made
   unsigned times_coyoted = 0; // made
@@ -34,7 +33,6 @@ struct Chapter {
     progress = rhs.progress;
     duration += rhs.duration;
     times_hit += rhs.times_hit;
-    times_missed = rhs.times_missed;
     time_spent_counter_steering += rhs.time_spent_counter_steering;
     times_jumped += rhs.times_jumped;
     times_coyoted += rhs.times_coyoted;

@@ -14,7 +14,6 @@ Surface::Surface(const std::vector<Vector2f>& points) {
   edges.back().setNext(&edges[0]);
   for (Edge& edge : edges) {
     edge.next->concave = edge.dire.dot(edge.next->norm) < 0.0f;
-    edge.next->text2.setFillColor(edge.next->concave ? sf::Color::Red : sf::Color::Blue);
   }
 }
 
@@ -118,8 +117,6 @@ void Surface::render() {
   if (active) {
     for (Edge& edge : edges) {
       S::Window.draw(edge.sprite);
-      S::Window.draw(edge.text1);
-      S::Window.draw(edge.text2);
     }
   }
 }
@@ -148,16 +145,6 @@ bool Edge::CollidePath(const Vector2f& n, const Vector2f& p) const {
 
 Edge::Edge(const Vector2f& p) {
   point = p;
-  text1.setCharacterSize(18);
-  text1.setString(p.to_string());
-  text1.setPosition(p + Vector2f{0, 10});
-  text1.setFillColor(sf::Color::White);
-  text1.setFont(AssetManager::getFont(0));
-  text2.setCharacterSize(18);
-  text2.setString(p.to_string());
-  text2.setPosition(p + Vector2f{0.5, 10.5});
-  text2.setFillColor(sf::Color::Black);
-  text2.setFont(AssetManager::getFont(0));
 }
 
 void Edge::setNext(Edge* n) {

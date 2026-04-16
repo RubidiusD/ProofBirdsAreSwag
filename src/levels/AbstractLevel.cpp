@@ -125,6 +125,9 @@ void AbstractLevel::open() {
       elements[index]->spawn();
     }
   }
+  for (ProgressTrigger& t : checkpoints) {
+    t.spawn();
+  }
 }
 
 void AbstractLevel::close() {
@@ -246,9 +249,9 @@ void AbstractLevel::hurtPlayer(const Vector2f& source) {
 
   if (player->hurt(source)) {
     publishProgress(DIED);
-    printf("publish progress is fine \n");
+    //  printf("publish progress is fine \n");
     open();
-    printf("open is also fine \n");
+    //  printf("open is also fine \n");
   }
 }
 

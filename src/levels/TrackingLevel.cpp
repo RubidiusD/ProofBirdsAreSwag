@@ -180,7 +180,9 @@ void TrackingLevel::open() {
   elements.back()->destroy_on_load = true;
   addElement(new SpawnTrigger({-100.0f, -200.0f, 50.0f, 500.0f}, launder<AbstractLevelElement>(ResultsMenu::bird->makeCopy({-25.0f, -150.0f}))));
   elements.back()->destroy_on_load = true;
-  addElement(new SpawnTrigger({-1450.0f, 350.0f, 100.0f, 500.0f}, launder<AbstractLevelElement>(ResultsMenu::bird->makeCopy({-1405.0f,  400.0f}))));
+  addElement(new SpawnTrigger({-1450.0f, 350.0f, 500.0f, 500.0f}, launder<AbstractLevelElement>(ResultsMenu::bird->makeCopy({-1405.0f,  400.0f}))));
+  elements.back()->destroy_on_load = true;
+  addElement(new SpawnTrigger({-600.0f, 800.0f, 500.0f, 400.0f}, launder<AbstractLevelElement>(ResultsMenu::bird->makeCopy({-0.0f,  850.0f}))));
   elements.back()->destroy_on_load = true;
 }
 
@@ -194,11 +196,11 @@ void TrackingLevel::close() {
 
   if (!S::bird3) {
     S::bird3 = true;
-    printf("Bird 3 is done \n");
+    //  printf("Bird 3 is done \n");
   }
   else if (!S::bird2) {
     S::bird2 = true;
-    printf("Bird 2 is done \n");
+    //  printf("Bird 2 is done \n");
   }
 
   AbstractLevel::close();

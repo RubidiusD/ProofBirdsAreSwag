@@ -3,7 +3,7 @@
 
 void ActionManager::update(float dt) {
   if (refresh()) {
-    printf("Starting new action");
+    //  printf("Starting new action");
     currentAction->identify();
     currentAction->start();
   }
@@ -11,7 +11,7 @@ void ActionManager::update(float dt) {
     currentAction->tick(dt);
     if (currentAction->isDone) {
       currentAction->end();
-      printf("Action Finished: ");
+      //  printf("Action Finished: ");
       currentAction->identify();
       currentAction = nullptr;
     } else {
