@@ -28,7 +28,7 @@ int main() {
     sf::Time time = clock.restart();
     float dt = time.asSeconds();
 
-    while (S::Window.pollEvent(event) && S::Window.isOpen()) {
+    while (S::Window.isOpen() && S::Window.pollEvent(event)) {
       InputManager::manageInput(event);
     }
     InputManager::update(dt);

@@ -84,7 +84,7 @@ std::shared_ptr<Collision> Surface::CollideCircle(const std::shared_ptr<CircleCo
   std::shared_ptr<Collision> first;
   std::shared_ptr<Collision> second;
 
-  for (auto& edge : edges) {
+  for (Edge& edge : edges) {
     std::shared_ptr<Collision> collision = edge.CollideCircle(c);
     if (collision == nullptr || !collision->inRange) {
       continue;

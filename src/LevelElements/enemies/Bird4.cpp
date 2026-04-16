@@ -45,7 +45,6 @@ void Bird4::update(float dt) {
     if (stamina == max_stamina) {
       velocity += (floor1->norm + intent * 0.5f) * jump_strength;
       unsetFloor(floor1);
-      unsetFloor(floor2);
     }
     else {
       velocity += intent * acceleration_speed * dt;

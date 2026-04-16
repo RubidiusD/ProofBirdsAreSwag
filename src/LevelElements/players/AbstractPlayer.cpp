@@ -6,7 +6,7 @@ const float AbstractPlayer::ACCELERATION = 960.0f;
 const float AbstractPlayer::AIR_ACCELERATION = 480.0f;
 const float AbstractPlayer::JUMP = 360.0f;
 const float AbstractPlayer::DRAG = 1.75f;
-const float AbstractPlayer::ELASTIC = 0.5f;
+const float AbstractPlayer::ELASTIC = 0.75f;
 const float AbstractPlayer::RADIUS = 16.0f;
 const float AbstractPlayer::COYOTE = 0.125f;
 
@@ -25,7 +25,7 @@ void AbstractPlayer::update(float dt) {
     }
     chapter.times_jumped ++;
     unsetFloor(floor1);
-    unsetFloor(floor2);
+    sprite.setColor(sf::Color::White);
     jumping = false;
     coyote = 0.0f;
   }
@@ -38,10 +38,6 @@ void AbstractPlayer::update(float dt) {
     velocity.y += gravity * dt;
     air_current -= velocity;
     velocity += air_current * drag_modifier * dt * (floor1 == nullptr ? 1.0f : 0.5f);
-  }
-
-  if (floor2 != nullptr) {
-    snapTo(floor1->CollideCircle(hB), floor2->CollideCircle(hB));
   }
 
   setPosition(hB->c + velocity * dt);

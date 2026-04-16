@@ -25,7 +25,9 @@ public:
   class CloseGameButton : public TextButton {
   public:
     CloseGameButton(const Neighbours& n, const Vector2f& ratio_) : TextButton(0, "Close", n, ratio_) {}
-    void Press() override {S::Window.close();}
+    void Press() override {
+      S::Window.close();
+    }
   };
 
   class LoadLevelButton : public TextButton {
