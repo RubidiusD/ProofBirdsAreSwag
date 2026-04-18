@@ -5,9 +5,9 @@
 
 class CursorPlayer : public AbstractPlayer {
 public:
-  void initialise() override;
+  CursorPlayer(const Vector2f& spawn, Chapter& c) : AbstractPlayer(spawn, c) {}
 
-public:
+  void initialise() override;
   void update(float dt) override;
   void Point(const Vector2f& vector) override;
   bool collidesSurface() const override;

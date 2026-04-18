@@ -2,6 +2,7 @@
 #include "../LevelElements/enemies/Bird2.h"
 #include "../LevelElements/enemies/Bird3.h"
 #include "../LevelElements/enemies/Bird4.h"
+#include "../LevelElements/players/CursorPlayer.h"
 #include "../LevelElements/scenery/Billboard.h"
 #include "../LevelElements/util/EndLevelTrigger.h"
 #include "../LevelElements/util/SpawnTrigger.h"
@@ -166,14 +167,13 @@ void TrackingLevel::open() {
   S::Window.setMouseCursorVisible(false);
   AbstractLevel::open();
 
-  if (!S::bird3) {
-    ResultsMenu::bird = std::make_shared<Bird3>(Vector2f{0.0f, 0.0f});
-  }
-  else if (!S::bird2) {
-    ResultsMenu::bird = std::make_shared<Bird2>(Vector2f{0.0f, 0.0f});
-  }
-  else if (!S::bird4) {
-    ResultsMenu::bird = std::make_shared<Bird4>(Vector2f{0.0f, 0.0f});
+  if (ResultsMenu::bird == nullptr || ResultsMenu::bird->cleared) {
+    unsigned index = M::Rand(0, ResultsMenu::birds.size() - 1);
+    ResultsMenu::bird = ResultsMenu::birds[index];
+    for (unsigned i = index; i != ResultsMenu::birds.size() - 1; i ++) {
+      ResultsMenu::birds[i] = ResultsMenu::birds[i + 1];
+    }
+    ResultsMenu::birds.pop_back();
   }
 
   addElement(ResultsMenu::bird->makeCopy({-150.0f, -30.0f}));
@@ -194,14 +194,7 @@ void TrackingLevel::Pause(bool down) {
 void TrackingLevel::close() {
   S::Window.setMouseCursorVisible(true);
 
-  if (!S::bird3) {
-    S::bird3 = true;
-    //  printf("Bird 3 is done \n");
-  }
-  else if (!S::bird2) {
-    S::bird2 = true;
-    //  printf("Bird 2 is done \n");
-  }
+  ResultsMenu::bird->cleared = true;
 
   AbstractLevel::close();
 }

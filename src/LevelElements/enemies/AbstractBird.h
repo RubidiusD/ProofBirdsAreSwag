@@ -24,7 +24,7 @@ protected:
   float stamina = 5.0f;
   float max_stamina = 10.0f;
 
-  void tickWing(float dt);
+  virtual void tickWing(float dt);
   void considerEgg();
   void setWingRect(const sf::IntRect& rect);
 
@@ -36,6 +36,7 @@ public:
   void remove() override;
 
   std::string name;
+  bool cleared = false;
 
   AbstractLevelElement *makeCopy() const override;
   AbstractLevelElement *makeCopy(const Vector2f &spawn_) const override;

@@ -20,6 +20,10 @@ protected:
   float particle_rate = 0.1f;
   void windParticles(float dt);
 
+private:
+  void Point(const Vector2f &vector) override;
+
+protected:
   Chapter chapter;
 
 public:

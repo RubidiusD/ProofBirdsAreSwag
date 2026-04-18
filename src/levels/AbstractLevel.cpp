@@ -186,6 +186,10 @@ void AbstractLevel::Look(const Vector2f& vector) {
   player->Look(vector);
 }
 
+void AbstractLevel::Point(const Vector2f &vector) {
+  player->Point(vector);
+}
+
 void AbstractLevel::spawnParticle(const Vector2f& position, const Vector2f& velocity) {
   addElement(new Particle(position, velocity));
 }
@@ -247,12 +251,12 @@ void AbstractLevel::hurtPlayer(const Vector2f& source) {
     chapter.second_egg = 0.0f;
   }
 
-  if (player->hurt(source)) {
-    publishProgress(DIED);
+//  if (player->hurt(source)) {
+//    publishProgress(DIED);
     //  printf("publish progress is fine \n");
-    open();
+//    open();
     //  printf("open is also fine \n");
-  }
+//  }
 }
 
 std::shared_ptr<AbstractPlayer> AbstractLevel::getPlayer() {

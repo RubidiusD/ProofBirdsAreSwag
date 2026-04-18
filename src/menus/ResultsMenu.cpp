@@ -1,4 +1,7 @@
 #include "ResultsMenu.h"
+#include "../LevelElements/enemies/Bird2.h"
+#include "../LevelElements/enemies/Bird3.h"
+#include "../LevelElements/enemies/Bird4.h"
 #include "PauseMenu.h"
 #include <SFML/Graphics/Text.hpp>
 #include <fstream>
@@ -6,10 +9,14 @@
 
 std::shared_ptr<ResultsMenu> ResultsMenu::instance;
 std::shared_ptr<AbstractBird> ResultsMenu::bird;
+std::vector<std::shared_ptr<AbstractBird>> ResultsMenu::birds;
 
 void ResultsMenu::Register() {
   instance = std::make_shared<ResultsMenu>();
   MenuManager::registerMenu(instance);
+//  birds.emplace_back(new Bird2({0, 0}));
+//  birds.emplace_back(new Bird3({0, 0}));
+  birds.emplace_back(new Bird4({0, 0}));
 }
 
 void ResultsMenu::load() {
@@ -18,7 +25,6 @@ void ResultsMenu::load() {
 }
 
 void ResultsMenu::open() {
-  //  printf("Trying to open that thang \n");
   while (true) {
     if (attempts.back().duration < 1.0f)
       attempts.pop_back();
@@ -58,6 +64,8 @@ void ResultsMenu::AddChapter(const Chapter& new_attempt) {
 
 void ResultsMenu::SaveAndCleanseAttempts() {
   std::ofstream file("RecordOf" + std::to_string(S::player_index) + bird->name + ".txt");
+
+  file << "Birds Remaining: " << birds.size() << std::endl;
 
   for (const auto& run : attempts) {
     file << " %% Attempt: " << run.duration << std::endl;

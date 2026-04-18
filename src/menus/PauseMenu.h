@@ -49,7 +49,7 @@ public:
 
 class ControllerButton : public TextButton {
 public:
-  ControllerButton(const Neighbours& n, const Vector2f& ratio_) : TextButton(0, "Reset ControllerConnected", n, ratio_) {}
+  ControllerButton(const Neighbours& n, const Vector2f& ratio_) : TextButton(0, "Reset Controller", n, ratio_) {}
   void Press() override {
     //  printf("Resetting ControllerConnected \n");
     InputManager::StartController();

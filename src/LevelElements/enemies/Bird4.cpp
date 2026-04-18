@@ -6,7 +6,7 @@ const float Bird4::GRAVITY = 384.0f;
 const float Bird4::ACCELERATION = 256.0f;
 const float Bird4::AIR_ACCELERATION = 1024.0f;
 const float Bird4::RADIUS = 12.0f;
-const float Bird4::DRAG = 1.0f;
+const float Bird4::DRAG = 2.0f;
 const float Bird4::JUMP = 256.0f;
 
 void Bird4::initialise() {
@@ -15,7 +15,7 @@ void Bird4::initialise() {
   elasticity = Bird4::ELASTIC;
   gravity = Bird4::GRAVITY;
   acceleration_speed = Bird4::ACCELERATION;
-  air_acceleration_speed = Bird4::AIR_ACCELERATION;
+  air_acceleration_speed = Bird4::AIR_ACCELERATION * inv_max_cooldown;
   hB->r = Bird4::RADIUS;
   drag_modifier = Bird4::DRAG; // this is the ground drag modifier lol
   max_stamina = 10.0f;
@@ -27,6 +27,7 @@ void Bird4::initialise() {
 void Bird4::onStick() {
   wing.setTextureRect({0, 0, 29, 27});
   flap_cooldown = 0.0f;
+  anim_cooldown = 0.0f;
 }
 
 void Bird4::update(float dt) {
@@ -46,6 +47,11 @@ void Bird4::update(float dt) {
     if (stamina == max_stamina) { // take off
       velocity += (floor->norm + intent * 0.5f) * jump_strength;
       unsetFloor(floor);
+      setWingRect({0, 27, 29, 27});
+      flap_cooldown = flap_max_cooldown;
+      anim_cooldown = 0.125f;
+      last_stroke_down = true;
+      LevelLibrary::current_level->spawnParticle(4, hB->c, velocity * -1.0f);
     }
     else {
       velocity += intent * acceleration_speed * dt;
@@ -64,13 +70,43 @@ void Bird4::update(float dt) {
   cooldowns(dt);
 }
 
+void Bird4::tickWing(float dt) {
+  anim_cooldown -= dt;
+  float facing = (wing_direction.x > 0) ? 1 : -1;
+  switch (wingRect.top) {
+  case (27):
+    velocity += wing_direction.rotate(Vector2f{0, -air_acceleration_speed * dt * flap_cooldown});
+    break;
+  case (54):
+    velocity += wing_direction.rotate(Vector2f{0.89508196721f, facing * -0.44590163934f}) * dt * air_acceleration_speed * flap_cooldown;
+    break;
+  case (81):
+    velocity += wing_direction.rotate(Vector2f{0.980198019802f, facing * 0.19801980198f}) * dt * air_acceleration_speed * flap_cooldown;
+//    velocity += wing_direction.rotate(Vector2f{0.89508196721f, facing * 0.44590163934f}) * dt * air_acceleration_speed * flap_cooldown;
+    break;
+  }
+  if (anim_cooldown <= 0.0f) {
+    anim_cooldown = 0.125f;
+    if (wingRect.left == 87) {
+      setWingRect({0, 0, 29, 27});
+    }
+    else {
+      wingRect.left += 29;
+      setWingRect(wingRect);
+    }
+  }
+}
+
 void Bird4::tiltWing(float dt) {
   if (playerPredictor.getPrecision() < 2) {
     return;
   }
   Vector2f target_direction;
   float disSQ = hB->c.disSqr(playerPredictor.current_position());
-  if (disSQ <= 10000) {
+  if (floor == nullptr && (selfPredictor.f(0.5f).x > playerPredictor.f(0.5f).x) == (velocity.x > 0.0f)) {
+    target_direction = {velocity.x > 0.0f ? 0.1f : -0.1f, -0.9f};
+  }
+  else if (floor == nullptr && disSQ <= 10000) {
     Vector2f wing_normal = wing_direction.i();
     Vector2f error = playerPredictor.f(1.0f) + Vector2f{0.0f, -100.0f} - selfPredictor.f(1.0f);
     float strength = fminf(error.dot(wing_normal), 100.0f) * 0.001f;
@@ -92,7 +128,7 @@ void Bird4::soar(float dt) {
   Vector2f wing_normal = wing_direction.i();
 
   Vector2f wind = air_current - velocity;
-  Vector2f r_wind = wind * wing_direction.conj();
+  Vector2f r_wind = wind.unRotate(wing_direction);
   Vector2f P = wing_direction * para_resistance * r_wind.x;
   Vector2f Q = wing_normal * perp_resistance * r_wind.y;
   Vector2f L = wing_normal * -1.0f * lift_coefficient * para_resistance * atanf(r_wind.y / r_wind.x) * sqrtf(M::lengthSQ(wind));
@@ -110,7 +146,7 @@ void Bird4::soar(float dt) {
 }
 
 void Bird4::considerFlap() {
-  if (spray == 0 && (playerPredictor.current_position() - hB->c).norm().dot(wing_direction) >= 0.5f && stamina >= 1.0f) {
+  if (spray == 0 && fabsf(wing_direction.y) < 0.3f && (playerPredictor.current_position() - hB->c).norm().dot(wing_direction) >= 0.5f && stamina >= 1.0f) {
     if (flap_cooldown == 0.0f)
       flap();
     else if (flap_cooldown <= flap_max_cooldown / 2) {
@@ -137,7 +173,7 @@ void Bird4::cooldowns(float dt) {
       egg_cooldown = 0.0f;
     }
   }
-  stamina = fminf(stamina + dt * (floor == nullptr ? 1.0f : 3.0f), max_stamina);
+  stamina = fminf(stamina + dt * (floor == nullptr ? 0.5f : 1.5f), max_stamina);
 }
 
 void Bird4::flapUpwards() {
@@ -149,7 +185,6 @@ void Bird4::flapUpwards() {
   if (cur.y > tar.y - 75.0f && pre.y > tarp.y - 100.0f) {
     setWingRect({0, 27, 29, 27});
     stamina -= 1.0f;
-    //  printf("upwards %f \n", flap_cooldown);
     flap_cooldown = flap_max_cooldown;
     anim_cooldown = 0.125f;
     last_stroke_down = true;
@@ -166,7 +201,6 @@ void Bird4::flapForwards() {
   if ((cur.x < tar.x - 200.0f && pre.x < tarp.x - 50.0f) || (cur.x > tar.x + 200.0f && pre.x > tarp.x + 50.0f)) {
     setWingRect({0, 81, 29, 27});
     stamina -= 1.0f;
-    //  printf("forwards %f \n", flap_cooldown);
     flap_cooldown = flap_max_cooldown;
     anim_cooldown = 0.125f;
     last_stroke_down = false;
@@ -184,7 +218,6 @@ void Bird4::flap() {
   else if (cur.y > tar.y - 75.0f && pre.y > tarp.y - 100.0f) { setWingRect({0, 27, 29, 27}); }
   else { return; }
   stamina -= 1.0f;
-  //  printf("neutral %f \n", flap_cooldown);
   flap_cooldown = flap_max_cooldown;
   anim_cooldown = 0.125f;
   last_stroke_down = true;

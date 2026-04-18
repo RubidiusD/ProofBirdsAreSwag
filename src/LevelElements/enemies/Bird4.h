@@ -16,10 +16,11 @@ private:
   void cooldowns(float dt);
   void considerFlap();
 protected:
-  const float flap_max_cooldown = 0.5f;
-  const float para_resistance = 0.55f;
-  const float perp_resistance = 1.0f;
-  const float lift_coefficient = 25.0f;
+  const float flap_max_cooldown = 0.4f;
+  const float inv_max_cooldown = 1/flap_max_cooldown;
+  const float para_resistance = 0.5f;
+  const float perp_resistance = 1.5f;
+  const float lift_coefficient = 15.0f;
 
   bool last_stroke_down = true;
 
@@ -29,6 +30,7 @@ protected:
   void soar(float dt);
   void tiltWing(float dt);
   void onStick() override;
+  void tickWing(float dt) override;
 
 public:
   explicit Bird4(const Vector2f& pos) : AbstractBird(pos) { name = "Pigeon"; }

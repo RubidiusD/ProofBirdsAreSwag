@@ -21,6 +21,7 @@ public:
 
   static void Register();
   static std::shared_ptr<ResultsMenu> instance;
+  static std::vector<std::shared_ptr<AbstractBird>> birds;
   static std::shared_ptr<AbstractBird> bird;
 };
 

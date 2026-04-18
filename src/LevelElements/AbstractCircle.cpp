@@ -66,9 +66,10 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   Vector2f old_vel = velocity;
   velocity = velocity.splat(collision->normal, collision->elasticity(elasticity));
   if (can_stick) {
-    if (setFloor(floor, collision->edge))
+    bool wasntStuck = floor == nullptr;
+    if (setFloor(floor, collision->edge) && wasntStuck)
       onStick();
-    else
+    else if (wasntStuck)
       onBounce();
     sprite.setColor(sf::Color::White);
   }

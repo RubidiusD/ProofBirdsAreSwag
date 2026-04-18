@@ -1,0 +1,49 @@
+Birds Remaining: 0
+ %% Attempt: 15.6799
+Time of first egg: -1
+Time of second egg: -1
+    Chapter: 1
+Type: 0
+Duration: 2.61891
+Times Hit: 0
+Time Spent Counter Steering: 0.378019
+Times Jumped: 1
+Times Coyoted: 0
+Times Bounced: 28
+Times Stuck: 3
+    Chapter: 2
+Type: 0
+Duration: 1.26774
+Times Hit: 0
+Time Spent Counter Steering: 0.480542
+Times Jumped: 1
+Times Coyoted: 1
+Times Bounced: 30
+Times Stuck: 1
+    Chapter: 3
+Type: 0
+Duration: 2.31393
+Times Hit: 0
+Time Spent Counter Steering: 0.417761
+Times Jumped: 1
+Times Coyoted: 0
+Times Bounced: 14
+Times Stuck: 3
+    Chapter: 4
+Type: 0
+Duration: 1.83842
+Times Hit: 0
+Time Spent Counter Steering: 0.033257
+Times Jumped: 0
+Times Coyoted: 0
+Times Bounced: 4
+Times Stuck: 1
+    Chapter: 0
+Type: 3
+Duration: 7.64091
+Times Hit: 0
+Time Spent Counter Steering: 1.20119
+Times Jumped: 1
+Times Coyoted: 0
+Times Bounced: 109
+Times Stuck: 6
