@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <SFML/System/Vector3.hpp>
 #include <cmath>
 #include <cstdio>
 #include <string>
@@ -25,6 +26,8 @@ struct Vector2f {
 
   operator sf::Vector2f() const { return {x, y}; }
   template<typename T> operator sf::Vector2<T>() const { return {(T)x, (T)y}; }
+  operator sf::Vector3f() const { return {x, y, 0.0f}; }
+  template<typename T> operator sf::Vector3<T>() const { return {(T)x, (T)y, 0.0f}; }
 
   Vector2f& set(float x_, float y_) { x = x_; y = y_; return *this; }
   Vector2f& set(const Vector2f& rhs) { x = rhs.x; y = rhs.y; return *this; }

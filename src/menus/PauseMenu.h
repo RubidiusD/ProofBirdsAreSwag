@@ -61,6 +61,8 @@ public:
   PauseMenu();
   void load() override;
   void Pause(bool down) override;
+  void open() override;
+  void close() override;
 };
 
 #endif // BIRDSARESWAG_PAUSE_MENU_H

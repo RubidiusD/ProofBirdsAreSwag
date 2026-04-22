@@ -1,5 +1,6 @@
 #include "AbstractPlayer.h"
 #include "../../managers/AssetManager.h"
+#include "../../managers/SoundManager.h"
 
 const float AbstractPlayer::GRAVITY = 1200.0f;
 const float AbstractPlayer::ACCELERATION = 960.0f;
@@ -24,10 +25,11 @@ void AbstractPlayer::update(float dt) {
       velocity += (floor->norm + intent * 0.5f) * jump_strength;
     }
     chapter.times_jumped ++;
-    unsetFloor(floor);
+    unsetFloor();
     sprite.setColor(sf::Color::White);
     jumping = false;
     coyote = 0.0f;
+    SoundManager::play(hB->c, 60, 61, 2.0f, 0.1f);
   }
   else {
     if (floor != nullptr) { // otherwise
@@ -50,6 +52,7 @@ void AbstractPlayer::update(float dt) {
   }
 
   stickToFloor();
+  SoundManager::listener = hB->c;
 }
 
 void AbstractPlayer::onStick() {
@@ -95,6 +98,7 @@ bool AbstractPlayer::hurt(const Vector2f& source) {
     return false;
   }
   chapter.times_hit ++;
+  SoundManager::play(40, 1.0f, 0.05f);
   i_timer = max_i_timer;
   lives --;
   lives_sprite.setTextureRect({0, 0, lives * 48, 48});

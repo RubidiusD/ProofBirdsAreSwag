@@ -6,7 +6,7 @@
 Surface::Surface(const std::vector<Vector2f>& points) {
   AssetManager::RegisterTexture("Data/images/Pointer.png", 2);
   for (const Vector2f& point : points) {
-    edges.emplace_back(point);
+    edges.emplace_back(point, active);
   }
   for (unsigned index = 0; index != edges.size() - 1; index ++) {
     edges[index].setNext(&edges[index + 1]);
@@ -143,7 +143,7 @@ bool Edge::CollidePath(const Vector2f& n, const Vector2f& p) const {
   return (t2 >= 0.0f && t2 <= 1.0f && t1 >= 0.0f && t1 <= 1.0f);
 }
 
-Edge::Edge(const Vector2f& p) {
+Edge::Edge(const Vector2f& p, bool& active_) : active(active_) {
   point = p;
 }
 
@@ -159,7 +159,7 @@ float Edge::getLength() const {
   return sqrtf(M::distanceSQ(point, next->point));
 }
 
-Edge::Edge(const Edge& edge) : Edge(edge.point) {}
+Edge::Edge(const Edge& edge) : Edge(edge.point, edge.active) {}
 
 Vector2f Edge::chop(float r) const {
   return next->point + next->dire * (r * ((dire.x*(next->norm.y - norm.y) - dire.y*(next->norm.x - norm.x)) /(next->dire.x * dire.y - next->dire.y * dire.x))) + next->norm * r;

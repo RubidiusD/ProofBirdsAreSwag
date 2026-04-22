@@ -97,3 +97,13 @@ Vector2f M::cross(const Vector2f& a, const Vector2f& b) {
 unsigned M::max(unsigned int a, unsigned int b) {
   return a > b ? a : b;
 }
+
+template <typename T> T M::Mod(T v, T l) {
+  while (v < 0) {
+    v += l;
+  }
+  while (v >= l) {
+    v -= l;
+  }
+  return v;
+}

@@ -20,6 +20,8 @@ public:
   template<typename T> static T Max(T a, T b);
   template<typename T> static T Min(T a, T b);
 
+  template<typename T> static T Mod(T v, T l);
+
   static bool Rand2();
   static unsigned short Rand4();
   static unsigned short Rand8();

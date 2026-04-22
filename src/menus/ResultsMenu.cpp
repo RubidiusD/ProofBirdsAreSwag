@@ -14,8 +14,8 @@ std::vector<std::shared_ptr<AbstractBird>> ResultsMenu::birds;
 void ResultsMenu::Register() {
   instance = std::make_shared<ResultsMenu>();
   MenuManager::registerMenu(instance);
-//  birds.emplace_back(new Bird2({0, 0}));
-//  birds.emplace_back(new Bird3({0, 0}));
+  birds.emplace_back(new Bird2({0, 0}));
+  birds.emplace_back(new Bird3({0, 0}));
   birds.emplace_back(new Bird4({0, 0}));
 }
 
@@ -40,11 +40,8 @@ void ResultsMenu::open() {
     text->setFillColor({150, 255, 185});
     addDrawable(text);
   }
-  //  printf("Done lol \n");
   AbstractMenu::open();
-  //  printf("Opened it :) \n");
   LevelLibrary::setLevel(-1);
-  //  printf("Closed it :) \n");
 }
 
 void ResultsMenu::close() {

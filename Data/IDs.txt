@@ -31,5 +31,13 @@
 
 
 ----------------------------------------Sounds
-
-
+0-2: Dull Thud (Digs) done
+5: Flap (Item_32) done
+10-12: Egg Break (Item_2, Item_48, Shatter) done
+20-22: Egg Fire (Item_18, Item_19, Item_39) done
+30: Checkpoint (Item_29) done
+40: Dead (Player_Killed) done
+50: Pause (Menu_Open) done
+51: UnPause (Menu_Close) done
+52: Menu Navigation (Chat) done
+60-61: Jump (Jump_1, Jump_2) done

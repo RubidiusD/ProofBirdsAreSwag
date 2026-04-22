@@ -2,6 +2,7 @@
 #include "../Settings.h"
 #include "../managers/AssetManager.h"
 #include "../managers/InputManager.h"
+#include "../managers/SoundManager.h"
 
 void AbstractMenu::load() {
   isLoaded = true;
@@ -19,6 +20,7 @@ void AbstractMenu::unload() {
 
 void AbstractMenu::open() {
   listening_to_inputs = true;
+  SoundManager::listener = S::Res / 2;
   Resize();
 }
 
@@ -62,6 +64,9 @@ void AbstractMenu::selectButton(unsigned short index) {
     current_button = buttons[index];
     current_button->Select();
     current_index = (short signed) index;
+  }
+  if (current_button != nullptr) {
+    SoundManager::play(current_button->getPosition(), 52, 2.0f, 0.1f);
   }
 }
 

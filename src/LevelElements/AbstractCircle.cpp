@@ -1,5 +1,6 @@
 #include "AbstractCircle.h"
 #include "../levels/LevelLibrary.h"
+#include "../managers/SoundManager.h"
 #include "fx/Particle.h"
 
 bool AbstractCircle::surfaceCollide(Surface& surface) {
@@ -35,13 +36,17 @@ void AbstractCircle::setPosition(const Vector2f& pos) {
 
 void AbstractCircle::stickToFloor() {
   if (floor != nullptr) {
+    if (!floor->active) {
+      unsetFloor();
+      return;
+    }
     std::shared_ptr<Collision> cA = floor->concave ? floor->prev->CollideCircle(hB) : nullptr;
     std::shared_ptr<Collision> cB = floor->CollideCircle(hB);
     std::shared_ptr<Collision> cC = floor->next->concave ? floor->next->CollideCircle(hB) : nullptr;
 
     if (cB == nullptr) { // no longer touching or in line with current floor
       if (!(cA != nullptr && cA->inRange && snapTo(cA)) && !(cC != nullptr && cC->inRange && snapTo(cC))) {
-        unsetFloor(floor);
+        unsetFloor();
         coyote = max_coyote;
       }
     }
@@ -67,7 +72,7 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   velocity = velocity.splat(collision->normal, collision->elasticity(elasticity));
   if (can_stick) {
     bool wasntStuck = floor == nullptr;
-    if (setFloor(floor, collision->edge) && wasntStuck)
+    if (setFloor(collision->edge) && wasntStuck)
       onStick();
     else if (wasntStuck)
       onBounce();
@@ -78,6 +83,7 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& collision) {
   if (change > 1000.0f) {
     LevelLibrary::current_level->spawnParticle(4, collision->point, velocity - old_vel);
     LevelLibrary::current_level->spawnParticle(4, collision->point, collision->normal * change);
+    SoundManager::play(collision->point, 0, 2, change / 10000.0f, 0.05f);
   }
   return true;
 }
@@ -104,42 +110,43 @@ bool AbstractCircle::snapTo(const std::shared_ptr<Collision>& c1, const std::sha
   Vector2f b = velocity.splat(e2->norm, E2).splat(e1->norm, E1);
   velocity = (M::lengthSQ(a) > M::lengthSQ(b)) ? a : b;
 
-  if (!setFloor(floor, e1)) {
-    setFloor(floor, e2);
+  if (!setFloor(e1)) {
+    setFloor(e2);
   }
   float change = M::distanceSQ(old_vel, velocity);
   if (change > 1000.0f) {
     for (unsigned index = 0; index != 2; index ++) {
       LevelLibrary::current_level->addElement(new Particle(c1->point, c1->normal.rotate(Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm()) * (1.0f + (float)M::Rand(0, 80) / 100.0f) * change));
       LevelLibrary::current_level->addElement(new Particle(c2->point, c2->normal.rotate(Vector2f(1.0f, M::Randf(-2.0f, 2.0f)).norm()) * (1.0f + (float)M::Rand(0, 80) / 100.0f) * change));
+      SoundManager::play(c1->point.avg(c2->point), 0, 2, change / 10000.0f, 0.05f);
     }
   }
 
   return true;
 }
 
-bool AbstractCircle::setFloor(Edge*& receptacle, Edge* new_edge) const {
+bool AbstractCircle::setFloor(Edge* new_edge) {
   if (new_edge == nullptr || new_edge->norm.dot(velocity) > S::stick_tolerance) {
-    receptacle = nullptr;
+    floor = nullptr;
     return false;
   }
 
-  receptacle = new_edge;
+  floor = new_edge;
   return true;
 }
 
-void AbstractCircle::unsetFloor(Edge*& receptacle) {
-  if (receptacle == nullptr) {
+void AbstractCircle::unsetFloor() {
+  if (floor == nullptr) {
     return;
   }
   if (coyote_normal.is(0.0f, 0.0f)) {
-    coyote_normal = receptacle->norm;
+    coyote_normal = floor->norm;
   }
   else {
-    coyote_normal += receptacle->norm;
+    coyote_normal += floor->norm;
     coyote_normal /= 2.0f;
   }
-  receptacle = nullptr;
+  floor = nullptr;
 }
 
 void AbstractCircle::applyWind(const std::vector<std::shared_ptr<AbstractWind>>& winds) {
@@ -154,7 +161,7 @@ void AbstractCircle::applyWind(const std::vector<std::shared_ptr<AbstractWind>>&
 void AbstractCircle::spawn() {
   setPosition(spawn_location);
   velocity.set(0.0f, 0.0f);
-  unsetFloor(floor);
+  unsetFloor();
   sprite.setColor(sf::Color::White);
 }
 

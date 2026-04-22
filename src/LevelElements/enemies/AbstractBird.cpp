@@ -1,6 +1,7 @@
 #include "AbstractBird.h"
 #include "../../levels/LevelLibrary.h"
 #include "../../managers/AssetManager.h"
+#include "../../managers/SoundManager.h"
 
 bool AbstractBird::collidesPlayer() const {
   return true;
@@ -59,6 +60,7 @@ void AbstractBird::considerEgg() {
   firing_velocity.y += jump_strength;
   if (egg_cooldown == 0.0f && (spray != 0 || isAimGood(firing_velocity))) {
     LevelLibrary::current_level->addElement(new Egg(getPosition(), firing_velocity));
+    SoundManager::play(hB->c, 20, 22, 1.0f, 0.1f);
     if (spray == 1) {
       egg_cooldown = egg_max_cooldown;
       spray = 0;

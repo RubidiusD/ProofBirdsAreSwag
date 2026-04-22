@@ -1,5 +1,6 @@
 #include "Bird4.h"
 #include "../../levels/LevelLibrary.h"
+#include "../../managers/SoundManager.h"
 
 const float Bird4::ELASTIC = -0.25f;
 const float Bird4::GRAVITY = 384.0f;
@@ -7,7 +8,7 @@ const float Bird4::ACCELERATION = 256.0f;
 const float Bird4::AIR_ACCELERATION = 1024.0f;
 const float Bird4::RADIUS = 12.0f;
 const float Bird4::DRAG = 2.0f;
-const float Bird4::JUMP = 256.0f;
+const float Bird4::JUMP = 512.0f;
 
 void Bird4::initialise() {
   AbstractBird::initialise();
@@ -25,7 +26,7 @@ void Bird4::initialise() {
 }
 
 void Bird4::onStick() {
-  wing.setTextureRect({0, 0, 29, 27});
+  setWingRect({0, 0, 29, 27});
   flap_cooldown = 0.0f;
   anim_cooldown = 0.0f;
 }
@@ -46,8 +47,10 @@ void Bird4::update(float dt) {
 
     if (stamina == max_stamina) { // take off
       velocity += (floor->norm + intent * 0.5f) * jump_strength;
-      unsetFloor(floor);
+      unsetFloor();
       setWingRect({0, 27, 29, 27});
+      SoundManager::play(hB->c, 5, 1.5f, 0.1f);
+      SoundManager::play(hB->c, 60, 61, 1.0f, 0.1f);
       flap_cooldown = flap_max_cooldown;
       anim_cooldown = 0.125f;
       last_stroke_down = true;
@@ -102,11 +105,16 @@ void Bird4::tiltWing(float dt) {
     return;
   }
   Vector2f target_direction;
+  Vector2f PlayerPPos = playerPredictor.f(0.5f);
+  Vector2f SelfPPos = selfPredictor.f(0.5f);
   float disSQ = hB->c.disSqr(playerPredictor.current_position());
-  if (floor == nullptr && (selfPredictor.f(0.5f).x > playerPredictor.f(0.5f).x) == (velocity.x > 0.0f)) {
+  if (floor != nullptr) {
+    target_direction = floor->direN * (((PlayerPPos - SelfPPos).dot(floor->direN) > 0) ? 10.0f : -10.0f);
+  }
+  else if ((SelfPPos.x > PlayerPPos.x) == (velocity.x > 0.0f)) {
     target_direction = {velocity.x > 0.0f ? 0.1f : -0.1f, -0.9f};
   }
-  else if (floor == nullptr && disSQ <= 10000) {
+  else if (disSQ <= 10000) {
     Vector2f wing_normal = wing_direction.i();
     Vector2f error = playerPredictor.f(1.0f) + Vector2f{0.0f, -100.0f} - selfPredictor.f(1.0f);
     float strength = fminf(error.dot(wing_normal), 100.0f) * 0.001f;
@@ -141,8 +149,9 @@ void Bird4::soar(float dt) {
     Vector2f W = wind * (perp_resistance + para_resistance);
     velocity += (W + G) * dt;
   }
-  sprite.setRotation(atan2f(velocity.y, velocity.x) * 180.0f / 3.1415926535f);
-  sprite.setScale(1, velocity.x > 0 ? 1.0f : -1.0f);
+  float wing_angle = wing.getRotation();
+  sprite.setRotation(fminf(fmaxf(M::Mod<float>(atan2f(velocity.y, velocity.x) * 180.0f / 3.1415926535f - wing_angle + 180.0f, 360.0f) - 180.0f, -30.0f), 30.0f) + wing_angle);
+  sprite.setScale(1, (sprite.getRotation() > -90.0f && sprite.getRotation() < 90.0f) ? 1.0f : -1.0f);
 }
 
 void Bird4::considerFlap() {
@@ -173,7 +182,9 @@ void Bird4::cooldowns(float dt) {
       egg_cooldown = 0.0f;
     }
   }
-  stamina = fminf(stamina + dt * (floor == nullptr ? 0.5f : 1.5f), max_stamina);
+  if (floor != nullptr) {
+    stamina += fminf(stamina + dt * 1.5f, max_stamina);
+  }
 }
 
 void Bird4::flapUpwards() {
@@ -184,6 +195,7 @@ void Bird4::flapUpwards() {
 
   if (cur.y > tar.y - 75.0f && pre.y > tarp.y - 100.0f) {
     setWingRect({0, 27, 29, 27});
+    SoundManager::play(hB->c, 5, 1.5f, 0.1f);
     stamina -= 1.0f;
     flap_cooldown = flap_max_cooldown;
     anim_cooldown = 0.125f;
@@ -200,6 +212,7 @@ void Bird4::flapForwards() {
 
   if ((cur.x < tar.x - 200.0f && pre.x < tarp.x - 50.0f) || (cur.x > tar.x + 200.0f && pre.x > tarp.x + 50.0f)) {
     setWingRect({0, 81, 29, 27});
+    SoundManager::play(hB->c, 5, 1.5f, 0.1f);
     stamina -= 1.0f;
     flap_cooldown = flap_max_cooldown;
     anim_cooldown = 0.125f;
@@ -217,6 +230,7 @@ void Bird4::flap() {
   if ((cur.x < tar.x - 50.0f && pre.x < tarp.x + 25.0f) || (cur.x > tar.x + 50.0f && pre.x > tarp.x - 25.0f))  { setWingRect({0, 54, 29, 27}); }
   else if (cur.y > tar.y - 75.0f && pre.y > tarp.y - 100.0f) { setWingRect({0, 27, 29, 27}); }
   else { return; }
+  SoundManager::play(hB->c, 5, 1.5f, 0.1f);
   stamina -= 1.0f;
   flap_cooldown = flap_max_cooldown;
   anim_cooldown = 0.125f;

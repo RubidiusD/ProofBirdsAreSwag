@@ -1,6 +1,7 @@
 #include "Egg.h"
 #include "../../levels/LevelLibrary.h"
 #include "../../managers/AssetManager.h"
+#include "../../managers/SoundManager.h"
 #include "../fx/EggParticle.h"
 
 Egg::Egg(const Vector2f& pos, const Vector2f& vel) : AbstractCircle(pos) {
@@ -21,6 +22,7 @@ bool Egg::collidesPlayer() const {
 
 void Egg::onHitSurface(const std::shared_ptr<Collision> &collision) {
   alive = false;
+  SoundManager::play(hB->c, 10, 12, 1.0f, 0.05f);
   for (int index = 0; index != 6; index ++) {
     LevelLibrary::current_level->addElement(new EggParticle(getPosition(), collision->normal.rotate(Vector2f(1.0f, M::Randf(-1.0f, 1.0f))) * 140.0f, index));
   }
@@ -28,6 +30,7 @@ void Egg::onHitSurface(const std::shared_ptr<Collision> &collision) {
 
 void Egg::onHitPlayer() {
   alive = false;
+  SoundManager::play(hB->c, 10, 12, 1.0f, 0.05f);
   LevelLibrary::current_level->hurtPlayer(hB->c);
 }
 

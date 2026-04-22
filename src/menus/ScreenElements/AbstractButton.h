@@ -45,6 +45,8 @@ public:
     ratio = ratio_;
     sprite.setPosition(S::Res * ratio);
   }
+
+  Vector2f getPosition() const { return sprite.getPosition(); }
 };
 
 #endif // BIRDSARESWAG_ABSTRACT_BUTTON_H

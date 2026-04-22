@@ -32,8 +32,9 @@ struct Edge {
   float elasticity = 0.0f;
   float wind_cooldown = 0.0f;
   bool concave = false;
+  bool& active;
 
-  explicit Edge(const Vector2f& p);
+  explicit Edge(const Vector2f& p, bool& active_);
   Edge(const Edge& edge);
   void setNext(Edge* n);
   float getLength() const;

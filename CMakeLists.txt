@@ -20,6 +20,7 @@ set(SOURCE_FILES
     src/managers/MenuManager.h src/managers/MenuManager.cpp
     src/managers/AssetManager.h src/managers/AssetManager.cpp
     src/managers/InputManager.h src/managers/InputManager.cpp
+    src/managers/SoundManager.h src/managers/SoundManager.cpp
     src/managers/GamepadInterpreter.h
     src/Settings.h src/Settings.cpp
 

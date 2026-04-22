@@ -2,6 +2,7 @@
 #define BIRDSARESWAG_PROGRESS_TRIGGER_H
 
 #include "AbstractLine.h"
+#include <SFML/Audio/Sound.hpp>
 class ProgressTrigger : public AbstractLine {
 protected:
   unsigned index;

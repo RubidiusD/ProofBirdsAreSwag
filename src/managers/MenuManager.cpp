@@ -1,5 +1,4 @@
 #include "MenuManager.h"
-#include "../Settings.h"
 #include "ActionManager.h"
 #include "AssetManager.h"
 

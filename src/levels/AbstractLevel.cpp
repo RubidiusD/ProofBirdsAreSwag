@@ -251,12 +251,10 @@ void AbstractLevel::hurtPlayer(const Vector2f& source) {
     chapter.second_egg = 0.0f;
   }
 
-//  if (player->hurt(source)) {
-//    publishProgress(DIED);
-    //  printf("publish progress is fine \n");
-//    open();
-    //  printf("open is also fine \n");
-//  }
+  if (player->hurt(source)) {
+    publishProgress(DIED);
+    open();
+  }
 }
 
 std::shared_ptr<AbstractPlayer> AbstractLevel::getPlayer() {

@@ -1,5 +1,6 @@
 #include "Bird2.h"
 #include "../../levels/LevelLibrary.h"
+#include "../../managers/SoundManager.h"
 
 const float Bird2::ELASTIC = 0.75f;
 const float Bird2::GRAVITY = 384.0f;
@@ -63,6 +64,7 @@ void Bird2::flap() {
   else if (cur.x > tar.x + 50.0f && pre.x > tarp.x - 25.0f)  { setWingRect({0, 54, 29, 27}); wing_direction = {-1, 0}; }
   else if (cur.y > tar.y - 75.0f && pre.y > tarp.y - 100.0f) { setWingRect({0, 27, 29, 27}); }
   else { return; }
+  SoundManager::play(hB->c, 5, 1.5f, 0.1f);
   flap_cooldown = flap_max_cooldown;
   anim_cooldown = 0.125f;
 }

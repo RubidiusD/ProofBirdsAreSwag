@@ -15,8 +15,8 @@ protected:
   virtual bool snapTo(const std::shared_ptr<Collision>& collision);
   virtual bool snapTo(const std::shared_ptr<Collision>& c1, const std::shared_ptr<Collision>& c2);
   void stickToFloor();
-  bool setFloor(Edge*&, Edge*) const;
-  void unsetFloor(Edge*&);
+  bool setFloor(Edge*);
+  void unsetFloor();
   void tickCoyote(float dt);
 
   float gravity = 640.0f;

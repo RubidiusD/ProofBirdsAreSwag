@@ -28,7 +28,7 @@ void BirdPlayer::initialise() {
 void BirdPlayer::update(float dt) {
   if (jumping && floor != nullptr) { // the moment you jump
     velocity += (floor->norm + intent * 0.5f) * jump_strength;
-    unsetFloor(floor);
+    unsetFloor();
     flap_cooldown = 0.0f;
     jumping = false;
   }

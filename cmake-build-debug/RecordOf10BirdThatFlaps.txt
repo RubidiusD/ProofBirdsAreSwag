@@ -1,0 +1,13 @@
+Birds Remaining: 2
+ %% Attempt: 4.39214
+Time of first egg: 0.728985
+Time of second egg: -1
+    Chapter: 0
+Type: 3
+Duration: 4.39214
+Times Hit: 1
+Time Spent Counter Steering: 0
+Times Jumped: 1
+Times Coyoted: 1
+Times Bounced: 62
+Times Stuck: 2

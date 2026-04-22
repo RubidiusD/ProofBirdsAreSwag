@@ -1,5 +1,6 @@
 #include "PauseMenu.h"
 #include "../managers/AssetManager.h"
+#include "../managers/SoundManager.h"
 
 PauseMenu::PauseMenu() : AbstractMenu("PAUS") {
 
@@ -14,6 +15,15 @@ void PauseMenu::load() {
   buttons.emplace_back(new ResetLevelButton("Reset Level DEBUG DO NOT USE IF I FORGOT TO REMOVE THIS PLEASE TELL ME!!", {2, 3, 0, 3}, {0.5, 0.8}));
 
   addText(sf::Color::Black, 0, 24, "Pause Menu", {0.5f, 0.25f});
+}
+void PauseMenu::open() {
+  AbstractMenu::open();
+  SoundManager::play(50);
+}
+
+void PauseMenu::close() {
+  AbstractMenu::close();
+  SoundManager::play(51);
 }
 
 void PauseMenu::Pause(bool down) {
